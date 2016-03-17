@@ -1,0 +1,20 @@
+{
+    "name": "bkstg/schedule-bundle",
+    "description": "Provides the backstage schedule.",
+    "type": "symfony-bundle",
+    "require": {
+        "symfony/framework-bundle": "^3.0",
+        "bkstg/core-bundle": "dev-master"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Luke Bainbridge",
+            "email": "luke.bainbridge@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-0": { "Bkstg\\ScheduleBundle": "" }
+    },
+    "target-dir": "Bkstg/ScheduleBundle"
+}

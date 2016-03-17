@@ -1,0 +1,29 @@
+{% extends 'BkstgCoreBundle::layout.html.twig' %}
+{% block title %}{{ title|default('Add New Schedule') }}{% endblock %}
+
+{% block content %}
+  <div class="schedule-form">
+    {{ form_start(form) }}
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          {{ form_errors(form) }}
+
+          {{ form_label(form.name) }}
+          {{ form_widget(form.name, { 'attr': { 'class': 'form-control' }}) }}
+        </div>
+        <ul class="list-group schedule-items" data-prototype="{{ include('BkstgScheduleBundle:Form:schedule_item_form.html.twig', { 'form': form.schedule_items.vars.prototype })|e }}">
+          {% for schedule_item in form.schedule_items %}
+            <li class="list-group-item">
+              {{ include('BkstgScheduleBundle:Form:schedule_item_form.html.twig', { 'form': schedule_item }) }}
+            </li>
+          {% endfor %}
+        </ul>
+        <div class="panel-footer form-inline">
+
+          {{ form_row(form._token) }}
+          <input class="btn btn-primary" type="submit" value="{{ submit_value|default('Create new schedule') }}" />
+        </div>
+      </div>
+    {{ form_end(form, {'render_rest': false}) }}
+  </div>
+{% endblock %}

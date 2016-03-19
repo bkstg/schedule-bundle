@@ -14,7 +14,6 @@
         }
     ],
     "autoload": {
-        "psr-0": { "Bkstg\\ScheduleBundle": "" }
-    },
-    "target-dir": "Bkstg/ScheduleBundle"
+        "psr-4": { "Bkstg\\ScheduleBundle": "" }
+    }
 }

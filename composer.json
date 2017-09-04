@@ -3,8 +3,8 @@
     "description": "Provides the backstage schedule.",
     "type": "symfony-bundle",
     "require": {
-        "symfony/framework-bundle": "^3.0",
-        "bkstg/core-bundle": "^0.0"
+        "symfony/framework-bundle": "^2.8",
+        "bkstg/core-bundle": "^1.0"
     },
     "license": "MIT",
     "authors": [
@@ -15,7 +15,7 @@
     ],
     "extra": {
         "branch-alias": {
-            "dev-master": "0.0.x-dev"
+            "dev-master": "1.0.x-dev"
         }
     },
     "autoload": {

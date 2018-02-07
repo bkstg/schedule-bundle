@@ -308,6 +308,5 @@ class ScheduleController extends Controller
             'schedules' => $schedules,
             'message_manager' => $message_manager,
         ));
-
     }
 }

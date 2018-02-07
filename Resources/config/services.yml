@@ -1,0 +1,15 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+    Bkstg\ScheduleBundle\:
+        resource: '../../*'
+        exclude: '../../{Entity,Repository,Tests}'
+
+    # Controller services.
+    Bkstg\ScheduleBundle\Controller\:
+        resource: '../../Controller'
+        public: true
+        tags:
+            - { name: controller.service_arguments }

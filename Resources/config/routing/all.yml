@@ -1,0 +1,20 @@
+bkstg_schedule_show:
+    path: /
+    defaults:
+      _controller: Bkstg\ScheduleBundle\Controller\ScheduleController:showAction
+bkstg_schedule_personal:
+    path: /personal
+    defaults:
+      _controller: Bkstg\ScheduleBundle\Controller\ScheduleController:showPersonalAction
+bkstg_event_index:
+    path: /event
+    defaults:
+      _controller: Bkstg\ScheduleBundle\Controller\EventController:indexAction
+bkstg_event_create:
+    path: /event/create
+    defaults:
+      _controller: Bkstg\ScheduleBundle\Controller\EventController:createAction
+bkstg_event_show:
+    path: /event/{id}
+    defaults:
+      _controller: Bkstg\ScheduleBundle\Controller\EventController:showAction

@@ -1,0 +1,37 @@
+Bkstg\ScheduleBundle\Entity\Schedule:
+    type: entity
+    repositoryClass: Bkstg\ScheduleBundle\Repository\ScheduleRepository
+
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+
+    fields:
+        notes:
+            type: text
+            nullable: true
+        status:
+            type: smallint
+        created:
+            type: datetime
+            gedmo:
+                timestampable:
+                    on: create
+        updated:
+            type: datetime
+            gedmo:
+                timestampable:
+                    on: update
+        author:
+            type: string
+
+    manyToMany:
+        groups:
+            targetEntity: Bkstg\CoreBundle\Entity\Production
+    oneToMany:
+        events:
+            targetEntity: Bkstg\ScheduleBundle\Entity\Event
+            mappedBy: schedule

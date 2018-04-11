@@ -1,0 +1,48 @@
+Bkstg\ScheduleBundle\Entity\Event:
+    type: entity
+    repositoryClass: Bkstg\ScheduleBundle\Repository\EventRepository
+
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+
+    fields:
+        start:
+            type: datetime
+        end:
+            type: datetime
+        name:
+            type: string
+        description:
+            type: text
+            nullable: true
+        location:
+            type: string
+            nullable: true
+        created:
+            type: datetime
+            gedmo:
+                timestampable:
+                    on: create
+        updated:
+            type: datetime
+            gedmo:
+                timestampable:
+                    on: update
+        author:
+            type: string
+        type:
+            type: string
+
+    manyToMany:
+        groups:
+            targetEntity: Bkstg\CoreBundle\Entity\Production
+        invitations:
+            targetEntity: Bkstg\ScheduleBundle\Entity\Invitation
+    manyToOne:
+        schedule:
+            targetEntity: Bkstg\ScheduleBundle\Entity\Schedule
+            inversedBy: events

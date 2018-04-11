@@ -1,0 +1,23 @@
+Bkstg\ScheduleBundle\Entity\Invitation:
+    type: entity
+    repositoryClass: Bkstg\ScheduleBundle\Repository\InvitationRepository
+
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+
+    fields:
+        response:
+            type: integer
+            nullable: true
+        optional:
+            type: boolean
+        invitee:
+            type: string
+
+    manyToOne:
+        event:
+            targetEntity: Bkstg\ScheduleBundle\Entity\Event

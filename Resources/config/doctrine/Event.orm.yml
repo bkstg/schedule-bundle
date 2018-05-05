@@ -42,6 +42,9 @@ Bkstg\ScheduleBundle\Entity\Event:
             targetEntity: Bkstg\CoreBundle\Entity\Production
         invitations:
             targetEntity: Bkstg\ScheduleBundle\Entity\Invitation
+            cascade:
+                - persist
+                - remove
     manyToOne:
         schedule:
             targetEntity: Bkstg\ScheduleBundle\Entity\Schedule

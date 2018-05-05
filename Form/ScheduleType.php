@@ -3,7 +3,9 @@
 namespace Bkstg\ScheduleBundle\Form;
 
 use Bkstg\ScheduleBundle\Entity\Schedule;
+use Bkstg\ScheduleBundle\Form\EventType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -17,7 +19,13 @@ class ScheduleType extends AbstractType
         $builder
             ->add('notes')
             ->add('status')
-            ->add('events')
+            ->add('events', CollectionType::class, [
+                'entry_type' => EventType::class,
+                'entry_options' => ['label' => false],
+                'allow_add' => true,
+                'allow_delete' => true,
+                'by_reference' => false,
+            ])
         ;
     }
 

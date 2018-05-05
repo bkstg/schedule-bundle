@@ -1,0 +1,13 @@
+{% block bkstg_schedulebundle_invitation_widget %}
+  <div class="form-row">
+    <div class="col-3">
+      {{ form_row(form.optional) }}
+    </div>
+    <div class="col">
+      {{ form_row(form.invitee) }}
+    </div>
+  </div>
+  <div class="btn-group">
+    <a href="#" class="collection-item-remove btn btn-danger"><i class="fa fa-times"></i> {{ 'Remove' }}</a>
+  </div>
+{% endblock %}

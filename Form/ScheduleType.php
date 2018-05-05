@@ -17,6 +17,7 @@ class ScheduleType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('title')
             ->add('notes')
             ->add('status')
             ->add('events', CollectionType::class, [

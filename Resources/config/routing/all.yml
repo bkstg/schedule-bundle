@@ -6,6 +6,10 @@ bkstg_schedule_personal:
     path: /personal
     defaults:
       _controller: Bkstg\ScheduleBundle\Controller\ScheduleController:showPersonalAction
+bkstg_schedule_create:
+    path: /create
+    defaults:
+      _controller: Bkstg\ScheduleBundle\Controller\ScheduleController:createAction
 bkstg_event_index:
     path: /event
     defaults:

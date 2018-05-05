@@ -10,6 +10,8 @@ Bkstg\ScheduleBundle\Entity\Schedule:
                 strategy: AUTO
 
     fields:
+        title:
+            type: string
         notes:
             type: text
             nullable: true
@@ -35,3 +37,5 @@ Bkstg\ScheduleBundle\Entity\Schedule:
         events:
             targetEntity: Bkstg\ScheduleBundle\Entity\Event
             mappedBy: schedule
+            cascade:
+                - persist

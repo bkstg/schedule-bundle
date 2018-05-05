@@ -1,11 +1,5 @@
 {% extends '@BkstgCore/layout.html.twig' %}
 {% set page_title = 'Create new event'|trans %}
-{% form_theme form '@BkstgSchedule/Invitation/form.html.twig' %}
 {% block content %}
-  {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <div class="form-group">
-      <button type="submit" class="btn btn-primary">{{ 'Save'|trans }}</button>
-    </div>
-  {{ form_end(form) }}
+  {% include '@BkstgSchedule/Invitation/_form.html.twig' with {'form': form} only %}
 {% endblock %}

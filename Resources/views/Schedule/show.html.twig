@@ -15,7 +15,7 @@
       <button class="btn btn-warning" data-calendar-view="day">Day</button>
     </div>
   </div>
-  <div id="calendar" class="mt-2 mb-2"></div>
+  <div id="calendar" class="mt-2 mb-2" data-app-url="{{ app.request.schemeAndHttpHost ~ app.request.baseUrl }}" data-production-slug="{{ production.slug }}"></div>
 {% endblock %}
 
 {# Override header block to add create link #}

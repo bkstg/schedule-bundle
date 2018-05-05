@@ -14,6 +14,7 @@ class Schedule implements GroupableInterface
     const STATUS_CLOSED = 0;
 
     private $id;
+    private $title;
     private $notes;
     private $status;
     private $author;
@@ -31,6 +32,25 @@ class Schedule implements GroupableInterface
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Get title
+     * @return
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * Set title
+     * @return $this
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+        return $this;
     }
 
     /**

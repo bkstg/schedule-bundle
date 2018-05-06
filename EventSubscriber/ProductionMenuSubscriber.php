@@ -45,20 +45,20 @@ class ProductionMenuSubscriber implements EventSubscriberInterface
         // Create overview menu item.
         $schedule = $this->factory->createItem('Schedule', [
             'uri' => $this->url_generator->generate(
-                'bkstg_schedule_show',
+                'bkstg_calendar_production',
                 ['production_slug' => $group->getSlug()]
             ),
             'extras' => ['icon' => 'calendar'],
         ]);
         $production = $this->factory->createItem('Production', [
             'uri' => $this->url_generator->generate(
-                'bkstg_schedule_show',
+                'bkstg_calendar_production',
                 ['production_slug' => $group->getSlug()]
             ),
         ]);
         $my_schedule = $this->factory->createItem('My Schedule', [
             'uri' => $this->url_generator->generate(
-                'bkstg_schedule_personal',
+                'bkstg_calendar_personal',
                 ['production_slug' => $group->getSlug()]
             ),
         ]);

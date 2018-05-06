@@ -1,19 +1,40 @@
-bkstg_schedule_show:
-    path: /
+# Calendar paths.
+bkstg_calendar_production:
+    path: /calendar
     defaults:
-      _controller: Bkstg\ScheduleBundle\Controller\ScheduleController:showAction
-bkstg_schedule_personal:
-    path: /personal
+        _controller: Bkstg\ScheduleBundle\Controller\CalendarController:productionAction
+bkstg_calendar_search_production:
+    path: /calendar/search
     defaults:
-      _controller: Bkstg\ScheduleBundle\Controller\ScheduleController:showPersonalAction
+        _controller: Bkstg\ScheduleBundle\Controller\CalendarController:searchProductionAction
+bkstg_calendar_personal:
+    path: /calendar/personal
+    defaults:
+        _controller: Bkstg\ScheduleBundle\Controller\CalendarController:personalAction
+bkstg_calendar_search_personal:
+    path: /calendar/personal/search
+    defaults:
+        _controller: Bkstg\ScheduleBundle\Controller\CalendarController:searchPersonalAction
+
+# Schedule paths.
 bkstg_schedule_create:
-    path: /create
+    path: /schedule/create
     defaults:
-      _controller: Bkstg\ScheduleBundle\Controller\ScheduleController:createAction
-bkstg_event_index:
-    path: /event
+        _controller: Bkstg\ScheduleBundle\Controller\ScheduleController:createAction
+bkstg_schedule_show:
+    path: /schedule/{id}
     defaults:
-      _controller: Bkstg\ScheduleBundle\Controller\EventController:indexAction
+        _controller: Bkstg\ScheduleBundle\Controller\ScheduleController:readAction
+bkstg_schedule_edit:
+    path: /schedule/{id}/edit
+    defaults:
+        _controller: Bkstg\ScheduleBundle\Controller\ScheduleController:updateAction
+bkstg_schedule_delete:
+    path: /schedule/{id}/delete
+    defaults:
+        _controller: Bkstg\ScheduleBundle\Controller\ScheduleController:deleteAction
+
+# Event paths.
 bkstg_event_create:
     path: /event/create
     defaults:
@@ -21,4 +42,12 @@ bkstg_event_create:
 bkstg_event_show:
     path: /event/{id}
     defaults:
-      _controller: Bkstg\ScheduleBundle\Controller\EventController:showAction
+      _controller: Bkstg\ScheduleBundle\Controller\EventController:readAction
+bkstg_event_edit:
+    path: /event/{id}/edit
+    defaults:
+        _controller: Bkstg\ScheduleBundle\Controller\EventController:updateAction
+bkstg_event_delete:
+    path: /event/{id}/delete
+    defaults:
+        _controller: Bkstg\ScheduleBundle\Controller\EventController:deleteAction

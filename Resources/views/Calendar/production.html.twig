@@ -1,0 +1,28 @@
+{% extends '@BkstgCore/layout.html.twig' %}
+{% set page_title = 'Schedule'|trans %}
+{% block content %}
+  <h3 class="date-display">{{ "now"|date('F Y') }}</h3>
+  {% include '@BkstgSchedule/Calendar/_controls.html.twig' %}
+  <div id="calendar" class="mt-2 mb-2" data-search-url="{{ url('bkstg_calendar_search_production', { 'production_slug': production.slug }) }}"></div>
+{% endblock %}
+
+{# Override header block to add create link #}
+{% block header %}
+  <header>
+    {% if is_granted('GROUP_ROLE_EDITOR', production) %}
+      <div class="dropdown float-left mr-2 mt-1">
+        <button class="text-small btn btn-success dropdown-toggle"  aria-hidden="true" type="button" id="schedule-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class="fa fa-plus"></i>
+          <span class="sr-only">{{ 'Create new schedule or event'|trans }}</span>
+        </button>
+        <div class="dropdown-menu" aria-labelledby="schedule-dropdown">
+          <a class="dropdown-item" href="#"><i class="fa fa-list" aria-hidden="true"></i> {{ 'Create new Schedule' }}</a>
+          <a class="dropdown-item" href="{{ url('bkstg_event_create', {'production_slug': production.slug}) }}"><i class="fa fa-calendar-plus-o" aria-hidden="true"></i> {{ 'Create new Event' }}</a>
+        </div>
+      </div>
+    {% endif %}
+    <h1>
+      {{ page_title }}
+    </h1>
+  </header>
+{% endblock %}

@@ -298,6 +298,7 @@ class Event implements GroupableInterface
      */
     public function addInvitation(Invitation $invitation)
     {
+        $invitation->setEvent($this);
         $this->invitations[] = $invitation;
 
         return $this;

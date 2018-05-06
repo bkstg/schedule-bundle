@@ -18,8 +18,21 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class EventController extends Controller
 {
+    /**
+     * Create a new standalone event.
+     *
+     * @param  string                        $production_slug The slug for the production.
+     * @param  AuthorizationCheckerInterface $auth            The authorization checker service.
+     * @param  TokenStorageInterface         $token           The token storage service.
+     * @param  Request                       $request         The request.
+     *
+     * @throws NotFoundHttpException                          When the production does not exist.
+     * @throws AccessDeniedException                          When the user is not an editor.
+     *
+     * @return Response                                       The response.
+     */
     public function createAction(
-        $production_slug,
+        string $production_slug,
         AuthorizationCheckerInterface $auth,
         TokenStorageInterface $token,
         Request $request
@@ -35,19 +48,27 @@ class EventController extends Controller
             throw new AccessDeniedException();
         }
 
+        // Create a new event with author and production.
         $event = new Event();
         $event->addGroup($production);
         $event->setAuthor($token->getToken()->getUser()->getUsername());
 
-        // Set start and end times using closest 15 minute intervals.
+        // Set start and end times using closest 1 hour intervals.
         $start = new \DateTime();
+        $start->modify('+1 hour');
+        $start->modify('-' . $start->format('i') . ' minutes');
         $event->setStart($start);
+
         $end = new \DateTime('+1 hour');
+        $end->modify('+1 hour');
+        $end->modify('-' . $end->format('i') . ' minutes');
         $event->setEnd($end);
 
+        // Create and handle the form.
         $form = $this->form->create(EventType::class, $event);
         $form->handleRequest($request);
 
+        // If the form is submitted and valid persist the event.
         if ($form->isSubmitted() && $form->isValid()) {
             $this->em->persist($event);
             $this->em->flush();

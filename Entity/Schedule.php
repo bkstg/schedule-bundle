@@ -210,6 +210,7 @@ class Schedule implements GroupableInterface
      */
     public function addEvent(Event $event)
     {
+        $event->setSchedule($this);
         $this->events[] = $event;
 
         return $this;

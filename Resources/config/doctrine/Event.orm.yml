@@ -35,6 +35,7 @@ Bkstg\ScheduleBundle\Entity\Event:
         author:
             type: string
         type:
+            nullable: true
             type: string
 
     manyToMany:

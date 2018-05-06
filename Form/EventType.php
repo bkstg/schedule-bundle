@@ -41,6 +41,7 @@ class EventType extends AbstractType
                 'by_reference' => false,
             ])
             ->add('type', ChoiceType::class, [
+                'required' => false,
                 'choices' => [
                     'Important' => 'important',
                     'Success' => 'success',

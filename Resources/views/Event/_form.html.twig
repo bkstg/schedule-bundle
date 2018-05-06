@@ -1,5 +1,11 @@
-{% form_theme form '@BkstgSchedule/Invitation/form.html.twig' %}
+{% form_theme form '@BkstgSchedule/Invitation/_form.html.twig' %}
 {{ form_start(form) }}
+  {{ form_row(form.name) }}
+  <div class="form-row">
+    <div class="col">{{ form_row(form.start) }}</div>
+    <div class="col">{{ form_row(form.end) }}</div>
+  </div>
+  {{ form_row(form.location, {'attr': { 'class': 'google-geolocate' }}) }}
   {{ form_widget(form) }}
   <div class="form-group">
     <button type="submit" class="btn btn-primary">{{ 'Save'|trans }}</button>

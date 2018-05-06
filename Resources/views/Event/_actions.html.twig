@@ -1,0 +1,14 @@
+{% if is_granted('edit', event) %}
+  {% set route = app.request.attributes.get('_route') %}
+  <ul class="nav nav-tabs mb-3">
+    <li class="nav-item">
+      <a class="nav-link{% if route == 'bkstg_event_show' %} active{% endif %}" href="{{ url('bkstg_event_show', {'id': event.id, 'production_slug': production.slug}) }}">View</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link{% if route == 'bkstg_event_edit' %} active{% endif %}" href="{{ url('bkstg_event_edit', {'id': event.id, 'production_slug': production.slug}) }}">Edit</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link{% if route == 'bkstg_event_delete' %} active{% endif %} text-danger" href="{{ url('bkstg_event_delete', {'id': event.id, 'production_slug': production.slug}) }}">Delete</a>
+    </li>
+  </ul>
+{% endif %}

@@ -89,11 +89,23 @@ class EventController extends Controller
         ]));
     }
 
+    /**
+     * Show a single event.
+     *
+     * @param  string                        $production_slug The slug for the production.
+     * @param  int                           $id              The event id.
+     * @param  AuthorizationCheckerInterface $auth            The authorization checker service.
+     *
+     * @throws NotFoundHttpException                          When the production or event does not exist.
+     * @throws AccessDeniedException                          When the user is not in the group.
+     *
+     * @return Response                                       The response.
+     */
     public function readAction(
-        $production_slug,
-        $id,
+        string $production_slug,
+        int $id,
         AuthorizationCheckerInterface $auth
-    ) {
+    ): Response {
         // Lookup the production by production_slug.
         $production_repo = $this->em->getRepository(Production::class);
         if (null === $production = $production_repo->findOneBy(['slug' => $production_slug])) {
@@ -111,7 +123,8 @@ class EventController extends Controller
             throw new AccessDeniedException();
         }
 
-        return new Response($this->templating->render('@BkstgSchedule/Event/show.html.twig', [
+        // Render the event.
+        return new Response($this->templating->render('@BkstgSchedule/Event/read.html.twig', [
             'production' => $production,
             'event' => $event,
         ]));

@@ -105,7 +105,7 @@ class CalendarController extends Controller
         }
 
         // Return a JSON response.
-        return new JsonResponse($result);
+        return new JsonResponse($this->prepareResult($events, $production));
     }
 
     /**
@@ -181,6 +181,20 @@ class CalendarController extends Controller
             new \DateTime('@' . ($request->query->get('to')/1000))
         );
 
+        // Return a JSON response.
+        return new JsonResponse($this->prepareResult($events, $production));
+    }
+
+    /**
+     * Helper function to prepare results for the calendar.
+     *
+     * @param  array      $events     The events to return.
+     * @param  Production $production The production for these events.
+     *
+     * @return array                  The formatted events.
+     */
+    private function prepareResult(array $events, Production $production): array
+    {
         // Create array of events for calendar.
         $result = [
             'success' => 1,
@@ -199,8 +213,6 @@ class CalendarController extends Controller
                 'end' => $event->getEnd()->format('U') * 1000,
             ];
         }
-
-        // Return a JSON response.
-        return new JsonResponse($result);
+        return $result;
     }
 }

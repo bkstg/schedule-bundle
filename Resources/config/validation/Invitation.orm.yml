@@ -1,0 +1,5 @@
+Bkstg\ScheduleBundle\Entity\Invitation:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+            fields: [ event, invitee ]
+            message: You can only invite a user to an event once.

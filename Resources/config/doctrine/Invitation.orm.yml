@@ -21,3 +21,4 @@ Bkstg\ScheduleBundle\Entity\Invitation:
     manyToOne:
         event:
             targetEntity: Bkstg\ScheduleBundle\Entity\Event
+            inversedBy: invitations

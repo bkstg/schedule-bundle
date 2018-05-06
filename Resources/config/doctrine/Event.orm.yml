@@ -41,8 +41,10 @@ Bkstg\ScheduleBundle\Entity\Event:
     manyToMany:
         groups:
             targetEntity: Bkstg\CoreBundle\Entity\Production
+    oneToMany:
         invitations:
             targetEntity: Bkstg\ScheduleBundle\Entity\Invitation
+            mappedBy: event
             cascade:
                 - persist
                 - remove

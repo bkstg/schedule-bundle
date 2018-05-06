@@ -1,0 +1,5 @@
+{% extends '@BkstgCore/layout.html.twig' %}
+{% set page_title = 'Edit event "%event%"'|trans({'%event%': event.name}) %}
+{% block content %}
+  {% include '@BkstgSchedule/Event/_form.html.twig' with {'form': form} only %}
+{% endblock %}

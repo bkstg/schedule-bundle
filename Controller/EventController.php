@@ -6,6 +6,7 @@ use Bkstg\CoreBundle\Controller\Controller;
 use Bkstg\CoreBundle\Entity\Production;
 use Bkstg\ScheduleBundle\Entity\Event;
 use Bkstg\ScheduleBundle\Form\EventType;
+use Doctrine\Common\Collections\ArrayCollection;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -80,7 +81,10 @@ class EventController extends Controller
                     '%event%' => $event->getName(),
                 ])
             );
-            return new RedirectResponse($this->url_generator->generate('bkstg_schedule_show', ['production_slug' => $production->getSlug()]));
+            return new RedirectResponse($this->url_generator->generate(
+                'bkstg_calendar_production',
+                ['production_slug' => $production->getSlug()]
+            ));
         }
 
         // Render the form.
@@ -127,6 +131,86 @@ class EventController extends Controller
         return new Response($this->templating->render('@BkstgSchedule/Event/read.html.twig', [
             'production' => $production,
             'event' => $event,
+        ]));
+    }
+
+    /**
+     * Update a standalone event.
+     *
+     * @param  string                        $production_slug The slug for the production.
+     * @param  int                           $id              The event id.
+     * @param  AuthorizationCheckerInterface $auth            The authorization checker service.
+     * @param  TokenStorageInterface         $token           The token storage service.
+     * @param  Request                       $request         The request.
+     *
+     * @throws NotFoundHttpException                          When the production does not exist.
+     * @throws AccessDeniedException                          When the user is not an editor.
+     *
+     * @return Response                                       The response.
+     */
+    public function updateAction(
+        string $production_slug,
+        int $id,
+        AuthorizationCheckerInterface $auth,
+        TokenStorageInterface $token,
+        Request $request
+    ) {
+        // Lookup the production by production_slug.
+        $production_repo = $this->em->getRepository(Production::class);
+        if (null === $production = $production_repo->findOneBy(['slug' => $production_slug])) {
+            throw new NotFoundHttpException();
+        }
+
+        // Lookup the event by id.
+        $event_repo = $this->em->getRepository(Event::class);
+        if (null === $event = $event_repo->findOneBy(['id' => $id])) {
+            throw new NotFoundHttpException();
+        }
+
+        // Check permissions for this action.
+        if (!$auth->isGranted('edit', $event)) {
+            throw new AccessDeniedException();
+        }
+
+        // Create an index of invitations for checking later.
+        $invitations = new ArrayCollection();
+        foreach ($event->getInvitations() as $invitation) {
+            $invitations->add($invitation);
+        }
+
+        // Create and handle the form.
+        $form = $this->form->create(EventType::class, $event);
+        $form->handleRequest($request);
+
+        // If the form is submitted and valid persist the event.
+        if ($form->isSubmitted() && $form->isValid()) {
+            // Remove unneeded invitations.
+            foreach ($invitations as $invitation) {
+                if (false === $event->getInvitations()->contains($invitation)) {
+                    $this->em->remove($invitation);
+                }
+            }
+
+            $this->em->persist($event);
+            $this->em->flush();
+
+            // Set success message and redirect.
+            $this->session->getFlashBag()->add(
+                'success',
+                $this->translator->trans('Event "%event%" edited.', [
+                    '%event%' => $event->getName(),
+                ])
+            );
+            return new RedirectResponse($this->url_generator->generate(
+                'bkstg_calendar_production',
+                ['production_slug' => $production->getSlug()]
+            ));
+        }
+
+        // Render the form.
+        return new Response($this->templating->render('@BkstgSchedule/Event/update.html.twig', [
+            'event' => $event,
+            'form' => $form->createView(),
         ]));
     }
 }

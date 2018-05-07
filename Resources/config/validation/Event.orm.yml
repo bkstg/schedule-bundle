@@ -1,7 +1,5 @@
 Bkstg\ScheduleBundle\Entity\Event:
     properties:
         invitations:
-            - All:
-                - Type:
-                    type: Bkstg\ScheduleBundle\Entity\Invitation
-            - Valid: ~
+            - Bkstg\ScheduleBundle\Validator\Constraints\UniqueCollectionProperty:
+                property: invitee

@@ -3,3 +3,6 @@ Bkstg\ScheduleBundle\Entity\Event:
         invitations:
             - Bkstg\ScheduleBundle\Validator\Constraints\UniqueCollectionProperty:
                 property: invitee
+        end:
+            - GreaterThanOrEqual:
+                propertyPath: start

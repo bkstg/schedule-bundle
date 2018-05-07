@@ -8,6 +8,7 @@ use Bkstg\ScheduleBundle\Entity\Event;
 use Bkstg\ScheduleBundle\Form\EventType;
 use Doctrine\Common\Collections\ArrayCollection;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -97,7 +98,7 @@ class EventController extends Controller
      * Show a single event.
      *
      * @param  string                        $production_slug The slug for the production.
-     * @param  int                           $id              The event id.
+     * @param  integer                       $id              The event id.
      * @param  AuthorizationCheckerInterface $auth            The authorization checker service.
      *
      * @throws NotFoundHttpException                          When the production or event does not exist.
@@ -138,7 +139,7 @@ class EventController extends Controller
      * Update a standalone event.
      *
      * @param  string                        $production_slug The slug for the production.
-     * @param  int                           $id              The event id.
+     * @param  integer                       $id              The event id.
      * @param  AuthorizationCheckerInterface $auth            The authorization checker service.
      * @param  TokenStorageInterface         $token           The token storage service.
      * @param  Request                       $request         The request.
@@ -210,6 +211,79 @@ class EventController extends Controller
         // Render the form.
         return new Response($this->templating->render('@BkstgSchedule/Event/update.html.twig', [
             'event' => $event,
+            'production' => $production,
+            'form' => $form->createView(),
+        ]));
+    }
+
+    /**
+     * Delete a single event.
+     *
+     * @param  string                        $production_slug The slug for the production.
+     * @param  integer                       $id              The event id.
+     * @param  AuthorizationCheckerInterface $auth            The authorization checker service.
+     * @param  Request                       $request         The request.
+     *
+     * @throws NotFoundHttpException                          When the production does not exist.
+     * @throws AccessDeniedException                          When the user is not an editor.
+     *
+     * @return Response                                       The response.
+     */
+    public function deleteAction(
+        string $production_slug,
+        int $id,
+        AuthorizationCheckerInterface $auth,
+        Request $request
+    ): Response {
+        // Lookup the production by production_slug.
+        $production_repo = $this->em->getRepository(Production::class);
+        if (null === $production = $production_repo->findOneBy(['slug' => $production_slug])) {
+            throw new NotFoundHttpException();
+        }
+
+        // Lookup the event by id.
+        $event_repo = $this->em->getRepository(Event::class);
+        if (null === $event = $event_repo->findOneBy(['id' => $id])) {
+            throw new NotFoundHttpException();
+        }
+
+        // Check permissions for this action.
+        if (!$auth->isGranted('edit', $event)) {
+            throw new AccessDeniedException();
+        }
+
+        // Create a fake form to submit.
+        $form = $this->form->createBuilder()
+            ->add('id', HiddenType::class)
+            ->getForm()
+        ;
+
+        // Handle the request.
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            // Remove the event and flush the entity manager.
+            $this->em->remove($event);
+            $this->em->flush();
+
+            // Create flash message.
+            $this->session->getFlashBag()->add(
+                'success',
+                $this->translator->trans('Deleted event "%name%".', [
+                    '%name%' => $event->getName(),
+                ])
+            );
+
+            // Redirect to event index.
+            return new RedirectResponse($this->url_generator->generate(
+                'bkstg_calendar_production',
+                ['production_slug' => $production->getSlug()]
+            ));
+        }
+
+        // Render the delete form.
+        return new Response($this->templating->render('@BkstgSchedule/Event/delete.html.twig', [
+            'event' => $event,
+            'production' => $production,
             'form' => $form->createView(),
         ]));
     }

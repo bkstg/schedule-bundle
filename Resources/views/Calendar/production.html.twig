@@ -16,7 +16,7 @@
           <span class="sr-only">{{ 'Create new schedule or event'|trans }}</span>
         </button>
         <div class="dropdown-menu" aria-labelledby="schedule-dropdown">
-          <a class="dropdown-item" href="#"><i class="fa fa-list" aria-hidden="true"></i> {{ 'Create new Schedule' }}</a>
+          <a class="dropdown-item" href="{{ url('bkstg_schedule_create', {'production_slug': production.slug}) }}"><i class="fa fa-list" aria-hidden="true"></i> {{ 'Create new Schedule' }}</a>
           <a class="dropdown-item" href="{{ url('bkstg_event_create', {'production_slug': production.slug}) }}"><i class="fa fa-calendar-plus-o" aria-hidden="true"></i> {{ 'Create new Event' }}</a>
         </div>
       </div>

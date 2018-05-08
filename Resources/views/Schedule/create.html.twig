@@ -1,11 +1,9 @@
 {% extends '@BkstgCore/layout.html.twig' %}
 {% set page_title = 'Create new schedule'|trans %}
-{% form_theme form '@BkstgSchedule/Event/_form.html.twig' %}
+{% form_theme form
+  '@BkstgSchedule/Invitation/_form.html.twig'
+  '@BkstgSchedule/Event/_form-collection.html.twig'
+%}
 {% block content %}
-  {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <div class="form-group">
-      <button type="submit" class="btn btn-primary">{{ 'Save'|trans }}</button>
-    </div>
-  {{ form_end(form) }}
+  {% include '@BkstgSchedule/Schedule/_form.html.twig' %}
 {% endblock %}

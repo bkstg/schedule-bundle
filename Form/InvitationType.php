@@ -36,6 +36,7 @@ class InvitationType extends AbstractType
         $builder
             ->add('optional')
             ->add('invitee', ChoiceType::class, [
+                'placeholder' => '- Choose an invitee -',
                 'choice_loader' => new CallbackChoiceLoader(function () use ($context, $provider) {
                     $return = [];
                     foreach ($provider->loadMembershipsByGroup($context->getContext()) as $membership) {

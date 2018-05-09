@@ -25,6 +25,7 @@ class Event implements GroupableInterface
     private $groups;
     private $invitations;
     private $type;
+    private $full_company;
 
     /**
      * Constructor
@@ -371,6 +372,25 @@ class Event implements GroupableInterface
     public function setType($type)
     {
         $this->type = $type;
+        return $this;
+    }
+
+    /**
+     * Get full_company
+     * @return
+     */
+    public function getFullCompany()
+    {
+        return $this->full_company;
+    }
+
+    /**
+     * Set full_company
+     * @return $this
+     */
+    public function setFullCompany(bool $full_company)
+    {
+        $this->full_company = $full_company;
         return $this;
     }
 }

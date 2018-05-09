@@ -37,6 +37,8 @@ Bkstg\ScheduleBundle\Entity\Event:
         type:
             nullable: true
             type: string
+        full_company:
+            type: boolean
 
     manyToMany:
         groups:

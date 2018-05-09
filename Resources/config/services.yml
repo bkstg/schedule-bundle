@@ -13,3 +13,8 @@ services:
         public: true
         tags:
             - { name: controller.service_arguments }
+
+    # Doctrine event listeners.
+    Bkstg\ScheduleBundle\EventListener\FullCompanyListener:
+        tags:
+            - { name: doctrine.event_listener, event: prePersist, lazy: true }

@@ -14,8 +14,10 @@
       {{ form_row(form.description) }}
     </div>
     <div class="col-md-4">
-      {{ form_row(form.full_company) }}
-      {{ form_row(form.invitations) }}
+      <div class="event-invitation-list">
+        <div class="event-full-company">{{ form_row(form.full_company) }}</div>
+        <div class="event-invitations">{{ form_row(form.invitations) }}</div>
+      </div>
     </div>
   </div>
   <div class="btn-group">

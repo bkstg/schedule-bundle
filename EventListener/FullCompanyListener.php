@@ -24,8 +24,9 @@ class FullCompanyListener
     {
         $object = $args->getObject();
 
-        // Only act on "Event" entities.
-        if (!$object instanceof Event) {
+        // Only act on "Event" entities that have "full company" checked.
+        if (!$object instanceof Event
+          || !$object->getFullCompany()) {
             return;
         }
 

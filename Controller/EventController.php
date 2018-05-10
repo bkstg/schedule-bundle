@@ -83,8 +83,8 @@ class EventController extends Controller
                 ])
             );
             return new RedirectResponse($this->url_generator->generate(
-                'bkstg_calendar_production',
-                ['production_slug' => $production->getSlug()]
+                'bkstg_event_show',
+                ['id' => $event->getId(), 'production_slug' => $production->getSlug()]
             ));
         }
 
@@ -203,8 +203,8 @@ class EventController extends Controller
                 ])
             );
             return new RedirectResponse($this->url_generator->generate(
-                'bkstg_calendar_production',
-                ['production_slug' => $production->getSlug()]
+                'bkstg_event_show',
+                ['id' => $event->getId(), 'production_slug' => $production->getSlug()]
             ));
         }
 

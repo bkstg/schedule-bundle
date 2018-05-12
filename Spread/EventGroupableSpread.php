@@ -15,7 +15,8 @@ class EventGroupableSpread extends GroupableSpread
     {
         $object = $action->getComponent('directComplement')->getData();
 
-        if (!$object instanceof Event) {
+        if (!$object instanceof Event
+            || $action->getVerb() != 'schedule') {
             return false;
         }
 

@@ -64,7 +64,7 @@ class EventCreator
             if ($event->getSchedule() === null) {
                 $action = $this->action_manager->create(
                     $author_component,
-                    'scheduled',
+                    'schedule',
                     ['directComplement' => $event_component, 'indirectComplement' => $group_component]
                 );
                 $action->setLink($this->url_generator->generate(

@@ -393,4 +393,9 @@ class Event implements GroupableInterface
         $this->full_company = $full_company;
         return $this;
     }
+
+    public function __toString()
+    {
+        return $this->name;
+    }
 }

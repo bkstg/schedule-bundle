@@ -18,3 +18,9 @@ services:
     Bkstg\ScheduleBundle\EventListener\FullCompanyListener:
         tags:
             - { name: doctrine.event_listener, event: onFlush, lazy: true }
+    Bkstg\ScheduleBundle\EventListener\InvitationCreator:
+        tags:
+            - { name: doctrine.event_listener, event: postPersist, lazy: true }
+    Bkstg\ScheduleBundle\EventListener\EventCreator:
+        tags:
+            - { name: doctrine.event_listener, event: postPersist, lazy: true }

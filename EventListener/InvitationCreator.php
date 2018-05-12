@@ -61,7 +61,7 @@ class InvitationCreator
             // If this invitation is not part of a schedule create timeline.
             $action = $this->action_manager->create(
                 $invitee_component,
-                'invited',
+                'invite',
                 ['directComplement' => $event_component, 'indirectComplement' => $author_component]
             );
             $action->setLink($this->url_generator->generate(

@@ -1,0 +1,10 @@
+{% embed '@BkstgTimeline/Timeline/default.html.twig' %}
+  {% trans_default_domain 'BkstgScheduleBundle' %}
+  {% block timeline_text %}
+    <strong>{{ timeline_component_render(timeline, 'indirectComplement') }}</strong>
+    {{ 'timeline.invited'|trans }}
+    {{ timeline_component_render(timeline, 'subject') }}
+    {{ 'timeline.invited_to'|trans }}
+    {{ timeline_component_render(timeline, 'directComplement') }}
+  {% endblock %}
+{% endembed %}

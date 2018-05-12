@@ -1,0 +1,5 @@
+timeline:
+    invited: 'invited'
+    invited_to: 'to'
+    scheduled: 'scheduled'
+    scheduled_in: 'in'

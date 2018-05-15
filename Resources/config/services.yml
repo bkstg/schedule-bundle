@@ -14,6 +14,13 @@ services:
         tags:
             - { name: controller.service_arguments }
 
+    # Spread services.
+    Bkstg\ScheduleBundle\Spread\:
+        resource: '../../Spread'
+        public: true
+        tags:
+            - { name: spy_timeline.spread }
+
     # Doctrine event listeners.
     Bkstg\ScheduleBundle\EventListener\FullCompanyListener:
         tags:

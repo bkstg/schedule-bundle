@@ -6,7 +6,7 @@ use Bkstg\ScheduleBundle\Entity\Event;
 use Bkstg\TimelineBundle\Spread\GroupableSpread;
 use Spy\Timeline\Model\ActionInterface;
 
-class EventGroupableSpread implements SpreadInterface
+class EventGroupableSpread extends GroupableSpread
 {
     /**
      * {@inheritdoc}

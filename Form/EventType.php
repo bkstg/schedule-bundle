@@ -55,6 +55,12 @@ class EventType extends AbstractType
                     'Special' => 'special',
                 ],
             ])
+            ->add('status', ChoiceType::class, [
+                'choices' => [
+                    'Active' => Event::STATUS_ACTIVE,
+                    'Closed' => Event::STATUS_CLOSED,
+                ],
+            ])
         ;
     }
 

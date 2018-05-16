@@ -39,6 +39,8 @@ Bkstg\ScheduleBundle\Entity\Event:
             type: string
         full_company:
             type: boolean
+        status:
+            type: integer
 
     manyToMany:
         groups:

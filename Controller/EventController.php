@@ -54,6 +54,7 @@ class EventController extends Controller
         $event = new Event();
         $event->addGroup($production);
         $event->setAuthor($token->getToken()->getUser()->getUsername());
+        $event->setStatus(Event::STATUS_ACTIVE);
 
         // Set start and end times using closest 1 hour intervals.
         $start = new \DateTime();

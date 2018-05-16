@@ -4,6 +4,7 @@ namespace Bkstg\ScheduleBundle\Entity;
 
 use Bkstg\CoreBundle\Entity\Production;
 use Bkstg\ScheduleBundle\Entity\Invitation;
+use Bkstg\SearchBundle\Model\SearchableInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use MidnightLuke\GroupSecurityBundle\Model\GroupInterface;
 use MidnightLuke\GroupSecurityBundle\Model\GroupableInterface;
@@ -11,7 +12,7 @@ use MidnightLuke\GroupSecurityBundle\Model\GroupableInterface;
 /**
  * Event
  */
-class Event implements GroupableInterface
+class Event implements SearchableInterface
 {
     private $id;
     private $start;
@@ -26,6 +27,7 @@ class Event implements GroupableInterface
     private $invitations;
     private $type;
     private $full_company;
+    private $status;
 
     /**
      * Constructor
@@ -391,6 +393,25 @@ class Event implements GroupableInterface
     public function setFullCompany(bool $full_company)
     {
         $this->full_company = $full_company;
+        return $this;
+    }
+
+    /**
+     * Get status
+     * @return
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * Set status
+     * @return $this
+     */
+    public function setStatus(int $status)
+    {
+        $this->status = $status;
         return $this;
     }
 

@@ -4,7 +4,7 @@ namespace Bkstg\ScheduleBundle\Form;
 
 use Bkstg\ScheduleBundle\Entity\Event;
 use Bkstg\ScheduleBundle\Form\InvitationType;
-use Ivory\CKEditorBundle\Form\Type\CKEditorType;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -57,8 +57,8 @@ class EventType extends AbstractType
             ])
             ->add('status', ChoiceType::class, [
                 'choices' => [
-                    'Active' => Event::STATUS_ACTIVE,
-                    'Closed' => Event::STATUS_CLOSED,
+                    'Active' => true,
+                    'Closed' => false,
                 ],
             ])
         ;

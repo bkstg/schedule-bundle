@@ -60,7 +60,12 @@ class ScheduleController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             // Match events with schedule.
             foreach ($schedule->getEvents() as $event) {
-                $event->addGroup($schedule->getGroup());
+                foreach ($schedule->getGroups() as $group) {
+                    if (!$event->hasGroup($group)) {
+                        $event->addGroup($group);
+                    }
+                }
+                $event->setStatus(true);
                 $event->setAuthor($schedule->getAuthor());
             }
 

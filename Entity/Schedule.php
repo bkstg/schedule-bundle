@@ -191,7 +191,7 @@ class Schedule implements GroupableInterface
     /**
      * {@inheritdoc}
      */
-    public function hasGroup(GroupInterface $group)
+    public function hasGroup(GroupInterface $group): bool
     {
         foreach ($this->groups as $my_group) {
             if ($group->isEqualTo($my_group)) {

@@ -4,7 +4,6 @@ namespace Bkstg\ScheduleBundle\Entity;
 
 use Bkstg\CoreBundle\Entity\Production;
 use Bkstg\ScheduleBundle\Entity\Invitation;
-use Bkstg\SearchBundle\Model\SearchableInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use MidnightLuke\GroupSecurityBundle\Model\GroupInterface;
 use MidnightLuke\GroupSecurityBundle\Model\GroupableInterface;
@@ -12,7 +11,7 @@ use MidnightLuke\GroupSecurityBundle\Model\GroupableInterface;
 /**
  * Event
  */
-class Event implements SearchableInterface
+class Event implements GroupableInterface
 {
     private $id;
     private $start;
@@ -282,7 +281,7 @@ class Event implements SearchableInterface
     /**
      * {@inheritdoc}
      */
-    public function hasGroup(GroupInterface $group)
+    public function hasGroup(GroupInterface $group): bool
     {
         foreach ($this->groups as $my_group) {
             if ($group->isEqualTo($my_group)) {

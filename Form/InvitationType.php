@@ -39,7 +39,7 @@ class InvitationType extends AbstractType
                 'placeholder' => '- Choose an invitee -',
                 'choice_loader' => new CallbackChoiceLoader(function () use ($context, $provider) {
                     $return = [];
-                    foreach ($provider->loadMembershipsByGroup($context->getContext()) as $membership) {
+                    foreach ($provider->loadActiveMembershipsByProduction($context->getContext()) as $membership) {
                         $member = $membership->getMember();
                         $return[$member->__toString()] = $member->getUsername();
                     }

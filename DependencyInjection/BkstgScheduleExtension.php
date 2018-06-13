@@ -24,5 +24,11 @@ class BkstgScheduleExtension extends Extension
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
+
+        // If the timeline bundle is active register notification listener.
+        $bundles = $container->getParameter('kernel.bundles');
+        if (isset($bundles['BkstgTimelineBundle'])) {
+            $loader->load('services.timeline.yml');
+        }
     }
 }

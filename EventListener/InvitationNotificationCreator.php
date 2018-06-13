@@ -8,7 +8,7 @@ use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
 use Spy\Timeline\Driver\ActionManagerInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-class InvitationCreator
+class InvitationNotificationCreator
 {
     private $action_manager;
     private $user_provider;

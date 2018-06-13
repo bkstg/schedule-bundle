@@ -16,7 +16,7 @@ class NotificationEntrySubscriber implements EventSubscriberInterface
     {
         // return the subscribed events, their methods and priorities
         return [
-            NotificationEntryEvent::NAME => [
+            'bkstg.timeline.notification_entry' => [
                 ['checkScheduleEntry', 0],
                 ['checkInviteEntry', 0],
             ]

@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 /**
  * Doctrine event listener for event creation.
  */
-class EventCreator
+class EventNotificationCreator
 {
     private $action_manager;
     private $user_provider;

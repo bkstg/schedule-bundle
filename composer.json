@@ -3,7 +3,7 @@
     "description": "Provides the backstage schedule.",
     "type": "symfony-bundle",
     "require": {
-        "symfony/framework-bundle": "^2.8",
+        "symfony/framework-bundle": "^2.8||^4.0",
         "bkstg/core-bundle": "^1.0"
     },
     "license": "MIT",

@@ -4,7 +4,7 @@
     "type": "symfony-bundle",
     "require": {
         "symfony/framework-bundle": "^2.8||^4.0",
-        "bkstg/core-bundle": "^1.0"
+        "bkstg/core-bundle": "2.0.x-dev"
     },
     "license": "MIT",
     "authors": [

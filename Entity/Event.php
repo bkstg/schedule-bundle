@@ -408,7 +408,7 @@ class Event implements GroupableInterface
      * Set status
      * @return $this
      */
-    public function setStatus(int $status)
+    public function setStatus(bool $status)
     {
         $this->status = $status;
         return $this;

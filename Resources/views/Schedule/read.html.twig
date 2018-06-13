@@ -1,0 +1,31 @@
+{% extends '@BkstgCore/layout.html.twig' %}
+{% set page_title = schedule.title %}
+{% block content %}
+  {% include '@BkstgSchedule/Schedule/_actions.html.twig' with { 'schedule': schedule, 'production': production } only %}
+  {% for event in schedule.events %}
+    <p><div class="row">
+      <div class="col-md-8">
+        <p><strong class="text-muted">{{ event.start|date('F j, Y g:ia') }} - {{ event.end|date('F j, Y g:ia') }}</strong></p>
+        {{ event.description|raw }}
+        {% if event.location is not empty %}
+          <iframe
+            width="100%"
+            height="450"
+            frameborder="0" style="border:0"
+            src="https://www.google.com/maps/embed/v1/place?key={{ google_api_key }}
+              &q={{ event.location|url_encode }}" allowfullscreen>
+          </iframe>
+        {% endif %}
+      </div>
+      <div class="col-md-4">
+        <ul class="list-group">
+          {% for invite in event.invitations %}
+            <li class="list-group-item">{{ get_user(invite.invitee) }}</li>
+          {% else %}
+            <li class="list-group-item">{{ 'No invitees'|trans }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div></p>
+  {% endfor %}
+{% endblock %}

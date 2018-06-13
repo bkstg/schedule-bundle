@@ -40,7 +40,7 @@ Bkstg\ScheduleBundle\Entity\Event:
         full_company:
             type: boolean
         status:
-            type: integer
+            type: boolean
 
     manyToMany:
         groups:

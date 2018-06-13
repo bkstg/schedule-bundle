@@ -16,7 +16,7 @@ Bkstg\ScheduleBundle\Entity\Schedule:
             type: text
             nullable: true
         status:
-            type: smallint
+            type: boolean
         created:
             type: datetime
             gedmo:
@@ -39,3 +39,4 @@ Bkstg\ScheduleBundle\Entity\Schedule:
             mappedBy: schedule
             cascade:
                 - persist
+                - remove

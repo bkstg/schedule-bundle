@@ -6,7 +6,9 @@ use Bkstg\CoreBundle\Controller\Controller;
 use Bkstg\CoreBundle\Entity\Production;
 use Bkstg\ScheduleBundle\Entity\Schedule;
 use Bkstg\ScheduleBundle\Form\ScheduleType;
+use Doctrine\Common\Collections\ArrayCollection;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -58,14 +60,13 @@ class ScheduleController extends Controller
 
         // Form is submitted and valid.
         if ($form->isSubmitted() && $form->isValid()) {
-            // Match events with schedule.
+            // Match event groups with schedule.
             foreach ($schedule->getEvents() as $event) {
                 foreach ($schedule->getGroups() as $group) {
                     if (!$event->hasGroup($group)) {
                         $event->addGroup($group);
                     }
                 }
-                $event->setStatus(true);
                 $event->setAuthor($schedule->getAuthor());
             }
 
@@ -80,11 +81,192 @@ class ScheduleController extends Controller
                     '%schedule%' => $schedule->getTitle(),
                 ])
             );
-            return new RedirectResponse($this->url_generator->generate('bkstg_schedule_show', ['production_slug' => $production->getSlug()]));
+            return new RedirectResponse($this->url_generator->generate(
+                'bkstg_schedule_show',
+                [
+                    'id' => $schedule->getId(),
+                    'production_slug' => $production->getSlug(),
+                ]
+            ));
         }
 
         // Render the form.
         return new Response($this->templating->render('@BkstgSchedule/Schedule/create.html.twig', [
+            'form' => $form->createView(),
+        ]));
+    }
+
+    public function readAction(
+        $id,
+        $production_slug,
+        AuthorizationCheckerInterface $auth,
+        PaginatorInterface $paginator,
+        Request $request
+    ) {
+        // Lookup the production by production_slug.
+        $production_repo = $this->em->getRepository(Production::class);
+        if (null === $production = $production_repo->findOneBy(['slug' => $production_slug])) {
+            throw new NotFoundHttpException();
+        }
+
+        // Lookup the schedule by id.
+        $schedule_repo = $this->em->getRepository(Schedule::class);
+        if (null === $schedule = $schedule_repo->findOneBy(['id' => $id])) {
+            throw new NotFoundHttpException();
+        }
+
+        // Check permissions for this action.
+        if (!$auth->isGranted('view', $schedule)) {
+            throw new AccessDeniedException();
+        }
+
+        // Render the schedule.
+        return new Response($this->templating->render('@BkstgSchedule/Schedule/read.html.twig', [
+            'production' => $production,
+            'schedule' => $schedule,
+        ]));
+    }
+
+    public function updateAction(
+        string $production_slug,
+        int $id,
+        AuthorizationCheckerInterface $auth,
+        TokenStorageInterface $token,
+        Request $request
+    ) {
+        // Lookup the production by production_slug.
+        $production_repo = $this->em->getRepository(Production::class);
+        if (null === $production = $production_repo->findOneBy(['slug' => $production_slug])) {
+            throw new NotFoundHttpException();
+        }
+
+        // Lookup the schedule by id.
+        $schedule_repo = $this->em->getRepository(Schedule::class);
+        if (null === $schedule = $schedule_repo->findOneBy(['id' => $id])) {
+            throw new NotFoundHttpException();
+        }
+
+        // Ensure that this schedule is a part of this group.
+        if (!$schedule->hasGroup($production)) {
+            throw new NotFoundHttpException();
+        }
+
+        // Check permissions for this action.
+        if (!$auth->isGranted('edit', $schedule)) {
+            throw new AccessDeniedException();
+        }
+
+        // Create an index of events and invitations for checking later.
+        $events = new ArrayCollection();
+        $invitations = [];
+        foreach ($schedule->getEvents() as $event) {
+            $events->add($event);
+            $invitations[$event->getId()] = new ArrayCollection();
+            foreach ($event->getInvitations() as $invitation) {
+                $invitations[$event->getId()]->add($invitation);
+            }
+        }
+
+        // Create and handle the form.
+        $form = $this->form->create(ScheduleType::class, $schedule);
+        $form->handleRequest($request);
+
+        // If the form is submitted and valid persist the event.
+        if ($form->isSubmitted() && $form->isValid()) {
+            // Remove unneeded events and invitations.
+            foreach ($events as $event) {
+                // First check for removed events.
+                if (false === $schedule->getEvents()->contains($event)) {
+                    $this->em->remove($event);
+                } else {
+                    // If event is still in schedule check invitations.
+                    foreach($invitations[$event->getId()] as $invitation) {
+                        if (false === $event->getInvitations()->contains($invitation)) {
+                            $this->em->remove($invitation);
+                        }
+                    }
+                }
+            }
+
+            $this->em->persist($schedule);
+            $this->em->flush();
+
+            // Set success message and redirect.
+            $this->session->getFlashBag()->add(
+                'success',
+                $this->translator->trans('Schedule "%schedule%" edited.', [
+                    '%schedule%' => $schedule->getTitle(),
+                ])
+            );
+            return new RedirectResponse($this->url_generator->generate(
+                'bkstg_schedule_show',
+                ['id' => $schedule->getId(), 'production_slug' => $production->getSlug()]
+            ));
+        }
+
+        // Render the form.
+        return new Response($this->templating->render('@BkstgSchedule/Schedule/update.html.twig', [
+            'schedule' => $schedule,
+            'production' => $production,
+            'form' => $form->createView(),
+        ]));
+    }
+
+    public function deleteAction(
+        string $production_slug,
+        int $id,
+        AuthorizationCheckerInterface $auth,
+        Request $request
+    ): Response {
+        // Lookup the production by production_slug.
+        $production_repo = $this->em->getRepository(Production::class);
+        if (null === $production = $production_repo->findOneBy(['slug' => $production_slug])) {
+            throw new NotFoundHttpException();
+        }
+
+        // Lookup the event by id.
+        $schedule_repo = $this->em->getRepository(Schedule::class);
+        if (null === $schedule = $schedule_repo->findOneBy(['id' => $id])) {
+            throw new NotFoundHttpException();
+        }
+
+        // Check permissions for this action.
+        if (!$auth->isGranted('edit', $schedule)) {
+            throw new AccessDeniedException();
+        }
+
+        // Create a fake form to submit.
+        $form = $this->form->createBuilder()
+            ->add('id', HiddenType::class)
+            ->getForm()
+        ;
+
+        // Handle the request.
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            // Remove the schedule and flush the entity manager.
+            $this->em->remove($schedule);
+            $this->em->flush();
+
+            // Create flash message.
+            $this->session->getFlashBag()->add(
+                'success',
+                $this->translator->trans('Deleted schedule "%title%".', [
+                    '%title%' => $schedule->getTitle(),
+                ])
+            );
+
+            // Redirect to schedule index.
+            return new RedirectResponse($this->url_generator->generate(
+                'bkstg_calendar_production',
+                ['production_slug' => $production->getSlug()]
+            ));
+        }
+
+        // Render the delete form.
+        return new Response($this->templating->render('@BkstgSchedule/Schedule/delete.html.twig', [
+            'schedule' => $schedule,
+            'production' => $production,
             'form' => $form->createView(),
         ]));
     }

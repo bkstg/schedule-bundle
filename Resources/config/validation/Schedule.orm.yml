@@ -1,0 +1,4 @@
+Bkstg\ScheduleBundle\Entity\Schedule:
+    properties:
+        events:
+            - Valid: ~

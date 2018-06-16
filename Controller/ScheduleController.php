@@ -60,13 +60,15 @@ class ScheduleController extends Controller
 
         // Form is submitted and valid.
         if ($form->isSubmitted() && $form->isValid()) {
-            // Match event groups with schedule.
+            // Match events with schedule.
             foreach ($schedule->getEvents() as $event) {
                 foreach ($schedule->getGroups() as $group) {
                     if (!$event->hasGroup($group)) {
                         $event->addGroup($group);
                     }
                 }
+                $event->setLocation($schedule->getLocation());
+                $event->setStatus($schedule->getStatus());
                 $event->setAuthor($schedule->getAuthor());
             }
 
@@ -173,6 +175,18 @@ class ScheduleController extends Controller
 
         // If the form is submitted and valid persist the event.
         if ($form->isSubmitted() && $form->isValid()) {
+            // Match events with schedule.
+            foreach ($schedule->getEvents() as $event) {
+                foreach ($schedule->getGroups() as $group) {
+                    if (!$event->hasGroup($group)) {
+                        $event->addGroup($group);
+                    }
+                }
+                $event->setLocation($schedule->getLocation());
+                $event->setStatus($schedule->getStatus());
+                $event->setAuthor($schedule->getAuthor());
+            }
+
             // Remove unneeded events and invitations.
             foreach ($events as $event) {
                 // First check for removed events.

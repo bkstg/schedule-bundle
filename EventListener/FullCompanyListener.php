@@ -79,7 +79,7 @@ class FullCompanyListener
         // Create and persist invitations for all active members of groups.
         $invitations = [];
         foreach ($object->getGroups() as $group) {
-            foreach ($this->membership_provider->loadMembershipsByGroup($group) as $membership) {
+            foreach ($this->membership_provider->loadActiveMembershipsByProduction($group) as $membership) {
                 // We can only act on our users.
                 if (!$membership->getMember() instanceof UserInterface) {
                     continue;
@@ -87,7 +87,7 @@ class FullCompanyListener
 
                 // If this membership is active, has not expired and is not
                 // already invited create new invitation.
-                if ($membership->isActive()
+                if ($membership->getStatus()
                     && !$membership->isExpired()
                     && !in_array($membership->getMember()->getUsername(), $existing)
                 ) {

@@ -181,18 +181,37 @@ class CalendarController extends Controller
             'success' => 1,
             'result' => [],
         ];
+
+        // Index schedules so we don't duplicate them.
+        $schedules = [];
         foreach ($events as $event) {
-            $result['result'][] = [
-                'id' => $event->getId(),
-                'title' => $event->getName(),
-                'url' => $this->url_generator->generate(
-                    'bkstg_event_show',
-                    ['production_slug' => $production->getSlug(), 'id' => $event->getId()]
-                ),
-                'class' => 'event-' . $event->getType(),
-                'start' => $event->getStart()->format('U') * 1000,
-                'end' => $event->getEnd()->format('U') * 1000,
-            ];
+            if (null === $schedule = $event->getSchedule()) {
+                // Add the event directly.
+                $result['result'][] = [
+                    'id' => 'event:' . $event->getId(),
+                    'title' => $event->getName(),
+                    'url' => $this->url_generator->generate(
+                        'bkstg_event_show',
+                        ['production_slug' => $production->getSlug(), 'id' => $event->getId()]
+                    ),
+                    'class' => 'event-' . $event->getType(),
+                    'start' => $event->getStart()->format('U') * 1000,
+                    'end' => $event->getEnd()->format('U') * 1000,
+                ];
+            } elseif (!isset($schedules[$schedule->getId()])) {
+                // Add the schedule instead of the event.
+                $schedules[$schedule->getId()] = true;
+                $result['result'][] = [
+                    'id' => 'schedule:' . $schedule->getId(),
+                    'title' => $schedule->getTitle(),
+                    'url' => $this->url_generator->generate(
+                        'bkstg_schedule_show',
+                        ['production_slug' => $production->getSlug(), 'id' => $schedule->getId()]
+                    ),
+                    'start' => $schedule->getStart()->format('U') * 1000,
+                    'end' => $schedule->getEnd()->format('U') * 1000,
+                ];
+            }
         }
         return $result;
     }

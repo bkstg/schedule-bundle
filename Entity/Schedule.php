@@ -258,7 +258,7 @@ class Schedule implements GroupableInterface
         return $this->events;
     }
 
-    public function getStart()
+    public function getStart(): ?\DateTimeInterface
     {
         $lowest_date = null;
         foreach ($this->events as $event) {
@@ -269,11 +269,11 @@ class Schedule implements GroupableInterface
         return $lowest_date;
     }
 
-    public function getEnd()
+    public function getEnd(): ?\DateTimeInterface
     {
         $highest_date = null;
         foreach ($this->events as $event) {
-            if ($highest_date === null || $event->getEnd() < $highest_date) {
+            if ($highest_date === null || $event->getEnd() > $highest_date) {
                 $highest_date = $event->getEnd();
             }
         }

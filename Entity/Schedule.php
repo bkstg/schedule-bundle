@@ -15,6 +15,7 @@ class Schedule implements GroupableInterface
 
     private $id;
     private $title;
+    private $location;
     private $notes;
     private $status;
     private $author;
@@ -50,6 +51,25 @@ class Schedule implements GroupableInterface
     public function setTitle($title)
     {
         $this->title = $title;
+        return $this;
+    }
+
+    /**
+    * Get location
+    * @return
+    */
+    public function getLocation(): ?string
+    {
+        return $this->location;
+    }
+
+    /**
+    * Set location
+    * @return $this
+    */
+    public function setLocation(string $location): self
+    {
+        $this->location = $location;
         return $this;
     }
 
@@ -236,5 +256,27 @@ class Schedule implements GroupableInterface
     public function getEvents()
     {
         return $this->events;
+    }
+
+    public function getStart()
+    {
+        $lowest_date = null;
+        foreach ($this->events as $event) {
+            if ($lowest_date === null || $event->getStart() < $lowest_date) {
+                $lowest_date = $event->getStart();
+            }
+        }
+        return $lowest_date;
+    }
+
+    public function getEnd()
+    {
+        $highest_date = null;
+        foreach ($this->events as $event) {
+            if ($highest_date === null || $event->getEnd() < $highest_date) {
+                $highest_date = $event->getEnd();
+            }
+        }
+        return $highest_date;
     }
 }

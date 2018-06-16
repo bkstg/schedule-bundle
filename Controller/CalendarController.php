@@ -85,25 +85,6 @@ class CalendarController extends Controller
             new \DateTime('@' . ($request->query->get('to')/1000))
         );
 
-        // Create array of events for calendar.
-        $result = [
-            'success' => 1,
-            'result' => [],
-        ];
-        foreach ($events as $event) {
-            $result['result'][] = [
-                'id' => $event->getId(),
-                'title' => $event->getName(),
-                'url' => $this->url_generator->generate(
-                    'bkstg_event_show',
-                    ['production_slug' => $production->getSlug(), 'id' => $event->getId()]
-                ),
-                'class' => 'event-' . $event->getType(),
-                'start' => $event->getStart()->format('U') * 1000,
-                'end' => $event->getEnd()->format('U') * 1000,
-            ];
-        }
-
         // Return a JSON response.
         return new JsonResponse($this->prepareResult($events, $production));
     }

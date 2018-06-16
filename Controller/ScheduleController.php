@@ -122,10 +122,17 @@ class ScheduleController extends Controller
             throw new AccessDeniedException();
         }
 
+        // Get and sort the events.
+        $events = $schedule->getEvents()->toArray();
+        usort($events, function ($a, $b) {
+            return $a->getStart() > $b->getStart();
+        });
+
         // Render the schedule.
         return new Response($this->templating->render('@BkstgSchedule/Schedule/read.html.twig', [
             'production' => $production,
             'schedule' => $schedule,
+            'sorted_events' => $events,
         ]));
     }
 

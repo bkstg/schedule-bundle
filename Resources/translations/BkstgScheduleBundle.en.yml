@@ -3,3 +3,12 @@ timeline:
     invited_to: 'to'
     scheduled: 'scheduled'
     scheduled_in: 'in'
+schedule:
+    no_events: 'No events in this schedule yet.'
+event:
+    full_company: 'Full company'
+    no_invitees: 'No invitees'
+    time: 'Time'
+    title: 'Title'
+    invitations: 'Invitations'
+    notes: 'Notes'

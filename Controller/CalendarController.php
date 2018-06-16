@@ -188,6 +188,7 @@ class CalendarController extends Controller
             if (null === $schedule = $event->getSchedule()) {
                 // Add the event directly.
                 $result['result'][] = [
+                    'icon' => 'calendar',
                     'id' => 'event:' . $event->getId(),
                     'title' => $event->getName(),
                     'url' => $this->url_generator->generate(
@@ -202,6 +203,7 @@ class CalendarController extends Controller
                 // Add the schedule instead of the event.
                 $schedules[$schedule->getId()] = true;
                 $result['result'][] = [
+                    'icon' => 'list',
                     'id' => 'schedule:' . $schedule->getId(),
                     'title' => $schedule->getTitle(),
                     'url' => $this->url_generator->generate(

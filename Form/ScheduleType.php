@@ -20,6 +20,7 @@ class ScheduleType extends AbstractType
     {
         $builder
             ->add('title')
+            ->add('location')
             ->add('notes', CKEditorType::class, [
                 'config' => ['toolbar' => 'basic'],
                 'required' => false]

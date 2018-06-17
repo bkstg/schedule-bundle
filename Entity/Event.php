@@ -26,7 +26,8 @@ class Event implements GroupableInterface
     private $invitations;
     private $colour;
     private $full_company;
-    private $status;
+    private $active;
+    private $published;
 
     /**
      * Constructor
@@ -396,21 +397,40 @@ class Event implements GroupableInterface
     }
 
     /**
-     * Get status
+     * Get active
      * @return
      */
-    public function getStatus()
+    public function isActive(): bool
     {
-        return $this->status;
+        return ($this->active === true);
     }
 
     /**
-     * Set status
+     * Set active
      * @return $this
      */
-    public function setStatus(bool $status)
+    public function setActive(bool $active): self
     {
-        $this->status = $status;
+        $this->active = $active;
+        return $this;
+    }
+
+    /**
+     * Get published
+     * @return
+     */
+    public function isPublished(): bool
+    {
+        return ($this->published === true);
+    }
+
+    /**
+     * Set published
+     * @return $this
+     */
+    public function setPublished(bool $published): self
+    {
+        $this->published = $published;
         return $this;
     }
 

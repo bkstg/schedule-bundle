@@ -69,7 +69,7 @@ class ScheduleController extends Controller
                 }
                 $event->setColour($schedule->getColour());
                 $event->setLocation($schedule->getLocation());
-                $event->setStatus($schedule->getStatus());
+                $event->setActive($schedule->getActive());
                 $event->setAuthor($schedule->getAuthor());
             }
 
@@ -192,7 +192,7 @@ class ScheduleController extends Controller
                 }
                 $event->setColour($schedule->getColour());
                 $event->setLocation($schedule->getLocation());
-                $event->setStatus($schedule->getStatus());
+                $event->setActive($schedule->getActive());
                 $event->setAuthor($schedule->getAuthor());
             }
 

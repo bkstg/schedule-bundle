@@ -21,7 +21,9 @@ Bkstg\ScheduleBundle\Entity\Schedule:
         notes:
             type: text
             nullable: true
-        status:
+        active:
+            type: boolean
+        published:
             type: boolean
         created:
             type: datetime

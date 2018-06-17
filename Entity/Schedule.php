@@ -10,15 +10,13 @@ use MidnightLuke\GroupSecurityBundle\Model\GroupableInterface;
 
 class Schedule implements GroupableInterface
 {
-    const STATUS_ACTIVE = 1;
-    const STATUS_CLOSED = 0;
-
     private $id;
     private $title;
     private $location;
     private $colour;
     private $notes;
-    private $status;
+    private $active;
+    private $published;
     private $author;
     private $created;
     private $updated;
@@ -113,21 +111,40 @@ class Schedule implements GroupableInterface
     }
 
     /**
-     * Get status
+     * Get active
      * @return
      */
-    public function getStatus()
+    public function isActive(): bool
     {
-        return $this->status;
+        return ($this->active === true);
     }
 
     /**
-     * Set status
+     * Set active
      * @return $this
      */
-    public function setStatus(bool $status)
+    public function setActive(bool $active): self
     {
-        $this->status = $status;
+        $this->active = $active;
+        return $this;
+    }
+
+    /**
+     * Get published
+     * @return
+     */
+    public function isPublished(): bool
+    {
+        return ($this->published === true);
+    }
+
+    /**
+     * Set published
+     * @return $this
+     */
+    public function setPublished(bool $published): self
+    {
+        $this->published = $published;
         return $this;
     }
 

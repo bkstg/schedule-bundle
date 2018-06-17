@@ -39,7 +39,9 @@ Bkstg\ScheduleBundle\Entity\Event:
             type: string
         full_company:
             type: boolean
-        status:
+        active:
+            type: boolean
+        published:
             type: boolean
 
     manyToMany:

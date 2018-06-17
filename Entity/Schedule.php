@@ -16,6 +16,7 @@ class Schedule implements GroupableInterface
     private $id;
     private $title;
     private $location;
+    private $colour;
     private $notes;
     private $status;
     private $author;
@@ -55,21 +56,40 @@ class Schedule implements GroupableInterface
     }
 
     /**
-    * Get location
-    * @return
-    */
+     * Get location
+     * @return
+     */
     public function getLocation(): ?string
     {
         return $this->location;
     }
 
     /**
-    * Set location
-    * @return $this
-    */
+     * Set location
+     * @return $this
+     */
     public function setLocation(string $location): self
     {
         $this->location = $location;
+        return $this;
+    }
+
+    /**
+     * Get colour
+     * @return
+     */
+    public function getColour(): ?string
+    {
+        return $this->colour;
+    }
+
+    /**
+     * Set colour
+     * @return $this
+     */
+    public function setColour(string $colour): self
+    {
+        $this->colour = $colour;
         return $this;
     }
 

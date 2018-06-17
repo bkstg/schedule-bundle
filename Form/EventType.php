@@ -44,15 +44,16 @@ class EventType extends AbstractType
                 'allow_delete' => true,
                 'by_reference' => false,
             ])
-            ->add('type', ChoiceType::class, [
+            ->add('colour', ChoiceType::class, [
+                'label' => 'Colour',
                 'required' => false,
                 'choices' => [
-                    'Important' => 'important',
-                    'Success' => 'success',
-                    'Warning' => 'warning',
-                    'Info' => 'info',
-                    'Inverse' => 'inverse',
-                    'Special' => 'special',
+                    'Red' => 'important',
+                    'Green' => 'success',
+                    'Yellow' => 'warning',
+                    'Blue' => 'info',
+                    'Dark' => 'inverse',
+                    'Purple' => 'special',
                 ],
             ])
             ->add('status', ChoiceType::class, [

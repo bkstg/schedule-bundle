@@ -25,6 +25,18 @@ class ScheduleType extends AbstractType
                 'config' => ['toolbar' => 'basic'],
                 'required' => false]
             )
+            ->add('colour', ChoiceType::class, [
+                'label' => 'Colour',
+                'required' => false,
+                'choices' => [
+                    'Red' => 'important',
+                    'Green' => 'success',
+                    'Yellow' => 'warning',
+                    'Blue' => 'info',
+                    'Dark' => 'inverse',
+                    'Purple' => 'special',
+                ],
+            ])
             ->add('status', ChoiceType::class, [
                 'choices' => [
                     'Active' => true,

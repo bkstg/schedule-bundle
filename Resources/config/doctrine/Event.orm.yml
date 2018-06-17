@@ -34,7 +34,7 @@ Bkstg\ScheduleBundle\Entity\Event:
                     on: update
         author:
             type: string
-        type:
+        colour:
             nullable: true
             type: string
         full_company:

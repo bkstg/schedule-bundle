@@ -4,7 +4,7 @@
   <div class="row">
     <div class="col-md-8">
       <div class="form-row">
-        <div class="col-2">{{ form_row(form.type) }}</div>
+        <div class="col-2">{{ form_row(form.status) }}</div>
         <div class="col">{{ form_row(form.name) }}</div>
       </div>
       <div class="form-row">
@@ -13,7 +13,7 @@
       </div>
       {{ form_row(form.location, {'attr': { 'class': 'google-geolocate' }}) }}
       {{ form_row(form.description) }}
-      {{ form_row(form.status) }}
+      {{ form_row(form.colour) }}
     </div>
     <div class="col-md-4">
       <div class="event-invitation-list">

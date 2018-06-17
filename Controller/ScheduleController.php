@@ -67,6 +67,7 @@ class ScheduleController extends Controller
                         $event->addGroup($group);
                     }
                 }
+                $event->setColour($schedule->getColour());
                 $event->setLocation($schedule->getLocation());
                 $event->setStatus($schedule->getStatus());
                 $event->setAuthor($schedule->getAuthor());
@@ -189,6 +190,7 @@ class ScheduleController extends Controller
                         $event->addGroup($group);
                     }
                 }
+                $event->setColour($schedule->getColour());
                 $event->setLocation($schedule->getLocation());
                 $event->setStatus($schedule->getStatus());
                 $event->setAuthor($schedule->getAuthor());

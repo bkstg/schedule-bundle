@@ -195,7 +195,7 @@ class CalendarController extends Controller
                         'bkstg_event_show',
                         ['production_slug' => $production->getSlug(), 'id' => $event->getId()]
                     ),
-                    'class' => 'event-' . $event->getType(),
+                    'class' => 'event-' . $event->getColour(),
                     'start' => $event->getStart()->format('U') * 1000,
                     'end' => $event->getEnd()->format('U') * 1000,
                 ];
@@ -210,6 +210,7 @@ class CalendarController extends Controller
                         'bkstg_schedule_show',
                         ['production_slug' => $production->getSlug(), 'id' => $schedule->getId()]
                     ),
+                    'class' => 'event-' . $schedule->getColour(),
                     'start' => $schedule->getStart()->format('U') * 1000,
                     'end' => $schedule->getEnd()->format('U') * 1000,
                 ];

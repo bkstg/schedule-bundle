@@ -15,6 +15,9 @@ Bkstg\ScheduleBundle\Entity\Schedule:
         location:
             type: string
             nullable: true
+        colour:
+            type: string
+            nullable: true
         notes:
             type: text
             nullable: true

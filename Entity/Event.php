@@ -24,7 +24,7 @@ class Event implements GroupableInterface
     private $author;
     private $groups;
     private $invitations;
-    private $type;
+    private $colour;
     private $full_company;
     private $status;
 
@@ -358,21 +358,21 @@ class Event implements GroupableInterface
     }
 
     /**
-     * Get type
+     * Get colour
      * @return
      */
-    public function getType()
+    public function getColour()
     {
-        return $this->type;
+        return $this->colour;
     }
 
     /**
-     * Set type
+     * Set colour
      * @return $this
      */
-    public function setType($type)
+    public function setColour(string $colour)
     {
-        $this->type = $type;
+        $this->colour = $colour;
         return $this;
     }
 

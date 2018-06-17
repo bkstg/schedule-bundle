@@ -90,9 +90,8 @@ class CalendarController extends Controller
     }
 
     /**
-     * Show a calendar for a user in a production.
+     * Show a calendar for a user.
      *
-     * @param  string                        $production_slug The slug for the production.
      * @param  AuthorizationCheckerInterface $auth            The authorization checker service.
      * @param  Request                       $request         The current request.
      *
@@ -102,31 +101,17 @@ class CalendarController extends Controller
      * @return Response                                       A response.
      */
     public function personalAction(
-        string $production_slug,
         AuthorizationCheckerInterface $auth,
         Request $request
     ): Response {
-        // Lookup the production by production_slug.
-        $production_repo = $this->em->getRepository(Production::class);
-        if (null === $production = $production_repo->findOneBy(['slug' => $production_slug])) {
-            throw new NotFoundHttpException();
-        }
-
-        // Check permissions for this action.
-        if (!$auth->isGranted('GROUP_ROLE_USER', $production)) {
-            throw new AccessDeniedException();
-        }
-
         return new Response($this->templating->render(
-            '@BkstgSchedule/Calendar/personal.html.twig',
-            ['production' => $production]
+            '@BkstgSchedule/Calendar/personal.html.twig'
         ));
     }
 
     /**
      * Search events for a production.
      *
-     * @param  string                        $production_slug The slug for the production.
      * @param  AuthorizationCheckerInterface $auth            The authorization checker service.
      * @param  TokenStorageInterface         $token           The user token.
      * @param  Request                       $request         The current request.
@@ -137,33 +122,20 @@ class CalendarController extends Controller
      * @return Response                                       A response.
      */
     public function searchPersonalAction(
-        string $production_slug,
         AuthorizationCheckerInterface $auth,
         TokenStorageInterface $token,
         Request $request
     ): Response {
-        // Lookup the production by production_slug.
-        $production_repo = $this->em->getRepository(Production::class);
-        if (null === $production = $production_repo->findOneBy(['slug' => $production_slug])) {
-            throw new NotFoundHttpException();
-        }
-
-        // Check permissions for this action.
-        if (!$auth->isGranted('GROUP_ROLE_USER', $production)) {
-            throw new AccessDeniedException();
-        }
-
         // Lookup events.
         $event_repo = $this->em->getRepository(Event::class);
         $events = $event_repo->searchEventsByUser(
-            $production,
             $token->getToken()->getUser(),
             new \DateTime('@' . ($request->query->get('from')/1000)),
             new \DateTime('@' . ($request->query->get('to')/1000))
         );
 
         // Return a JSON response.
-        return new JsonResponse($this->prepareResult($events, $production));
+        return new JsonResponse($this->prepareResult($events, null));
     }
 
     /**
@@ -174,7 +146,7 @@ class CalendarController extends Controller
      *
      * @return array                  The formatted events.
      */
-    private function prepareResult(array $events, Production $production): array
+    private function prepareResult(array $events, Production $production = null): array
     {
         // Create array of events for calendar.
         $result = [
@@ -185,6 +157,7 @@ class CalendarController extends Controller
         // Index schedules so we don't duplicate them.
         $schedules = [];
         foreach ($events as $event) {
+            $event_production = ($production !== null) ? $production : $event->getGroups()[0];
             if (null === $schedule = $event->getSchedule()) {
                 // Add the event directly.
                 $result['result'][] = [
@@ -193,7 +166,7 @@ class CalendarController extends Controller
                     'title' => $event->getName(),
                     'url' => $this->url_generator->generate(
                         'bkstg_event_show',
-                        ['production_slug' => $production->getSlug(), 'id' => $event->getId()]
+                        ['production_slug' => $event_production->getSlug(), 'id' => $event->getId()]
                     ),
                     'class' => 'event-' . $event->getColour(),
                     'start' => $event->getStart()->format('U') * 1000,
@@ -208,7 +181,7 @@ class CalendarController extends Controller
                     'title' => $schedule->getTitle(),
                     'url' => $this->url_generator->generate(
                         'bkstg_schedule_show',
-                        ['production_slug' => $production->getSlug(), 'id' => $schedule->getId()]
+                        ['production_slug' => $event_production->getSlug(), 'id' => $schedule->getId()]
                     ),
                     'class' => 'event-' . $schedule->getColour(),
                     'start' => $schedule->getStart()->format('U') * 1000,

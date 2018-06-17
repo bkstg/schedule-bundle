@@ -47,18 +47,11 @@ class ProductionMenuSubscriber implements EventSubscriberInterface
         ]);
         $menu->addChild($schedule);
 
-        $production = $this->factory->createItem('menu_item.production', [
-            'route' => 'bkstg_calendar_production',
-            'routeParameters' => ['production_slug' => $group->getSlug()],
-            'extras' => ['translation_domain' => BkstgScheduleBundle::TRANSLATION_DOMAIN],
-        ]);
-        $schedule->addChild($production);
-
-        $my_schedule = $this->factory->createItem('My Schedule', [
-            'route' => 'bkstg_calendar_personal',
-            'routeParameters' => ['production_slug' => $group->getSlug()],
-            'extras' => ['translation_domain' => BkstgScheduleBundle::TRANSLATION_DOMAIN],
-        ]);
-        $schedule->addChild($my_schedule);
+        // $production = $this->factory->createItem('menu_item.production', [
+        //     'route' => 'bkstg_calendar_production',
+        //     'routeParameters' => ['production_slug' => $group->getSlug()],
+        //     'extras' => ['translation_domain' => BkstgScheduleBundle::TRANSLATION_DOMAIN],
+        // ]);
+        // $schedule->addChild($production);
     }
 }

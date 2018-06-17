@@ -1,10 +1,10 @@
 # Calendar paths.
 bkstg_calendar_production:
-    path: /calendar
+    path: /{production_slug}/calendar
     defaults:
         _controller: Bkstg\ScheduleBundle\Controller\CalendarController:productionAction
 bkstg_calendar_search_production:
-    path: /calendar/search
+    path: /{production_slug}/calendar/search
     defaults:
         _controller: Bkstg\ScheduleBundle\Controller\CalendarController:searchProductionAction
 bkstg_calendar_personal:
@@ -18,36 +18,36 @@ bkstg_calendar_search_personal:
 
 # Schedule paths.
 bkstg_schedule_create:
-    path: /schedule/create
+    path: /{production_slug}/schedule/create
     defaults:
         _controller: Bkstg\ScheduleBundle\Controller\ScheduleController:createAction
 bkstg_schedule_show:
-    path: /schedule/{id}
+    path: /{production_slug}/schedule/{id}
     defaults:
         _controller: Bkstg\ScheduleBundle\Controller\ScheduleController:readAction
 bkstg_schedule_edit:
-    path: /schedule/{id}/edit
+    path: /{production_slug}/schedule/{id}/edit
     defaults:
         _controller: Bkstg\ScheduleBundle\Controller\ScheduleController:updateAction
 bkstg_schedule_delete:
-    path: /schedule/{id}/delete
+    path: /{production_slug}/schedule/{id}/delete
     defaults:
         _controller: Bkstg\ScheduleBundle\Controller\ScheduleController:deleteAction
 
 # Event paths.
 bkstg_event_create:
-    path: /event/create
+    path: /{production_slug}/schedule/event/create
     defaults:
       _controller: Bkstg\ScheduleBundle\Controller\EventController:createAction
 bkstg_event_show:
-    path: /event/{id}
+    path: /{production_slug}/schedule/event/{id}
     defaults:
       _controller: Bkstg\ScheduleBundle\Controller\EventController:readAction
 bkstg_event_edit:
-    path: /event/{id}/edit
+    path: /{production_slug}/schedule/event/{id}/edit
     defaults:
         _controller: Bkstg\ScheduleBundle\Controller\EventController:updateAction
 bkstg_event_delete:
-    path: /event/{id}/delete
+    path: /{production_slug}/schedule/event/{id}/delete
     defaults:
         _controller: Bkstg\ScheduleBundle\Controller\EventController:deleteAction

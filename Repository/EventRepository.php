@@ -37,19 +37,16 @@ class EventRepository extends EntityRepository
     }
 
     public function searchEventsByUser(
-        Production $production,
         UserInterface $user,
         \DateTime $from,
-        \DateTime $to
+        \DateTime $to,
         bool $active = true
     ) {
         $qb = $this->createQueryBuilder('e');
         return $qb
-            ->join('e.groups', 'g')
             ->join('e.invitations', 'i')
 
             // Add conditions.
-            ->andWhere($qb->expr()->eq('g', ':group'))
             ->andWhere($qb->expr()->between('e.start', ':from', ':to'))
             ->andWhere($qb->expr()->eq('i.invitee', ':invitee'))
             ->andWhere($qb->expr()->eq('e.active', ':active'))
@@ -59,7 +56,6 @@ class EventRepository extends EntityRepository
             ))
 
             // Add parameters.
-            ->setParameter('group', $production)
             ->setParameter('from', $from)
             ->setParameter('to', $to)
             ->setParameter('invitee', $user->getUsername())

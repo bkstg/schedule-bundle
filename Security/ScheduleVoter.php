@@ -26,14 +26,4 @@ class ScheduleVoter extends GroupableEntityVoter
 
         return true;
     }
-
-    public function canEdit(GroupableInterface $schedule, TokenInterface $token)
-    {
-        foreach ($schedule->getGroups() as $group) {
-            if ($this->decision_manager->decide($token, ['GROUP_ROLE_EDITOR'], $group)) {
-                return true;
-            }
-        }
-        return false;
-    }
 }

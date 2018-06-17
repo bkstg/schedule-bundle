@@ -26,14 +26,4 @@ class EventVoter extends GroupableEntityVoter
 
         return true;
     }
-
-    public function canEdit(GroupableInterface $event, TokenInterface $token)
-    {
-        foreach ($event->getGroups() as $group) {
-            if ($this->decision_manager->decide($token, ['GROUP_ROLE_EDITOR'], $group)) {
-                return true;
-            }
-        }
-        return false;
-    }
 }

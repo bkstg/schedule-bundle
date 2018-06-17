@@ -13,7 +13,8 @@ class EventRepository extends EntityRepository
     public function searchEvents(
         Production $production,
         \DateTime $from,
-        \DateTime $to
+        \DateTime $to,
+        bool $active = true
     ) {
         $qb = $this->createQueryBuilder('e');
         return $qb
@@ -22,11 +23,13 @@ class EventRepository extends EntityRepository
             // Add conditions.
             ->andWhere($qb->expr()->eq('g', ':group'))
             ->andWhere($qb->expr()->between('e.start', ':from', ':to'))
+            ->andWhere($qb->expr()->eq('e.active', ':active'))
 
             // Add parameters.
             ->setParameter('group', $production)
             ->setParameter('from', $from)
             ->setParameter('to', $to)
+            ->setParameter('active', $active)
 
             // Get results.
             ->getQuery()
@@ -38,6 +41,7 @@ class EventRepository extends EntityRepository
         UserInterface $user,
         \DateTime $from,
         \DateTime $to
+        bool $active = true
     ) {
         $qb = $this->createQueryBuilder('e');
         return $qb
@@ -48,6 +52,7 @@ class EventRepository extends EntityRepository
             ->andWhere($qb->expr()->eq('g', ':group'))
             ->andWhere($qb->expr()->between('e.start', ':from', ':to'))
             ->andWhere($qb->expr()->eq('i.invitee', ':invitee'))
+            ->andWhere($qb->expr()->eq('e.active', ':active'))
             ->andWhere($qb->expr()->orX(
                 $qb->expr()->isNull('i.response'),
                 $qb->expr()->neq('i.response', ':decline')
@@ -59,6 +64,7 @@ class EventRepository extends EntityRepository
             ->setParameter('to', $to)
             ->setParameter('invitee', $user->getUsername())
             ->setParameter('decline', Invitation::RESPONSE_DECLINE)
+            ->setParameter('active', $active)
 
             // Get results.
             ->getQuery()

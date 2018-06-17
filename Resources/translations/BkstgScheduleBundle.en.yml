@@ -12,3 +12,7 @@ event:
     title: 'Title'
     invitations: 'Invitations'
     notes: 'Notes'
+menu_item:
+    schedule: 'Schedule'
+    production: 'Production'
+    my_schedule: 'My Schedule'

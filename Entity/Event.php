@@ -3,6 +3,7 @@
 namespace Bkstg\ScheduleBundle\Entity;
 
 use Bkstg\CoreBundle\Entity\Production;
+use Bkstg\CoreBundle\Model\PublishableInterface;
 use Bkstg\ScheduleBundle\Entity\Invitation;
 use Doctrine\Common\Collections\ArrayCollection;
 use MidnightLuke\GroupSecurityBundle\Model\GroupInterface;
@@ -11,7 +12,7 @@ use MidnightLuke\GroupSecurityBundle\Model\GroupableInterface;
 /**
  * Event
  */
-class Event implements GroupableInterface
+class Event implements GroupableInterface, PublishableInterface
 {
     private $id;
     private $start;

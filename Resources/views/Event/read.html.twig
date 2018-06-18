@@ -19,7 +19,7 @@
     <div class="col-md-4">
       <ul class="list-group">
         {% for invite in event.invitations %}
-          <li class="list-group-item">{{ get_user(invite.invitee) }}</li>
+          <li class="list-group-item">{% include '@BkstgSchedule/Invitation/_show.html.twig' with {'invitation': invite} only %}</li>
         {% else %}
           <li class="list-group-item">{{ 'No invitees'|trans }}</li>
         {% endfor %}

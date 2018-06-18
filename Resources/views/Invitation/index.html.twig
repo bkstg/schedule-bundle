@@ -8,7 +8,7 @@
       <table class="table table-striped">
         <thead>
           <tr>
-            <th></th>
+            <th>{{ 'Response'|trans }}</th>
             <th>{{ 'Optional?'|trans }}</th>
             <th>{{ 'Production'|trans }}</th>
             <th>{{ 'Event'|trans }}</th>
@@ -21,12 +21,12 @@
         {% for invitation in invitations %}
           {% set author = get_user(invitation.event.author) %}
           <tr>
-            <td>{% include '@BkstgSchedule/Invitation/_respond.html.twig' with {'invitation': invitation} only %}</td>
+            <td>{% include '@BkstgSchedule/Invitation/_respond.html.twig' with { 'invitation': invitation } only %}</td>
             <td>{% if invitation.optional %}{{ 'Yes'|trans }}{% else %}{{ 'No'|trans }}{% endif %}</td>
             <td>{{ invitation.event.groups[0] }}</td>
-            <td>{% if invitation.event.schedule is defined %}<strong>{{ invitation.event.schedule.title }}:</strong> {% endif %}{{ invitation.event }}</td>
-            <td>{{ invitation.event.start|date('F j, Y g:i a') }}</td>
-            <td>{{ invitation.event.end|date('F j, Y g:i a') }}</td>
+            <td>{% if invitation.event.schedule is not empty %}<strong>{{ invitation.event.schedule.title }}:</strong> {% endif %}{{ invitation.event }}</td>
+            <td>{{ invitation.event.start|date('l, F j, Y g:i a') }}</td>
+            <td>{{ invitation.event.end|date('l, F j, Y g:i a') }}</td>
             <td>{{ author }}</td>
           </tr>
         {% else %}

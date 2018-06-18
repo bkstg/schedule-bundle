@@ -64,7 +64,7 @@
                 {% else %}
                   {% for invitation in event.invitations %}
                     {% set user = get_user(invitation.invitee) %}
-                    <li>{% if user == app.user %}<strong>{% endif %}{{ user }}{% if user == app.user %}</strong>{% endif %}</li>
+                    <li>{% if user == app.user %}<strong>{% endif %}{% include '@BkstgSchedule/Invitation/_show.html.twig' with {'invitation': invitation} only %}{% if user == app.user %}</strong>{% endif %}</li>
                   {% else %}
                     <li><em class="text-muted">{{ 'event.no_invitees'|trans }}</em></li>
                   {% endfor %}

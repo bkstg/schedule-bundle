@@ -1,4 +1,4 @@
-<div class="btn-group btn-group-toggle invitation-respond" data-toggle="buttons" role="group" aria-label="{{ 'Respond to invitation.'|trans }}">
+<div class="btn-group btn-group-toggle btn-group-{{ size|default('md') }} invitation-respond" data-toggle="buttons" role="group" aria-label="{{ 'Respond to invitation.'|trans }}">
   <label class="btn btn-outline-success">
     <input type="radio" name="response" data-respond-url="{{ url('bkstg_invitation_respond', {'id': invitation.id, 'response': 'accept'}) }}" value="accept"><i class="fa fa-check"></i><span class="sr-only">{{ 'Accept'|trans }}</span>
   </label>

@@ -1,0 +1,13 @@
+{% if invitation.response is empty %}
+  <i class="fa fa-circle-thin"></i>
+{% elseif invitation.response == 1 %}
+  <i class="fa fa-check-circle text-success"></i>
+{% elseif invitation.response == 0 %}
+  <i class="fa fa-question-circle text-warning"></i>
+{% elseif invitation.response == -1 %}
+  <i class="fa fa-times-circle text-danger"></i><em class="text-muted">
+{% endif %}
+{{ get_user(invitation.invitee) }}
+{% if invitation.response == -1 %}
+  </em>
+{% endif %}

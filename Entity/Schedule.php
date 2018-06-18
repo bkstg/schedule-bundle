@@ -3,12 +3,13 @@
 namespace Bkstg\ScheduleBundle\Entity;
 
 use Bkstg\CoreBundle\Entity\Production;
+use Bkstg\CoreBundle\Model\PublishableInterface;
 use Bkstg\ScheduleBundle\Entity\Event;
 use Doctrine\Common\Collections\ArrayCollection;
 use MidnightLuke\GroupSecurityBundle\Model\GroupInterface;
 use MidnightLuke\GroupSecurityBundle\Model\GroupableInterface;
 
-class Schedule implements GroupableInterface
+class Schedule implements GroupableInterface, PublishableInterface
 {
     private $id;
     private $title;

@@ -41,6 +41,14 @@ class UserMenuSubscriber implements EventSubscriberInterface
     {
         $menu = $event->getMenu();
 
+        $separator = $this->factory->createItem('schedule_separator', [
+            'extras' => [
+                'separator' => true,
+                'translation_domain' => false,
+            ],
+        ]);
+        $menu->addChild($separator);
+
         $schedule = $this->factory->createItem('menu_item.my_schedule', [
             'route' => 'bkstg_calendar_personal',
             'extras' => [

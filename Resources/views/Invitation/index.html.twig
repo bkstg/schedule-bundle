@@ -1,5 +1,5 @@
 {% extends '@BkstgCore/layout.html.twig' %}
-{% set page_title = 'Invitations'|trans %}
+{% set page_title = 'My Pending Invitations'|trans %}
 {% trans_default_domain 'BkstgResourceBundle' %}
 {% block main %}
   <div class="container-fluid">
@@ -8,13 +8,24 @@
       <table class="table table-striped">
         <thead>
           <tr>
+            <th></th>
+            <th>{{ 'Production'|trans }}</th>
             <th>{{ 'Event'|trans }}</th>
+            <th>{{ 'Start'|trans }}</th>
+            <th>{{ 'End'|trans }}</th>
+            <th>{{ 'Invited by'|trans }}</th>
           </tr>
         </thead>
         <tbody>
         {% for invitation in invitations %}
+          {% set author = get_user(invitation.event.author) %}
           <tr>
+            <td>{% include '@BkstgSchedule/Invitation/_respond.html.twig' with {'invitation': invitation} only %}</td>
+            <td>{{ invitation.event.groups[0] }}</td>
             <td>{{ invitation.event }}</td>
+            <td>{{ invitation.event.start|date('F j, Y g:i a') }}</td>
+            <td>{{ invitation.event.end|date('F j, Y g:i a') }}</td>
+            <td>{{ author }}</td>
           </tr>
         {% else %}
             <tr>

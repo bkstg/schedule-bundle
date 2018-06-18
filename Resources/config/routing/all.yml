@@ -51,3 +51,18 @@ bkstg_event_delete:
     path: /{production_slug}/schedule/event/{id}/delete
     defaults:
         _controller: Bkstg\ScheduleBundle\Controller\EventController:deleteAction
+
+# Invitation paths.
+bkstg_invitation_index:
+    path: /invitations
+    defaults:
+        _controller: Bkstg\ScheduleBundle\Controller\InvitationController:indexAction
+bkstg_invitation_archive:
+    path: /invitations/archive
+    defaults:
+        _controller: Bkstg\ScheduleBundle\Controller\InvitationController:archiveAction
+bkstg_invitation_respond:
+    path: /invitations/{id}/respond
+    defaults:
+        _controller: Bkstg\ScheduleBundle\Controller\InvitationController:respondAction
+

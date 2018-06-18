@@ -59,8 +59,8 @@ class UserMenuSubscriber implements EventSubscriberInterface
         $user = $this->token_storage->getToken()->getUser();
         $invitations = $repo->findPendingInvitations($user);
 
-        $invitations = $this->factory->createItem('menu_item.invitations', [
-            'uri' => '#',
+        $invitations = $this->factory->createItem('menu_item.pending_invitations', [
+            'route' => 'bkstg_invitation_index',
             'extras' => [
                 'badge_count' => count($invitations),
                 'translation_domain' => BkstgScheduleBundle::TRANSLATION_DOMAIN,

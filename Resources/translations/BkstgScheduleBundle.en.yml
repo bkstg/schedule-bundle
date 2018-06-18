@@ -16,4 +16,4 @@ menu_item:
     schedule: 'Schedule'
     production: 'Production'
     my_schedule: 'My Schedule'
-    invitations: 'Invitations'
+    pending_invitations: 'Pending Invitations'

@@ -9,6 +9,7 @@
         <thead>
           <tr>
             <th></th>
+            <th>{{ 'Optional?'|trans }}</th>
             <th>{{ 'Production'|trans }}</th>
             <th>{{ 'Event'|trans }}</th>
             <th>{{ 'Start'|trans }}</th>
@@ -21,6 +22,7 @@
           {% set author = get_user(invitation.event.author) %}
           <tr>
             <td>{% include '@BkstgSchedule/Invitation/_respond.html.twig' with {'invitation': invitation} only %}</td>
+            <td>{% if invitation.optional %}{{ 'Yes'|trans }}{% else %}{{ 'No'|trans }}{% endif %}</td>
             <td>{{ invitation.event.groups[0] }}</td>
             <td>{{ invitation.event }}</td>
             <td>{{ invitation.event.start|date('F j, Y g:i a') }}</td>

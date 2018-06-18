@@ -37,7 +37,7 @@ class ScheduleType extends AbstractType
                     'Purple' => 'special',
                 ],
             ])
-            ->add('status', ChoiceType::class, [
+            ->add('active', ChoiceType::class, [
                 'choices' => [
                     'Active' => true,
                     'Closed' => false,

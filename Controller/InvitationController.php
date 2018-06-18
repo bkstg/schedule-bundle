@@ -5,9 +5,13 @@ namespace Bkstg\ScheduleBundle\Controller;
 use Bkstg\CoreBundle\Controller\Controller;
 use Bkstg\ScheduleBundle\Entity\Invitation;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\Finder\Exception\AccessDeniedException;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class InvitationController extends Controller
 {
@@ -23,5 +27,35 @@ class InvitationController extends Controller
             '@BkstgSchedule/Invitation/index.html.twig',
             ['invitations' => $invitations]
         ));
+    }
+
+    public function respondAction(
+        $id,
+        $response,
+        AuthorizationCheckerInterface $auth
+    ) {
+        $repo = $this->em->getRepository(Invitation::class);
+        if (null === $invitation = $repo->findOneBy(['id' => $id])) {
+            throw new NotFoundHttpException();
+        }
+
+        if (!$auth->isGranted('respond', $invitation)) {
+            throw new AccessDeniedException();
+        }
+
+        switch ($response) {
+            case 'accept':
+                $invitation->setResponse(Invitation::RESPONSE_ACCEPT);
+                break;
+            case 'maybe':
+                $invitation->setResponse(Invitation::RESPONSE_MAYBE);
+                break;
+            case 'decline':
+                $invitation->setResponse(Invitation::RESPONSE_DECLINE);
+                break;
+        }
+
+        $this->em->flush();
+        return new JsonResponse();
     }
 }

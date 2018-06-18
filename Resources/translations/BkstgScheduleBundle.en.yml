@@ -17,3 +17,5 @@ menu_item:
     production: 'Production'
     my_schedule: 'My Schedule'
     pending_invitations: 'Pending Invitations'
+invitations:
+    no_invitations: 'No pending invitations.'

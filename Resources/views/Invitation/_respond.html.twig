@@ -1,11 +1,11 @@
-<div class="btn-group btn-group-toggle" data-toggle="buttons" role="group" aria-label="Respond to invitation.">
+<div class="btn-group btn-group-toggle invitation-respond" data-toggle="buttons" role="group" aria-label="{{ 'Respond to invitation.'|trans }}">
   <label class="btn btn-outline-success">
-    <input type="radio" name="response"><i class="fa fa-check"></i><span class="sr-only">{{ 'Accept'|trans }}</span>
+    <input type="radio" name="response" data-respond-url="{{ url('bkstg_invitation_respond', {'id': invitation.id, 'response': 'accept'}) }}" value="accept"><i class="fa fa-check"></i><span class="sr-only">{{ 'Accept'|trans }}</span>
   </label>
   <label class="btn btn-outline-warning">
-    <input type="radio" name="response"><i class="fa fa-question"></i><span class="sr-only">{{ 'Maybe'|trans }}</span>
+    <input type="radio" name="response" data-respond-url="{{ url('bkstg_invitation_respond', {'id': invitation.id, 'response': 'maybe'}) }}" value="maybe"><i class="fa fa-question"></i><span class="sr-only">{{ 'Maybe'|trans }}</span>
   </label>
   <label class="btn btn-outline-danger">
-    <input type="radio" name="response"><i class="fa fa-times"></i><span class="sr-only">{{ 'Decline'|trans }}</span>
+    <input type="radio" name="response" data-respond-url="{{ url('bkstg_invitation_respond', {'id': invitation.id, 'response': 'decline'}) }}" value="decline"><i class="fa fa-times"></i><span class="sr-only">{{ 'Decline'|trans }}</span>
   </label>
 </div>

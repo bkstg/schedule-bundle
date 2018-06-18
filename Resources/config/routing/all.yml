@@ -62,7 +62,7 @@ bkstg_invitation_archive:
     defaults:
         _controller: Bkstg\ScheduleBundle\Controller\InvitationController:archiveAction
 bkstg_invitation_respond:
-    path: /invitations/{id}/respond
+    path: /invitations/{id}/respond/{response}
     defaults:
         _controller: Bkstg\ScheduleBundle\Controller\InvitationController:respondAction
 

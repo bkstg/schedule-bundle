@@ -1,6 +1,6 @@
 {% extends '@BkstgCore/layout.html.twig' %}
 {% set page_title = 'My Pending Invitations'|trans %}
-{% trans_default_domain 'BkstgResourceBundle' %}
+{% trans_default_domain 'BkstgScheduleBundle' %}
 {% block main %}
   <div class="container-fluid">
     {% include '@BkstgCore/Partials/header.html.twig' with { 'title': page_title } only %}
@@ -24,14 +24,14 @@
             <td>{% include '@BkstgSchedule/Invitation/_respond.html.twig' with {'invitation': invitation} only %}</td>
             <td>{% if invitation.optional %}{{ 'Yes'|trans }}{% else %}{{ 'No'|trans }}{% endif %}</td>
             <td>{{ invitation.event.groups[0] }}</td>
-            <td>{{ invitation.event }}</td>
+            <td>{% if invitation.event.schedule is defined %}<strong>{{ invitation.event.schedule.title }}:</strong> {% endif %}{{ invitation.event }}</td>
             <td>{{ invitation.event.start|date('F j, Y g:i a') }}</td>
             <td>{{ invitation.event.end|date('F j, Y g:i a') }}</td>
             <td>{{ author }}</td>
           </tr>
         {% else %}
             <tr>
-              <td colspan="6">{{ 'invitations.no_invitations'|trans }}</td>
+              <td colspan="7">{{ 'invitations.no_invitations'|trans }}</td>
             </tr>
         {% endfor %}
         </tbody>

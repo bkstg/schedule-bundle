@@ -6,5 +6,6 @@
     <h3 class="date-display">{{ "now"|date('F Y') }}</h3>
     {% include '@BkstgSchedule/Calendar/_controls.html.twig' %}
     <div id="calendar" class="mt-2 mb-2" data-search-url="{{ url('bkstg_calendar_search_personal') }}"></div>
+    {% include '@BkstgCore/partials/footer.html.twig' %}
   </div>
 {% endblock %}

@@ -163,7 +163,7 @@ class CalendarController extends Controller
                 $result['result'][] = [
                     'icon' => 'calendar',
                     'id' => 'event:' . $event->getId(),
-                    'title' => $event->getName(),
+                    'title' => (($production === null) ? $event_production->getName() . ': ' : '') . $event->getName(),
                     'url' => $this->url_generator->generate(
                         'bkstg_event_show',
                         ['production_slug' => $event_production->getSlug(), 'id' => $event->getId()]
@@ -178,7 +178,7 @@ class CalendarController extends Controller
                 $result['result'][] = [
                     'icon' => 'list',
                     'id' => 'schedule:' . $schedule->getId(),
-                    'title' => $schedule->getTitle(),
+                    'title' => (($production === null) ? $event_production->getName() . ': ' : '') . $schedule->getTitle(),
                     'url' => $this->url_generator->generate(
                         'bkstg_schedule_show',
                         ['production_slug' => $event_production->getSlug(), 'id' => $schedule->getId()]

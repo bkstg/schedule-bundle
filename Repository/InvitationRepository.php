@@ -32,4 +32,35 @@ class InvitationRepository extends EntityRepository
     {
         return $this->findPendingInvitationsQuery($user)->getResult();
     }
+
+    public function findOtherInvitationsQuery(UserInterface $user)
+    {
+        $qb = $this->createQueryBuilder('i');
+        return $qb
+            ->join('i.event', 'e')
+
+            // Add conditions.
+            ->andWhere($qb->expr()->eq('e.active', ':active'))
+            ->andWhere($qb->expr()->orX(
+                $qb->expr()->lt('e.end', ':now'),
+                $qb->expr()->isNotNull('i.response')
+            ))
+            ->andWhere($qb->expr()->eq('i.invitee', ':invitee'))
+
+            // Add parameters.
+            ->setParameter('active', true)
+            ->setParameter('now', new \DateTime())
+            ->setParameter('invitee', $user->getUsername())
+
+            // Add order by.
+            ->addOrderBy('e.end', 'DESC')
+
+            // Get query.
+            ->getQuery();
+    }
+
+    public function findOtherInvitations(UserInterface $user)
+    {
+        return $this->findOtherInvitationsQuery($user)->getResult();
+    }
 }

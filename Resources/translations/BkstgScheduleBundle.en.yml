@@ -12,6 +12,8 @@ event:
     title: 'Title'
     invitations: 'Invitations'
     notes: 'Notes'
+    start: 'Start'
+    end: 'End'
 menu_item:
     schedule: 'Schedule'
     production: 'Production'
@@ -19,3 +21,7 @@ menu_item:
     pending_invitations: 'Pending Invitations'
 invitations:
     no_invitations: 'No pending invitations.'
+invitation:
+    optional: 'Optional'
+    production: 'Production'
+    event: 'Event'

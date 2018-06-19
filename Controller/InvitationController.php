@@ -29,6 +29,20 @@ class InvitationController extends Controller
         ));
     }
 
+    public function archiveAction(
+        Request $request,
+        PaginatorInterface $paginator,
+        TokenStorageInterface $token_storage
+    ) {
+        $repo = $this->em->getRepository(Invitation::class);
+        $query = $repo->findOtherInvitationsQuery($token_storage->getToken()->getUser());
+        $invitations = $paginator->paginate($query, $request->query->getInt('page', 1));
+        return new Response($this->templating->render(
+            '@BkstgSchedule/Invitation/archive.html.twig',
+            ['invitations' => $invitations]
+        ));
+    }
+
     public function respondAction(
         $id,
         $response,

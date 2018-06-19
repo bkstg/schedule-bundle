@@ -1,0 +1,17 @@
+# Schedule paths.
+bkstg_schedule_create:
+    path: /create
+    defaults:
+        _controller: Bkstg\ScheduleBundle\Controller\ScheduleController:createAction
+bkstg_schedule_show:
+    path: /{id}
+    defaults:
+        _controller: Bkstg\ScheduleBundle\Controller\ScheduleController:readAction
+bkstg_schedule_edit:
+    path: /{id}/edit
+    defaults:
+        _controller: Bkstg\ScheduleBundle\Controller\ScheduleController:updateAction
+bkstg_schedule_delete:
+    path: /{id}/delete
+    defaults:
+        _controller: Bkstg\ScheduleBundle\Controller\ScheduleController:deleteAction

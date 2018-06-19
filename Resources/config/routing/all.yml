@@ -1,68 +1,22 @@
 # Calendar paths.
 bkstg_calendar_production:
-    path: /{production_slug}/calendar
-    defaults:
-        _controller: Bkstg\ScheduleBundle\Controller\CalendarController:productionAction
-bkstg_calendar_search_production:
-    path: /{production_slug}/calendar/search
-    defaults:
-        _controller: Bkstg\ScheduleBundle\Controller\CalendarController:searchProductionAction
+    prefix: /{production_slug}/calendar
+    resource: '@BkstgScheduleBundle/Resources/config/routing/calendar_production.yml'
 bkstg_calendar_personal:
-    path: /calendar/personal
-    defaults:
-        _controller: Bkstg\ScheduleBundle\Controller\CalendarController:personalAction
-bkstg_calendar_search_personal:
-    path: /calendar/personal/search
-    defaults:
-        _controller: Bkstg\ScheduleBundle\Controller\CalendarController:searchPersonalAction
+    prefix: /calendar/personal
+    resource: '@BkstgScheduleBundle/Resources/config/routing/calendar_personal.yml'
 
 # Schedule paths.
-bkstg_schedule_create:
-    path: /{production_slug}/schedule/create
-    defaults:
-        _controller: Bkstg\ScheduleBundle\Controller\ScheduleController:createAction
-bkstg_schedule_show:
-    path: /{production_slug}/schedule/{id}
-    defaults:
-        _controller: Bkstg\ScheduleBundle\Controller\ScheduleController:readAction
-bkstg_schedule_edit:
-    path: /{production_slug}/schedule/{id}/edit
-    defaults:
-        _controller: Bkstg\ScheduleBundle\Controller\ScheduleController:updateAction
-bkstg_schedule_delete:
-    path: /{production_slug}/schedule/{id}/delete
-    defaults:
-        _controller: Bkstg\ScheduleBundle\Controller\ScheduleController:deleteAction
+bkstg_schedule:
+    prefix: /{production_slug}/schedule
+    resource: '@BkstgScheduleBundle/Resources/config/routing/schedule.yml'
 
 # Event paths.
-bkstg_event_create:
-    path: /{production_slug}/schedule/event/create
-    defaults:
-      _controller: Bkstg\ScheduleBundle\Controller\EventController:createAction
-bkstg_event_show:
-    path: /{production_slug}/schedule/event/{id}
-    defaults:
-      _controller: Bkstg\ScheduleBundle\Controller\EventController:readAction
-bkstg_event_edit:
-    path: /{production_slug}/schedule/event/{id}/edit
-    defaults:
-        _controller: Bkstg\ScheduleBundle\Controller\EventController:updateAction
-bkstg_event_delete:
-    path: /{production_slug}/schedule/event/{id}/delete
-    defaults:
-        _controller: Bkstg\ScheduleBundle\Controller\EventController:deleteAction
+bkstg_event:
+    prefix: /{production_slug}/schedule/event
+    resource: '@BkstgScheduleBundle/Resources/config/routing/event.yml'
 
 # Invitation paths.
-bkstg_invitation_index:
-    path: /invitations
-    defaults:
-        _controller: Bkstg\ScheduleBundle\Controller\InvitationController:indexAction
-bkstg_invitation_archive:
-    path: /invitations/archive
-    defaults:
-        _controller: Bkstg\ScheduleBundle\Controller\InvitationController:archiveAction
-bkstg_invitation_respond:
-    path: /invitations/{id}/respond/{response}
-    defaults:
-        _controller: Bkstg\ScheduleBundle\Controller\InvitationController:respondAction
-
+bkstg_invitation:
+    prefix: /calendar/invitations
+    resource: '@BkstgScheduleBundle/Resources/config/routing/invitation.yml'

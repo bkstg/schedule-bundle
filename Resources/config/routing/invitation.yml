@@ -1,0 +1,13 @@
+# Invitation paths.
+bkstg_invitation_index:
+    path: /
+    defaults:
+        _controller: Bkstg\ScheduleBundle\Controller\InvitationController:indexAction
+bkstg_invitation_archive:
+    path: /archive
+    defaults:
+        _controller: Bkstg\ScheduleBundle\Controller\InvitationController:archiveAction
+bkstg_invitation_respond:
+    path: /{id}/respond/{response}
+    defaults:
+        _controller: Bkstg\ScheduleBundle\Controller\InvitationController:respondAction

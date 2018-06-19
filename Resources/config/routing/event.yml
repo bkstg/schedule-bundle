@@ -1,0 +1,17 @@
+# Event paths.
+bkstg_event_create:
+    path: /create
+    defaults:
+      _controller: Bkstg\ScheduleBundle\Controller\EventController:createAction
+bkstg_event_show:
+    path: /{id}
+    defaults:
+      _controller: Bkstg\ScheduleBundle\Controller\EventController:readAction
+bkstg_event_edit:
+    path: /{id}/edit
+    defaults:
+        _controller: Bkstg\ScheduleBundle\Controller\EventController:updateAction
+bkstg_event_delete:
+    path: /{id}/delete
+    defaults:
+        _controller: Bkstg\ScheduleBundle\Controller\EventController:deleteAction

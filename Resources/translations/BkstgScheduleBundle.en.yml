@@ -7,6 +7,8 @@ schedule:
     no_events: 'No events in this schedule yet.'
 event:
     full_company: 'Full company'
+    show_full_company: '(show)'
+    hide_full_company: '(hide)'
     no_invitees: 'No invitees'
     time: 'Time'
     title: 'Title'

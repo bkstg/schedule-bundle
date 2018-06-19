@@ -1,0 +1,9 @@
+{% trans_default_domain 'BkstgScheduleBundle' %}
+<div class="full-company-wrapper">
+  <strong>{{ 'event.full_company'|trans|upper }}</strong> <a href="#" class="full-company-toggle" data-hide-label="{{ 'event.hide_full_company'|trans }}">{{ 'event.show_full_company'|trans }}</a>
+  <ul class="full-company-list">
+    {% for invitation in event.invitations %}
+      <li>{% include '@BkstgSchedule/Invitation/_show.html.twig' with {'invitation': invitation} only %}</li>
+    {% endfor %}
+  </ul>
+</div>

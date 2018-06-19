@@ -60,7 +60,7 @@
             <td>
               <ul>
                 {% if event.fullCompany %}
-                  <li><strong>{{ 'event.full_company'|trans|upper }}</strong></li>
+                  <li>{% include '@BkstgSchedule/Event/_full-company.html.twig' with { 'event': event } only %}</li>
                 {% else %}
                   {% for invitation in event.invitations %}
                     {% set user = get_user(invitation.invitee) %}

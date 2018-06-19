@@ -106,17 +106,8 @@ class ScheduleController extends Controller
         PaginatorInterface $paginator,
         Request $request
     ) {
-        // Lookup the production by production_slug.
-        $production_repo = $this->em->getRepository(Production::class);
-        if (null === $production = $production_repo->findOneBy(['slug' => $production_slug])) {
-            throw new NotFoundHttpException();
-        }
-
-        // Lookup the schedule by id.
-        $schedule_repo = $this->em->getRepository(Schedule::class);
-        if (null === $schedule = $schedule_repo->findOneBy(['id' => $id])) {
-            throw new NotFoundHttpException();
-        }
+        // Get the schedule and production for this action.
+        list($schedule, $production) = $this->lookupEntity(Schedule::class, $id, $production_slug);
 
         // Check permissions for this action.
         if (!$auth->isGranted('view', $schedule)) {
@@ -144,22 +135,8 @@ class ScheduleController extends Controller
         TokenStorageInterface $token,
         Request $request
     ) {
-        // Lookup the production by production_slug.
-        $production_repo = $this->em->getRepository(Production::class);
-        if (null === $production = $production_repo->findOneBy(['slug' => $production_slug])) {
-            throw new NotFoundHttpException();
-        }
-
-        // Lookup the schedule by id.
-        $schedule_repo = $this->em->getRepository(Schedule::class);
-        if (null === $schedule = $schedule_repo->findOneBy(['id' => $id])) {
-            throw new NotFoundHttpException();
-        }
-
-        // Ensure that this schedule is a part of this group.
-        if (!$schedule->hasGroup($production)) {
-            throw new NotFoundHttpException();
-        }
+        // Get the schedule and production for this action.
+        list($schedule, $production) = $this->lookupEntity(Schedule::class, $id, $production_slug);
 
         // Check permissions for this action.
         if (!$auth->isGranted('edit', $schedule)) {
@@ -241,17 +218,8 @@ class ScheduleController extends Controller
         AuthorizationCheckerInterface $auth,
         Request $request
     ): Response {
-        // Lookup the production by production_slug.
-        $production_repo = $this->em->getRepository(Production::class);
-        if (null === $production = $production_repo->findOneBy(['slug' => $production_slug])) {
-            throw new NotFoundHttpException();
-        }
-
-        // Lookup the event by id.
-        $schedule_repo = $this->em->getRepository(Schedule::class);
-        if (null === $schedule = $schedule_repo->findOneBy(['id' => $id])) {
-            throw new NotFoundHttpException();
-        }
+        // Get the schedule and production for this action.
+        list($schedule, $production) = $this->lookupEntity(Schedule::class, $id, $production_slug);
 
         // Check permissions for this action.
         if (!$auth->isGranted('edit', $schedule)) {
@@ -291,50 +259,6 @@ class ScheduleController extends Controller
             'schedule' => $schedule,
             'production' => $production,
             'form' => $form->createView(),
-        ]));
-    }
-
-    public function showAction(
-        $production_slug,
-        AuthorizationCheckerInterface $auth,
-        PaginatorInterface $paginator,
-        Request $request
-    ) {
-        // Lookup the production by production_slug.
-        $production_repo = $this->em->getRepository(Production::class);
-        if (null === $production = $production_repo->findOneBy(['slug' => $production_slug])) {
-            throw new NotFoundHttpException();
-        }
-
-        // Check permissions for this action.
-        if (!$auth->isGranted('GROUP_ROLE_USER', $production)) {
-            throw new AccessDeniedException();
-        }
-
-        return new Response($this->templating->render('@BkstgSchedule/Schedule/show.html.twig', [
-            'production' => $production,
-        ]));
-    }
-
-    public function showPersonalAction(
-        $production_slug,
-        AuthorizationCheckerInterface $auth,
-        PaginatorInterface $paginator,
-        Request $request
-    ) {
-        // Lookup the production by production_slug.
-        $production_repo = $this->em->getRepository(Production::class);
-        if (null === $production = $production_repo->findOneBy(['slug' => $production_slug])) {
-            throw new NotFoundHttpException();
-        }
-
-        // Check permissions for this action.
-        if (!$auth->isGranted('GROUP_ROLE_USER', $production)) {
-            throw new AccessDeniedException();
-        }
-
-        return new Response($this->templating->render('@BkstgSchedule/Schedule/show.html.twig', [
-            'production' => $production,
         ]));
     }
 }

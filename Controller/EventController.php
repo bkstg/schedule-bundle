@@ -124,9 +124,25 @@ class EventController extends Controller
             throw new NotFoundHttpException();
         }
 
+        // Ensure event contains production.
+        if (!$event->getGroups()->contains($production)) {
+            throw new NotFoundHttpException();
+        }
+
         // Check permissions for this action.
         if (!$auth->isGranted('view', $event)) {
             throw new AccessDeniedException();
+        }
+
+        // If this event is handled by a schedule redirect there.
+        if (null !== $schedule = $event->getSchedule()) {
+            return new RedirectResponse($this->url_generator->generate(
+                'bkstg_schedule_show',
+                [
+                    'production_slug' => $production->getSlug(),
+                    'id' => $schedule->getId()
+                ]
+            ));
         }
 
         // Render the event.
@@ -166,6 +182,11 @@ class EventController extends Controller
         // Lookup the event by id.
         $event_repo = $this->em->getRepository(Event::class);
         if (null === $event = $event_repo->findOneBy(['id' => $id])) {
+            throw new NotFoundHttpException();
+        }
+
+        // Ensure event contains production.
+        if (!$event->getGroups()->contains($production)) {
             throw new NotFoundHttpException();
         }
 
@@ -245,6 +266,11 @@ class EventController extends Controller
         // Lookup the event by id.
         $event_repo = $this->em->getRepository(Event::class);
         if (null === $event = $event_repo->findOneBy(['id' => $id])) {
+            throw new NotFoundHttpException();
+        }
+
+        // Ensure event contains production.
+        if (!$event->getGroups()->contains($production)) {
             throw new NotFoundHttpException();
         }
 

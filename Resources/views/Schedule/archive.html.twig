@@ -5,6 +5,16 @@
   <div class="alert alert-info">
     {{ 'schedule.archive_info'|trans }}
   </div>
+
+  <ul class="nav nav-tabs mb-3">
+    <li class="nav-item">
+      <a class="nav-link active" href="{{ url('bkstg_schedule_archive', {'production_slug': production.slug}) }}">Schedules</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{{ url('bkstg_event_archive', {'production_slug': production.slug}) }}">Events</a>
+    </li>
+  </ul>
+
   <p><div class="table-responsive">
     <table class="table table-striped">
       <thead>

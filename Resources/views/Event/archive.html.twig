@@ -1,0 +1,47 @@
+{% trans_default_domain 'BkstgScheduleBundle' %}
+{% extends '@BkstgCore/layout.html.twig' %}
+{% set page_title = 'Events' %}
+{% block content %}
+  <div class="alert alert-info">
+    {{ 'event.archive_info'|trans }}
+  </div>
+
+  <ul class="nav nav-tabs mb-3">
+    <li class="nav-item">
+      <a class="nav-link" href="{{ url('bkstg_schedule_archive', {'production_slug': production.slug}) }}">Schedules</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link active" href="{{ url('bkstg_event_archive', {'production_slug': production.slug}) }}">Events</a>
+    </li>
+  </ul>
+
+  <p><div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>{{ 'Author'|trans }}</th>
+          <th>{{ 'Status'|trans }}</th>
+          <th>{{ 'Name'|trans }}</th>
+          <th>{{ 'Updated'|trans }}</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for event in events %}
+          <tr>
+            <td>{{ get_user(event.author) }}</td>
+            <td>{% if event.published == false %}{{ 'event.unpublished'|trans }}{% else %}{{ 'event.archived'|trans }}{% endif %}</td>
+            <td>{{ event.name }}</td>
+            <td>{{ event.updated|date }}</td>
+            <td><a href="{{ url('bkstg_event_edit', {'production_slug': production.slug, 'id': event.id}) }}">{{ 'event.edit'|trans }}</a></td>
+          </tr>
+        {% else %}
+          <tr>
+            <td colspan="5">{{ 'event.archive_no_events'|trans }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div></p>
+  {{ knp_pagination_render(events) }}
+{% endblock %}

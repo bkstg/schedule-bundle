@@ -73,6 +73,7 @@ class EventRepository extends EntityRepository
         return $qb
             // Add conditions.
             ->andWhere($qb->expr()->eq('e.active', ':active'))
+            ->andWhere($qb->expr()->isNull('e.schedule'))
 
             // Add parameters.
             ->setParameter('active', false)

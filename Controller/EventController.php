@@ -101,10 +101,7 @@ class EventController extends Controller
      * @param  string                        $production_slug The slug for the production.
      * @param  integer                       $id              The event id.
      * @param  AuthorizationCheckerInterface $auth            The authorization checker service.
-     *
-     * @throws NotFoundHttpException                          When the production or event does not exist.
      * @throws AccessDeniedException                          When the user is not in the group.
-     *
      * @return Response                                       The response.
      */
     public function readAction(
@@ -112,22 +109,8 @@ class EventController extends Controller
         int $id,
         AuthorizationCheckerInterface $auth
     ): Response {
-        // Lookup the production by production_slug.
-        $production_repo = $this->em->getRepository(Production::class);
-        if (null === $production = $production_repo->findOneBy(['slug' => $production_slug])) {
-            throw new NotFoundHttpException();
-        }
-
-        // Lookup the event by id.
-        $event_repo = $this->em->getRepository(Event::class);
-        if (null === $event = $event_repo->findOneBy(['id' => $id])) {
-            throw new NotFoundHttpException();
-        }
-
-        // Ensure event contains production.
-        if (!$event->getGroups()->contains($production)) {
-            throw new NotFoundHttpException();
-        }
+        // Get the event and production for this action.
+        list($event, $production) = $this->lookupEntity(Event::class, $id, $production_slug);
 
         // Check permissions for this action.
         if (!$auth->isGranted('view', $event)) {
@@ -173,22 +156,8 @@ class EventController extends Controller
         TokenStorageInterface $token,
         Request $request
     ) {
-        // Lookup the production by production_slug.
-        $production_repo = $this->em->getRepository(Production::class);
-        if (null === $production = $production_repo->findOneBy(['slug' => $production_slug])) {
-            throw new NotFoundHttpException();
-        }
-
-        // Lookup the event by id.
-        $event_repo = $this->em->getRepository(Event::class);
-        if (null === $event = $event_repo->findOneBy(['id' => $id])) {
-            throw new NotFoundHttpException();
-        }
-
-        // Ensure event contains production.
-        if (!$event->getGroups()->contains($production)) {
-            throw new NotFoundHttpException();
-        }
+        // Get the event and production for this action.
+        list($event, $production) = $this->lookupEntity(Event::class, $id, $production_slug);
 
         // Check permissions for this action.
         if (!$auth->isGranted('edit', $event)) {
@@ -257,22 +226,8 @@ class EventController extends Controller
         AuthorizationCheckerInterface $auth,
         Request $request
     ): Response {
-        // Lookup the production by production_slug.
-        $production_repo = $this->em->getRepository(Production::class);
-        if (null === $production = $production_repo->findOneBy(['slug' => $production_slug])) {
-            throw new NotFoundHttpException();
-        }
-
-        // Lookup the event by id.
-        $event_repo = $this->em->getRepository(Event::class);
-        if (null === $event = $event_repo->findOneBy(['id' => $id])) {
-            throw new NotFoundHttpException();
-        }
-
-        // Ensure event contains production.
-        if (!$event->getGroups()->contains($production)) {
-            throw new NotFoundHttpException();
-        }
+        // Get the event and production for this action.
+        list($event, $production) = $this->lookupEntity(Event::class, $id, $production_slug);
 
         // Check permissions for this action.
         if (!$auth->isGranted('edit', $event)) {

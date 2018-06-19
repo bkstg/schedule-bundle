@@ -372,7 +372,7 @@ class Event implements GroupableInterface, PublishableInterface
      * Set colour
      * @return $this
      */
-    public function setColour(string $colour)
+    public function setColour(?string $colour)
     {
         $this->colour = $colour;
         return $this;

@@ -1,0 +1,37 @@
+{% trans_default_domain 'BkstgScheduleBundle' %}
+{% extends '@BkstgCore/layout.html.twig' %}
+{% set page_title = 'Schedule' %}
+{% block content %}
+  <div class="alert alert-info">
+    {{ 'schedule.archive_info'|trans }}
+  </div>
+  <p><div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>{{ 'Author'|trans }}</th>
+          <th>{{ 'Status'|trans }}</th>
+          <th>{{ 'Name'|trans }}</th>
+          <th>{{ 'Updated'|trans }}</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for schedule in schedules %}
+          <tr>
+            <td>{{ get_user(schedule.author) }}</td>
+            <td>{% if schedule.published == false %}{{ 'schedule.unpublished'|trans }}{% else %}{{ 'schedule.archived'|trans }}{% endif %}</td>
+            <td>{{ schedule.title }}</td>
+            <td>{{ schedule.updated|date }}</td>
+            <td><a href="{{ url('bkstg_schedule_edit', {'production_slug': production.slug, 'id': schedule.id}) }}">{{ 'schedule.edit'|trans }}</a></td>
+          </tr>
+        {% else %}
+          <tr>
+            <td colspan="5">{{ 'schedule.archive_no_schedules'|trans }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div></p>
+  {{ knp_pagination_render(schedules) }}
+{% endblock %}

@@ -66,4 +66,21 @@ class EventRepository extends EntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function findArchivedEventsQuery(Production $production)
+    {
+        $qb = $this->createQueryBuilder('e');
+        return $qb
+            // Add conditions.
+            ->andWhere($qb->expr()->eq('e.active', ':active'))
+
+            // Add parameters.
+            ->setParameter('active', false)
+
+            // Add ordering.
+            ->addOrderBy('e.updated', 'DESC')
+
+            // Get results.
+            ->getQuery();
+    }
 }

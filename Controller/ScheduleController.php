@@ -51,6 +51,7 @@ class ScheduleController extends Controller
 
         // Create new schedule in this production.
         $schedule = new Schedule();
+        $schedule->setActive(true);
         $schedule->addGroup($production);
         $schedule->setAuthor($token->getToken()->getUser()->getUsername());
 
@@ -169,7 +170,7 @@ class ScheduleController extends Controller
                 }
                 $event->setColour($schedule->getColour());
                 $event->setLocation($schedule->getLocation());
-                $event->setActive($schedule->getActive());
+                $event->setActive($schedule->isActive());
                 $event->setAuthor($schedule->getAuthor());
             }
 
@@ -259,6 +260,35 @@ class ScheduleController extends Controller
             'schedule' => $schedule,
             'production' => $production,
             'form' => $form->createView(),
+        ]));
+    }
+
+    public function archiveAction(
+        string $production_slug,
+        PaginatorInterface $paginator,
+        AuthorizationCheckerInterface $auth,
+        Request $request
+    ) {
+        // Lookup the production by production_slug.
+        $production_repo = $this->em->getRepository(Production::class);
+        if (null === $production = $production_repo->findOneBy(['slug' => $production_slug])) {
+            throw new NotFoundHttpException();
+        }
+
+        // Check permissions for this action.
+        if (!$auth->isGranted('GROUP_ROLE_EDITOR', $production)) {
+            throw new AccessDeniedException();
+        }
+
+        // Get a list of archived events.
+        $schedule_repo = $this->em->getRepository(Schedule::class);
+        $query = $schedule_repo->findArchivedSchedulesQuery($production);
+        $schedules = $paginator->paginate($query, $request->query->getInt('page', 1));
+
+        // Render the results.
+        return new Response($this->templating->render('@BkstgSchedule/Schedule/archive.html.twig', [
+            'schedules' => $schedules,
+            'production' => $production,
         ]));
     }
 }

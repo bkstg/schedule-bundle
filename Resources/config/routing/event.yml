@@ -3,6 +3,10 @@ bkstg_event_create:
     path: /create
     defaults:
       _controller: Bkstg\ScheduleBundle\Controller\EventController:createAction
+bkstg_event_archive:
+    path: /archive
+    defaults:
+      _controller: Bkstg\ScheduleBundle\Controller\EventController:archiveAction
 bkstg_event_show:
     path: /{id}
     defaults:

@@ -47,11 +47,21 @@ class ProductionMenuSubscriber implements EventSubscriberInterface
         ]);
         $menu->addChild($schedule);
 
-        // $production = $this->factory->createItem('menu_item.production', [
-        //     'route' => 'bkstg_calendar_production',
-        //     'routeParameters' => ['production_slug' => $group->getSlug()],
-        //     'extras' => ['translation_domain' => BkstgScheduleBundle::TRANSLATION_DOMAIN],
-        // ]);
-        // $schedule->addChild($production);
+        // If this user is an editor create the calendar and archive items.
+        if ($this->auth->isGranted('GROUP_ROLE_EDITOR', $group)) {
+            $calendar = $this->factory->createItem('menu_item.schedule_calendar', [
+                'route' => 'bkstg_calendar_production',
+                'routeParameters' => ['production_slug' => $group->getSlug()],
+                'extras' => ['translation_domain' => BkstgScheduleBundle::TRANSLATION_DOMAIN],
+            ]);
+            $schedule->addChild($calendar);
+
+            $archive = $this->factory->createItem('menu_item.schedule_archive', [
+                'route' => 'bkstg_schedule_archive',
+                'routeParameters' => ['production_slug' => $group->getSlug()],
+                'extras' => ['translation_domain' => BkstgScheduleBundle::TRANSLATION_DOMAIN],
+            ]);
+            $schedule->addChild($archive);
+        }
     }
 }

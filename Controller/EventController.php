@@ -269,4 +269,33 @@ class EventController extends Controller
             'form' => $form->createView(),
         ]));
     }
+
+    public function archiveAction(
+        string $production_slug,
+        PaginatorInterface $paginator,
+        AuthorizationCheckerInterface $auth,
+        Request $request
+    ) {
+        // Lookup the production by production_slug.
+        $production_repo = $this->em->getRepository(Production::class);
+        if (null === $production = $production_repo->findOneBy(['slug' => $production_slug])) {
+            throw new NotFoundHttpException();
+        }
+
+        // Check permissions for this action.
+        if (!$auth->isGranted('GROUP_ROLE_EDITOR', $production)) {
+            throw new AccessDeniedException();
+        }
+
+        // Get a list of archived events.
+        $event_repo = $this->em->getRepository(Event::class);
+        $query = $event_repo->findArchivedEventsQuery($production);
+        $events = $paginator->paginate($query, $request->query->getInt('page', 1));
+
+        // Render the results.
+        return new Response($this->templating->render('@BkstgSchedule/Event/archive.html.twig', [
+            'events' => $events,
+            'production' => $production,
+        ]));
+    }
 }

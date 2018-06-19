@@ -3,6 +3,10 @@ bkstg_schedule_create:
     path: /create
     defaults:
         _controller: Bkstg\ScheduleBundle\Controller\ScheduleController:createAction
+bkstg_schedule_archive:
+    path: /archive
+    defaults:
+      _controller: Bkstg\ScheduleBundle\Controller\ScheduleController:archiveAction
 bkstg_schedule_show:
     path: /{id}
     defaults:

@@ -1,6 +1,6 @@
 # Production calendar paths.
 bkstg_calendar_production:
-    prefix: /{production_slug}/calendar
+    prefix: /{production_slug}/schedule
     resource: '@BkstgScheduleBundle/Resources/config/routing/calendar_production.yml'
 
 # Personal calendar paths.

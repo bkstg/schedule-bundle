@@ -5,7 +5,7 @@ bkstg_calendar_production:
 
 # Personal calendar paths.
 bkstg_calendar_personal:
-    prefix: /calendar/personal
+    prefix: /profile/calendar
     resource: '@BkstgScheduleBundle/Resources/config/routing/calendar_personal.yml'
 
 # Schedule paths.
@@ -20,5 +20,5 @@ bkstg_event:
 
 # Invitation paths.
 bkstg_invitation:
-    prefix: /calendar/invitations
+    prefix: /profile/calendar/invitations
     resource: '@BkstgScheduleBundle/Resources/config/routing/invitation.yml'

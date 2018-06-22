@@ -20,5 +20,5 @@ bkstg_event:
 
 # Invitation paths.
 bkstg_invitation:
-    prefix: /profile/calendar/invitations
+    prefix: /profile/invitations
     resource: '@BkstgScheduleBundle/Resources/config/routing/invitation.yml'

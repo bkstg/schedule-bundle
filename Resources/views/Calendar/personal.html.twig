@@ -2,10 +2,10 @@
 {% set page_title = 'My Schedule'|trans %}
 {% block main %}
   <div class="container-fluid">
-    {% include '@BkstgCore/Partials/header.html.twig' with { 'title': page_title } only %}
+    {% include '@BkstgCore/_header.html.twig' with { 'title': page_title } only %}
     <h3 class="date-display">{{ "now"|date('F Y') }}</h3>
     {% include '@BkstgSchedule/Calendar/_controls.html.twig' %}
     <div id="calendar" class="mt-2 mb-2" data-search-url="{{ url('bkstg_calendar_search_personal') }}"></div>
-    {% include '@BkstgCore/partials/footer.html.twig' %}
+    {% include '@BkstgCore/_footer.html.twig' %}
   </div>
 {% endblock %}

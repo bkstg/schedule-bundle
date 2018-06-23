@@ -3,7 +3,7 @@
 {% trans_default_domain 'BkstgScheduleBundle' %}
 {% block main %}
   <div class="container-fluid">
-    {% include '@BkstgCore/Partials/header.html.twig' with { 'title': page_title } only %}
+    {% include '@BkstgCore/_header.html.twig' with { 'title': page_title } only %}
     {% include '@BkstgSchedule/Invitation/_actions.html.twig' %}
     <p><div class="table-responsive">
       <table class="table table-striped">
@@ -51,6 +51,6 @@
       </table>
       {{ knp_pagination_render(invitations) }}
     </div></p>
-    {% include '@BkstgCore/partials/footer.html.twig' %}
+    {% include '@BkstgCore/_footer.html.twig' %}
   </div>
 {% endblock %}

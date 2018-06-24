@@ -3,6 +3,7 @@
 {% block main %}
   <div class="container-fluid">
     {% include '@BkstgCore/_header.html.twig' with { 'title': page_title } only %}
+    {% include '@BkstgCore/_alerts.html.twig' %}
     <h3 class="date-display">{{ "now"|date('F Y') }}</h3>
     {% include '@BkstgSchedule/Calendar/_controls.html.twig' %}
     <div id="calendar" class="mt-2 mb-2" data-search-url="{{ url('bkstg_calendar_search_personal') }}"></div>

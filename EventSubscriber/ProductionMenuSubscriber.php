@@ -24,11 +24,11 @@ class ProductionMenuSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         // return the subscribed events, their methods and priorities
-        return array(
-           ProductionMenuCollectionEvent::NAME => array(
-               array('addScheduleItem', 10),
-           )
-        );
+        return [
+           ProductionMenuCollectionEvent::NAME => [
+               ['addScheduleItem', 10],
+           ]
+        ];
     }
 
     public function addScheduleItem(ProductionMenuCollectionEvent $event)

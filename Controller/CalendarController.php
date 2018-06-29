@@ -92,8 +92,8 @@ class CalendarController extends Controller
     /**
      * Show a calendar for a user.
      *
-     * @param  AuthorizationCheckerInterface $auth            The authorization checker service.
-     * @param  Request                       $request         The current request.
+     * @param  AuthorizationCheckerInterface $auth    The authorization checker service.
+     * @param  Request                       $request The current request.
      *
      * @throws NotFoundHttpException                          When the production does not exist.
      * @throws AccessDeniedException                          When the user is not an editor.
@@ -112,9 +112,9 @@ class CalendarController extends Controller
     /**
      * Search events for a production.
      *
-     * @param  AuthorizationCheckerInterface $auth            The authorization checker service.
-     * @param  TokenStorageInterface         $token           The user token.
-     * @param  Request                       $request         The current request.
+     * @param  AuthorizationCheckerInterface $auth    The authorization checker service.
+     * @param  TokenStorageInterface         $token   The user token.
+     * @param  Request                       $request The current request.
      *
      * @throws NotFoundHttpException                          When the production does not exist.
      * @throws AccessDeniedException                          When the user is not an editor.

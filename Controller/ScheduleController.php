@@ -181,7 +181,7 @@ class ScheduleController extends Controller
                     $this->em->remove($event);
                 } else {
                     // If event is still in schedule check invitations.
-                    foreach($invitations[$event->getId()] as $invitation) {
+                    foreach ($invitations[$event->getId()] as $invitation) {
                         if (false === $event->getInvitations()->contains($invitation)) {
                             $this->em->remove($invitation);
                         }

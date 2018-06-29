@@ -23,8 +23,7 @@ class ScheduleType extends AbstractType
             ->add('location')
             ->add('notes', CKEditorType::class, [
                 'config' => ['toolbar' => 'basic'],
-                'required' => false]
-            )
+                'required' => false])
             ->add('colour', ChoiceType::class, [
                 'label' => 'Colour',
                 'required' => false,
@@ -58,9 +57,9 @@ class ScheduleType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => Schedule::class
-        ));
+        ]);
     }
 
     /**

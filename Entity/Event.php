@@ -42,7 +42,7 @@ class Event implements GroupableInterface, PublishableInterface
     /**
      * Get id.
      *
-     * @return int
+     * @return integer
      */
     public function getId()
     {

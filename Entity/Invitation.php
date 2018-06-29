@@ -22,7 +22,7 @@ class Invitation
     /**
      * Get id.
      *
-     * @return int
+     * @return integer
      */
     public function getId()
     {
@@ -32,7 +32,7 @@ class Invitation
     /**
      * Set response.
      *
-     * @param int|null $response
+     * @param integer|null $response
      *
      * @return Invitation
      */
@@ -46,7 +46,7 @@ class Invitation
     /**
      * Get response.
      *
-     * @return int|null
+     * @return integer|null
      */
     public function getResponse()
     {
@@ -56,7 +56,7 @@ class Invitation
     /**
      * Set optional.
      *
-     * @param bool $optional
+     * @param boolean $optional
      *
      * @return Invitation
      */
@@ -70,7 +70,7 @@ class Invitation
     /**
      * Get optional.
      *
-     * @return bool
+     * @return boolean
      */
     public function getOptional()
     {

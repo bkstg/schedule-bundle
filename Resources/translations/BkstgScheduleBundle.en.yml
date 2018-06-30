@@ -4,6 +4,9 @@ timeline:
     scheduled: 'scheduled'
     scheduled_in: 'in'
 schedule:
+    created: 'Schedule "%schedule%" created.'
+    updated: 'Schedule "%schedule%" edited.'
+    deleted: 'Schedule "%schedule%" deleted.'
     unpublished: 'Unpublished'
     archived: 'Archived'
     edit: 'Edit'
@@ -11,6 +14,9 @@ schedule:
     archive_no_schedules: 'No schedules in the archive right now.'
     archive_info: 'These schedules are either unpublished or inactive, you can edit them here.'
 event:
+    created: 'Event "%event%" created.'
+    updated: 'Event "%event%" edited.'
+    deleted: 'Event "%event%" deleted.'
     unpublished: 'Unpublished'
     edit: 'Edit'
     archive_no_events: 'No events in the archive right now.'

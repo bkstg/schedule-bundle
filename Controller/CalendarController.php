@@ -21,10 +21,8 @@ class CalendarController extends Controller
      * @param  string                        $production_slug The slug for the production.
      * @param  AuthorizationCheckerInterface $auth            The authorization checker service.
      * @param  Request                       $request         The current request.
-     *
      * @throws NotFoundHttpException                          When the production does not exist.
      * @throws AccessDeniedException                          When the user is not an editor.
-     *
      * @return Response                                       A response.
      */
     public function productionAction(
@@ -55,10 +53,8 @@ class CalendarController extends Controller
      * @param  string                        $production_slug The slug for the production.
      * @param  AuthorizationCheckerInterface $auth            The authorization checker service.
      * @param  Request                       $request         The current request.
-     *
      * @throws NotFoundHttpException                          When the production does not exist.
      * @throws AccessDeniedException                          When the user is not an editor.
-     *
      * @return Response                                       A response.
      */
     public function searchProductionAction(
@@ -94,10 +90,8 @@ class CalendarController extends Controller
      *
      * @param  AuthorizationCheckerInterface $auth    The authorization checker service.
      * @param  Request                       $request The current request.
-     *
      * @throws NotFoundHttpException                          When the production does not exist.
      * @throws AccessDeniedException                          When the user is not an editor.
-     *
      * @return Response                                       A response.
      */
     public function personalAction(
@@ -115,11 +109,9 @@ class CalendarController extends Controller
      * @param  AuthorizationCheckerInterface $auth    The authorization checker service.
      * @param  TokenStorageInterface         $token   The user token.
      * @param  Request                       $request The current request.
-     *
-     * @throws NotFoundHttpException                          When the production does not exist.
-     * @throws AccessDeniedException                          When the user is not an editor.
-     *
-     * @return Response                                       A response.
+     * @throws NotFoundHttpException                  When the production does not exist.
+     * @throws AccessDeniedException                  When the user is not an editor.
+     * @return Response                               A response.
      */
     public function searchPersonalAction(
         AuthorizationCheckerInterface $auth,
@@ -143,7 +135,6 @@ class CalendarController extends Controller
      *
      * @param  array      $events     The events to return.
      * @param  Production $production The production for these events.
-     *
      * @return array                  The formatted events.
      */
     private function prepareResult(array $events, Production $production = null): array

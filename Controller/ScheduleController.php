@@ -4,6 +4,7 @@ namespace Bkstg\ScheduleBundle\Controller;
 
 use Bkstg\CoreBundle\Controller\Controller;
 use Bkstg\CoreBundle\Entity\Production;
+use Bkstg\ScheduleBundle\BkstgScheduleBundle;
 use Bkstg\ScheduleBundle\Entity\Schedule;
 use Bkstg\ScheduleBundle\Form\ScheduleType;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -26,10 +27,8 @@ class ScheduleController extends Controller
      * @param  AuthorizationCheckerInterface $auth            The authorization checker service.
      * @param  TokenStorageInterface         $token           The user token service.
      * @param  Request                       $request         The current request.
-     *
      * @throws NotFoundHttpException                          When the production does not exist.
      * @throws AccessDeniedException                          When the user is not an editor.
-     *
      * @return Response                                       A response.
      */
     public function createAction(
@@ -81,9 +80,9 @@ class ScheduleController extends Controller
             // Set success message and redirect.
             $this->session->getFlashBag()->add(
                 'success',
-                $this->translator->trans('Schedule "%schedule%" created.', [
+                $this->translator->trans('schedule.created', [
                     '%schedule%' => $schedule->getTitle(),
-                ])
+                ], BkstgScheduleBundle::TRANSLATION_DOMAIN)
             );
             return new RedirectResponse($this->url_generator->generate(
                 'bkstg_schedule_show',
@@ -100,13 +99,24 @@ class ScheduleController extends Controller
         ]));
     }
 
+    /**
+     * Show a single schedule.
+     *
+     * @param  integer                       $id              The schedule id.
+     * @param  string                        $production_slug The production slug.
+     * @param  AuthorizationCheckerInterface $auth            The authorization checker service.
+     * @param  PaginatorInterface            $paginator       The paginator service.
+     * @param  Request                       $request         The incoming request.
+     * @throws AccessDeniedException                          If the user has no access to view.
+     * @return Response
+     */
     public function readAction(
-        $id,
-        $production_slug,
+        int $id,
+        string $production_slug,
         AuthorizationCheckerInterface $auth,
         PaginatorInterface $paginator,
         Request $request
-    ) {
+    ): Response {
         // Get the schedule and production for this action.
         list($schedule, $production) = $this->lookupEntity(Schedule::class, $id, $production_slug);
 
@@ -129,13 +139,22 @@ class ScheduleController extends Controller
         ]));
     }
 
+    /**
+     * Update a single schedule.
+     *
+     * @param  string                        $production_slug The production slug.
+     * @param  integer                       $id              The schedule id.
+     * @param  AuthorizationCheckerInterface $auth            The authorization checker service.
+     * @param  Request                       $request         The incoming request.
+     * @throws AccessDeniedException                          If the user has no access to edit.
+     * @return Response
+     */
     public function updateAction(
         string $production_slug,
         int $id,
         AuthorizationCheckerInterface $auth,
-        TokenStorageInterface $token,
         Request $request
-    ) {
+    ): Response {
         // Get the schedule and production for this action.
         list($schedule, $production) = $this->lookupEntity(Schedule::class, $id, $production_slug);
 
@@ -195,9 +214,9 @@ class ScheduleController extends Controller
             // Set success message and redirect.
             $this->session->getFlashBag()->add(
                 'success',
-                $this->translator->trans('Schedule "%schedule%" edited.', [
+                $this->translator->trans('schedule.updated', [
                     '%schedule%' => $schedule->getTitle(),
-                ])
+                ], BkstgScheduleBundle::TRANSLATION_DOMAIN)
             );
             return new RedirectResponse($this->url_generator->generate(
                 'bkstg_schedule_show',
@@ -213,6 +232,16 @@ class ScheduleController extends Controller
         ]));
     }
 
+    /**
+     * Delete a single schedule.
+     *
+     * @param  string                        $production_slug The production slug.
+     * @param  integer                       $id              The schedule id.
+     * @param  AuthorizationCheckerInterface $auth            The authorization checker service.
+     * @param  Request                       $request         The incoming request.
+     * @throws AccessDeniedException                          If the user has no access to edit.
+     * @return Response
+     */
     public function deleteAction(
         string $production_slug,
         int $id,
@@ -227,14 +256,11 @@ class ScheduleController extends Controller
             throw new AccessDeniedException();
         }
 
-        // Create a fake form to submit.
-        $form = $this->form->createBuilder()
-            ->add('id', HiddenType::class)
-            ->getForm()
-        ;
-
-        // Handle the request.
+        // Create and handle a fake form to submit.
+        $form = $this->form->createBuilder()->getForm();
         $form->handleRequest($request);
+
+        // If form is submitted and valid.
         if ($form->isSubmitted() && $form->isValid()) {
             // Remove the schedule and flush the entity manager.
             $this->em->remove($schedule);
@@ -243,12 +269,12 @@ class ScheduleController extends Controller
             // Create flash message.
             $this->session->getFlashBag()->add(
                 'success',
-                $this->translator->trans('Deleted schedule "%title%".', [
-                    '%title%' => $schedule->getTitle(),
-                ])
+                $this->translator->trans('schedule.deleted', [
+                    '%schedule%' => $schedule->getTitle(),
+                ], BkstgScheduleBundle::TRANSLATION_DOMAIN)
             );
 
-            // Redirect to schedule index.
+            // Redirect to production calendar.
             return new RedirectResponse($this->url_generator->generate(
                 'bkstg_calendar_production',
                 ['production_slug' => $production->getSlug()]
@@ -263,12 +289,23 @@ class ScheduleController extends Controller
         ]));
     }
 
+    /**
+     * Show a list of archived schedules.
+     *
+     * @param  string                        $production_slug The production to look in.
+     * @param  PaginatorInterface            $paginator       The paginator service.
+     * @param  AuthorizationCheckerInterface $auth            The authorization checker service.
+     * @param  Request                       $request         The incoming request.
+     * @throws NotFoundHttpException                          When the production does not exist.
+     * @throws AccessDeniedException                          When the user is not an editor.
+     * @return Response
+     */
     public function archiveAction(
         string $production_slug,
         PaginatorInterface $paginator,
         AuthorizationCheckerInterface $auth,
         Request $request
-    ) {
+    ): Response {
         // Lookup the production by production_slug.
         $production_repo = $this->em->getRepository(Production::class);
         if (null === $production = $production_repo->findOneBy(['slug' => $production_slug])) {
@@ -280,12 +317,12 @@ class ScheduleController extends Controller
             throw new AccessDeniedException();
         }
 
-        // Get a list of archived events.
+        // Get a list of archived schedules.
         $schedule_repo = $this->em->getRepository(Schedule::class);
         $query = $schedule_repo->findArchivedSchedulesQuery($production);
-        $schedules = $paginator->paginate($query, $request->query->getInt('page', 1));
 
-        // Render the results.
+        // Paginate and render the results.
+        $schedules = $paginator->paginate($query, $request->query->getInt('page', 1));
         return new Response($this->templating->render('@BkstgSchedule/Schedule/archive.html.twig', [
             'schedules' => $schedules,
             'production' => $production,

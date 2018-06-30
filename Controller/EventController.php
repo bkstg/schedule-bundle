@@ -4,6 +4,7 @@ namespace Bkstg\ScheduleBundle\Controller;
 
 use Bkstg\CoreBundle\Controller\Controller;
 use Bkstg\CoreBundle\Entity\Production;
+use Bkstg\ScheduleBundle\BkstgScheduleBundle;
 use Bkstg\ScheduleBundle\Entity\Event;
 use Bkstg\ScheduleBundle\Form\EventType;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -27,10 +28,8 @@ class EventController extends Controller
      * @param  AuthorizationCheckerInterface $auth            The authorization checker service.
      * @param  TokenStorageInterface         $token           The token storage service.
      * @param  Request                       $request         The request.
-     *
      * @throws NotFoundHttpException                          When the production does not exist.
      * @throws AccessDeniedException                          When the user is not an editor.
-     *
      * @return Response                                       The response.
      */
     public function createAction(
@@ -38,7 +37,7 @@ class EventController extends Controller
         AuthorizationCheckerInterface $auth,
         TokenStorageInterface $token,
         Request $request
-    ) {
+    ): Response {
         // Lookup the production by production_slug.
         $production_repo = $this->em->getRepository(Production::class);
         if (null === $production = $production_repo->findOneBy(['slug' => $production_slug])) {
@@ -79,9 +78,9 @@ class EventController extends Controller
             // Set success message and redirect.
             $this->session->getFlashBag()->add(
                 'success',
-                $this->translator->trans('Event "%event%" created.', [
+                $this->translator->trans('event.created', [
                     '%event%' => $event->getName(),
-                ])
+                ], BkstgScheduleBundle::TRANSLATION_DOMAIN)
             );
             return new RedirectResponse($this->url_generator->generate(
                 'bkstg_event_show',
@@ -112,20 +111,14 @@ class EventController extends Controller
         // Get the event and production for this action.
         list($event, $production) = $this->lookupEntity(Event::class, $id, $production_slug);
 
+        // If this event is handled by a schedule redirect there.
+        if (null !== $redirect = $this->checkSchedule($event, $production)) {
+            return $redirect;
+        }
+
         // Check permissions for this action.
         if (!$auth->isGranted('view', $event)) {
             throw new AccessDeniedException();
-        }
-
-        // If this event is handled by a schedule redirect there.
-        if (null !== $schedule = $event->getSchedule()) {
-            return new RedirectResponse($this->url_generator->generate(
-                'bkstg_schedule_show',
-                [
-                    'production_slug' => $production->getSlug(),
-                    'id' => $schedule->getId()
-                ]
-            ));
         }
 
         // Render the event.
@@ -143,10 +136,7 @@ class EventController extends Controller
      * @param  AuthorizationCheckerInterface $auth            The authorization checker service.
      * @param  TokenStorageInterface         $token           The token storage service.
      * @param  Request                       $request         The request.
-     *
-     * @throws NotFoundHttpException                          When the production does not exist.
      * @throws AccessDeniedException                          When the user is not an editor.
-     *
      * @return Response                                       The response.
      */
     public function updateAction(
@@ -155,9 +145,14 @@ class EventController extends Controller
         AuthorizationCheckerInterface $auth,
         TokenStorageInterface $token,
         Request $request
-    ) {
+    ): Response {
         // Get the event and production for this action.
         list($event, $production) = $this->lookupEntity(Event::class, $id, $production_slug);
+
+        // If this event is handled by a schedule redirect there.
+        if (null !== $redirect = $this->checkSchedule($event, $production)) {
+            return $redirect;
+        }
 
         // Check permissions for this action.
         if (!$auth->isGranted('edit', $event)) {
@@ -189,9 +184,9 @@ class EventController extends Controller
             // Set success message and redirect.
             $this->session->getFlashBag()->add(
                 'success',
-                $this->translator->trans('Event "%event%" edited.', [
+                $this->translator->trans('event.updated', [
                     '%event%' => $event->getName(),
-                ])
+                ], BkstgScheduleBundle::TRANSLATION_DOMAIN)
             );
             return new RedirectResponse($this->url_generator->generate(
                 'bkstg_event_show',
@@ -214,10 +209,7 @@ class EventController extends Controller
      * @param  integer                       $id              The event id.
      * @param  AuthorizationCheckerInterface $auth            The authorization checker service.
      * @param  Request                       $request         The request.
-     *
-     * @throws NotFoundHttpException                          When the production does not exist.
      * @throws AccessDeniedException                          When the user is not an editor.
-     *
      * @return Response                                       The response.
      */
     public function deleteAction(
@@ -229,19 +221,21 @@ class EventController extends Controller
         // Get the event and production for this action.
         list($event, $production) = $this->lookupEntity(Event::class, $id, $production_slug);
 
+        // If this event is handled by a schedule redirect there.
+        if (null !== $redirect = $this->checkSchedule($event, $production)) {
+            return $redirect;
+        }
+
         // Check permissions for this action.
         if (!$auth->isGranted('edit', $event)) {
             throw new AccessDeniedException();
         }
 
-        // Create a fake form to submit.
-        $form = $this->form->createBuilder()
-            ->add('id', HiddenType::class)
-            ->getForm()
-        ;
-
-        // Handle the request.
+        // Create and handle a fake form to submit.
+        $form = $this->form->createBuilder()->getForm();
         $form->handleRequest($request);
+
+        // If form is submitted and valid.
         if ($form->isSubmitted() && $form->isValid()) {
             // Remove the event and flush the entity manager.
             $this->em->remove($event);
@@ -250,12 +244,12 @@ class EventController extends Controller
             // Create flash message.
             $this->session->getFlashBag()->add(
                 'success',
-                $this->translator->trans('Deleted event "%name%".', [
-                    '%name%' => $event->getName(),
-                ])
+                $this->translator->trans('event.deleted', [
+                    '%event%' => $event->getName(),
+                ], BkstgScheduleBundle::TRANSLATION_DOMAIN)
             );
 
-            // Redirect to event index.
+            // Redirect to the production calendar.
             return new RedirectResponse($this->url_generator->generate(
                 'bkstg_calendar_production',
                 ['production_slug' => $production->getSlug()]
@@ -270,12 +264,23 @@ class EventController extends Controller
         ]));
     }
 
+    /**
+     * Show a list of archived events.
+     *
+     * @param  string                        $production_slug The production to look in.
+     * @param  PaginatorInterface            $paginator       The paginator service.
+     * @param  AuthorizationCheckerInterface $auth            The authorization checker service.
+     * @param  Request                       $request         The incoming request.
+     * @throws NotFoundHttpException                          When the production does not exist.
+     * @throws AccessDeniedException                          When the user is not an editor.
+     * @return Response
+     */
     public function archiveAction(
         string $production_slug,
         PaginatorInterface $paginator,
         AuthorizationCheckerInterface $auth,
         Request $request
-    ) {
+    ): Response {
         // Lookup the production by production_slug.
         $production_repo = $this->em->getRepository(Production::class);
         if (null === $production = $production_repo->findOneBy(['slug' => $production_slug])) {
@@ -290,12 +295,35 @@ class EventController extends Controller
         // Get a list of archived events.
         $event_repo = $this->em->getRepository(Event::class);
         $query = $event_repo->findArchivedEventsQuery($production);
-        $events = $paginator->paginate($query, $request->query->getInt('page', 1));
 
-        // Render the results.
+        // Paginate and render the results.
+        $events = $paginator->paginate($query, $request->query->getInt('page', 1));
         return new Response($this->templating->render('@BkstgSchedule/Event/archive.html.twig', [
             'events' => $events,
             'production' => $production,
         ]));
+    }
+
+    /**
+     * Check if an event has a parent schedule.
+     *
+     * @param  Event      $event      The event to check.
+     * @param  Production $production The production this event is in.
+     * @return RedirectResponse
+     */
+    private function checkSchedule(Event $event, Production $production): ?RedirectResponse
+    {
+        // If this event is handled by a schedule generate a redirect there.
+        if (null !== $schedule = $event->getSchedule()) {
+            return new RedirectResponse($this->url_generator->generate(
+                'bkstg_schedule_show',
+                [
+                    'production_slug' => $production->getSlug(),
+                    'id' => $schedule->getId()
+                ]
+            ));
+        }
+
+        return null;
     }
 }

@@ -35,7 +35,6 @@ class InvitationNotificationCreator
      * Listener for invitation creation that creates invitation timeline entry.
      *
      * @param LifecycleEventArgs $args The event arguments.
-     *
      * @return void
      */
     public function postPersist(LifecycleEventArgs $args): void

@@ -27,7 +27,6 @@ class NotificationEntrySubscriber implements EventSubscriberInterface
      * Check the entry for whether or not to notify.
      *
      * @param  NotificationEntryEvent $event The notification event.
-     *
      * @return void
      */
     public function checkScheduleEntry(NotificationEntryEvent $event)
@@ -36,7 +35,7 @@ class NotificationEntrySubscriber implements EventSubscriberInterface
         $action = $event->getAction();
         $entry = $event->getEntry();
 
-        // If this is not a post verb then skip it.
+        // If this is not a schedule verb then skip it.
         if ($action->getVerb() != 'schedule') {
             return;
         }
@@ -55,7 +54,6 @@ class NotificationEntrySubscriber implements EventSubscriberInterface
      * Check the entry for whether or not to notify.
      *
      * @param  NotificationEntryEvent $event The notification event.
-     *
      * @return void
      */
     public function checkInviteEntry(NotificationEntryEvent $event)

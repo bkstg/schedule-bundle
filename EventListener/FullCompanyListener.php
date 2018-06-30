@@ -29,7 +29,6 @@ class FullCompanyListener
      * Listens for the onFlush event.
      *
      * @param  OnFlushEventArgs $args The arguments for this event.
-     *
      * @return void
      */
     public function onFlush(OnFlushEventArgs $args)
@@ -59,7 +58,6 @@ class FullCompanyListener
      * Helper function that generates new invitations as needed.
      *
      * @param  mixed $object The entity being acted on.
-     *
      * @return Invitation[]  The new invitations needed for this event.
      */
     private function getInvitations($object)

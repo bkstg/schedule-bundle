@@ -16,6 +16,13 @@ class UserMenuSubscriber implements EventSubscriberInterface
     private $em;
     private $token_storage;
 
+    /**
+     * Create a new user menu subscriber.
+     *
+     * @param FactoryInterface       $factory       The menu factory service.
+     * @param EntityManagerInterface $em            The entity manager service.
+     * @param TokenStorageInterface  $token_storage The token storage service.
+     */
     public function __construct(
         FactoryInterface $factory,
         EntityManagerInterface $em,
@@ -26,9 +33,13 @@ class UserMenuSubscriber implements EventSubscriberInterface
         $this->token_storage = $token_storage;
     }
 
-    public static function getSubscribedEvents()
+    /**
+     * Return the events this subscriber listens for.
+     *
+     * @return array The subscribed events.
+     */
+    public static function getSubscribedEvents(): array
     {
-        // return the subscribed events, their methods and priorities
         return [
            UserMenuCollectionEvent::NAME => [
                ['addScheduleMenuItem', 0],
@@ -37,10 +48,18 @@ class UserMenuSubscriber implements EventSubscriberInterface
         ];
     }
 
-    public function addScheduleMenuItem(UserMenuCollectionEvent $event)
+    /**
+     * Add the schedule items to the user menu.
+     *
+     * @param  UserMenuCollectionEvent $event The menu collection event.
+     * @return void
+     */
+    public function addScheduleMenuItem(UserMenuCollectionEvent $event): void
     {
+        // Get the menu from the event.
         $menu = $event->getMenu();
 
+        // Create a separator first.
         $separator = $this->factory->createItem('schedule_separator', [
             'extras' => [
                 'separator' => true,
@@ -49,6 +68,7 @@ class UserMenuSubscriber implements EventSubscriberInterface
         ]);
         $menu->addChild($separator);
 
+        // Add link to user's calendar.
         $schedule = $this->factory->createItem('menu_item.my_schedule', [
             'route' => 'bkstg_calendar_personal',
             'extras' => [
@@ -59,14 +79,23 @@ class UserMenuSubscriber implements EventSubscriberInterface
         $menu->addChild($schedule);
     }
 
-    public function addInvitationsMenuItem(UserMenuCollectionEvent $event)
+    /**
+     * Add invitations menu item.
+     *
+     * @param  UserMenuCollectionEvent $event The menu collection event.
+     * @return void
+     */
+    public function addInvitationsMenuItem(UserMenuCollectionEvent $event): void
     {
+        // Get the menu from the event.
         $menu = $event->getMenu();
 
+        // Lookup and count pending invitations.
         $repo = $this->em->getRepository(Invitation::class);
         $user = $this->token_storage->getToken()->getUser();
         $invitations = $repo->findPendingInvitations($user);
 
+        // Create the pending invitations menu link.
         $invitations = $this->factory->createItem('menu_item.pending_invitations', [
             'route' => 'bkstg_invitation_index',
             'extras' => [

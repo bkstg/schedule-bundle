@@ -21,9 +21,13 @@ class ProductionMenuSubscriber implements EventSubscriberInterface
         $this->auth = $auth;
     }
 
-    public static function getSubscribedEvents()
+    /**
+     * Return the subscribed events.
+     *
+     * @return array
+     */
+    public static function getSubscribedEvents(): array
     {
-        // return the subscribed events, their methods and priorities
         return [
            ProductionMenuCollectionEvent::NAME => [
                ['addScheduleItem', 10],
@@ -31,7 +35,13 @@ class ProductionMenuSubscriber implements EventSubscriberInterface
         ];
     }
 
-    public function addScheduleItem(ProductionMenuCollectionEvent $event)
+    /**
+     * Add the schedule menu item.
+     *
+     * @param  ProductionMenuCollectionEvent $event The menu collection event.
+     * @return void
+     */
+    public function addScheduleItem(ProductionMenuCollectionEvent $event): void
     {
         $menu = $event->getMenu();
         $group = $event->getGroup();

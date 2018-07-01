@@ -2,6 +2,7 @@
 
 namespace Bkstg\ScheduleBundle\Form;
 
+use Bkstg\ScheduleBundle\BkstgScheduleBundle;
 use Bkstg\ScheduleBundle\Entity\Event;
 use Bkstg\ScheduleBundle\Form\InvitationType;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
@@ -16,28 +17,41 @@ class EventType extends AbstractType
 {
     /**
      * {@inheritdoc}
+     *
+     * @param  FormBuilderInterface $builder The form builder.
+     * @param  array                $options The options for this form.
+     * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('start', null, [
+                'label' => 'event.form.start',
                 'date_widget' => 'single_text',
                 'time_widget' => 'single_text',
             ])
             ->add('end', null, [
+                'label' => 'event.form.end',
                 'date_widget' => 'single_text',
                 'time_widget' => 'single_text',
             ])
-            ->add('name')
-            ->add('location')
+            ->add('name', null, [
+                'label' => 'event.form.name',
+            ])
+            ->add('location', null, [
+                'label' => 'event.form.location',
+            ])
             ->add('description', CKEditorType::class, [
+                'label' => 'event.form.description',
                 'required' => false,
                 'config' => ['toolbar' => 'basic'],
             ])
             ->add('full_company', CheckboxType::class, [
+                'label' => 'event.form.full_company',
                 'required' => false,
             ])
             ->add('invitations', CollectionType::class, [
+                'label' => 'event.form.invitations',
                 'entry_type' => InvitationType::class,
                 'entry_options' => ['label' => false],
                 'allow_add' => true,
@@ -45,41 +59,38 @@ class EventType extends AbstractType
                 'by_reference' => false,
             ])
             ->add('colour', ChoiceType::class, [
-                'label' => 'Colour',
+                'label' => 'event.form.colour',
                 'required' => false,
                 'choices' => [
-                    'Red' => 'important',
-                    'Green' => 'success',
-                    'Yellow' => 'warning',
-                    'Blue' => 'info',
-                    'Dark' => 'inverse',
-                    'Purple' => 'special',
+                    'event.form.colour_choices.red' => 'important',
+                    'event.form.colour_choices.green' => 'success',
+                    'event.form.colour_choices.yellow' => 'warning',
+                    'event.form.colour_choices.blue' => 'info',
+                    'event.form.colour_choices.dark' => 'inverse',
+                    'event.form.colour_choices.purple' => 'special',
                 ],
             ])
             ->add('active', ChoiceType::class, [
+                'label' => 'event.form.active',
                 'choices' => [
-                    'Active' => true,
-                    'Closed' => false,
+                    'event.form.active_choices.active' => true,
+                    'event.form.active_choices.inactive' => false,
                 ],
             ])
         ;
     }
 
     /**
-     * {@inheritdoc}
+     * Set default options.
+     *
+     * @param  OptionsResolver $resolver The options resolver.
+     * @return void
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Event::class
+            'data_class' => Event::class,
+            'translation_domain' => BkstgScheduleBundle::TRANSLATION_DOMAIN,
         ]);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getBlockPrefix()
-    {
-        return 'bkstg_schedulebundle_event';
     }
 }

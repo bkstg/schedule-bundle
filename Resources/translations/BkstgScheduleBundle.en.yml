@@ -13,6 +13,23 @@ schedule:
     no_events: 'No events in this schedule yet.'
     archive_no_schedules: 'No schedules in the archive right now.'
     archive_info: 'These schedules are either unpublished or inactive, you can edit them here.'
+    form:
+        title: 'Title'
+        notes: 'Notes'
+        active: 'Active'
+        active_choices:
+            active: 'Active'
+            inactive: 'Inactive'
+        colour: 'Colour'
+        colour_choices:
+            red: 'Red'
+            green: 'Green'
+            yellow: 'Yellow'
+            blue: 'Blue'
+            dark: 'Dark'
+            purple: 'Purple'
+        location: 'Location'
+        events: 'Events'
 event:
     created: 'Event "%event%" created.'
     updated: 'Event "%event%" edited.'
@@ -31,6 +48,26 @@ event:
     notes: 'Notes'
     start: 'Start'
     end: 'End'
+    form:
+        name: 'Name'
+        description: 'Description'
+        start: 'Start'
+        end: 'End'
+        full_company: 'Full company'
+        active: 'Active'
+        active_choices:
+            active: 'Active'
+            inactive: 'Inactive'
+        colour: 'Colour'
+        colour_choices:
+            red: 'Red'
+            green: 'Green'
+            yellow: 'Yellow'
+            blue: 'Blue'
+            dark: 'Dark'
+            purple: 'Purple'
+        location: 'Location'
+        events: 'Events'
 menu_item:
     schedule_calendar: 'Calendar'
     schedule_archive: 'Archive'

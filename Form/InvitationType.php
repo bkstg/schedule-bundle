@@ -4,6 +4,7 @@ namespace Bkstg\ScheduleBundle\Form;
 
 use Bkstg\CoreBundle\Context\ProductionContextProviderInterface;
 use Bkstg\CoreBundle\User\MembershipProviderInterface;
+use Bkstg\ScheduleBundle\BkstgScheduleBundle;
 use Bkstg\ScheduleBundle\Entity\Invitation;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\ChoiceList\Loader\CallbackChoiceLoader;
@@ -16,6 +17,12 @@ class InvitationType extends AbstractType
     private $production_context;
     private $membership_provider;
 
+    /**
+     * Create a new invitation form.
+     *
+     * @param ProductionContextProviderInterface $production_context  The production context service.
+     * @param MembershipProviderInterface        $membership_provider The membership provider.
+     */
     public function __construct(
         ProductionContextProviderInterface $production_context,
         MembershipProviderInterface $membership_provider
@@ -24,26 +31,34 @@ class InvitationType extends AbstractType
         $this->membership_provider = $membership_provider;
     }
 
-
     /**
      * {@inheritdoc}
+     *
+     * @param  FormBuilderInterface $builder The form builder.
+     * @param  array                $options The form options.
+     * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        // Get the context and membership provider to pass into transformer.
         $context = $this->production_context;
         $provider = $this->membership_provider;
 
         $builder
-            ->add('optional')
+            ->add('optional', null, [
+                'label' => 'invitation.form.optional',
+            ])
             ->add('invitee', ChoiceType::class, [
-                'placeholder' => '- Choose an invitee -',
+                'label' => 'invitation.form.invitee',
+                'placeholder' => 'invitation.form.choose_invitee',
+                'choice_translation_domain' => false,
+
+                // Load all active memberships for a production as choices.
                 'choice_loader' => new CallbackChoiceLoader(function () use ($context, $provider) {
-                    $return = [];
                     foreach ($provider->loadActiveMembershipsByProduction($context->getContext()) as $membership) {
                         $member = $membership->getMember();
-                        $return[$member->__toString()] = $member->getUsername();
+                        yield $member->__toString() => $member->getUsername();
                     }
-                    return $return;
                 })
             ])
         ;
@@ -51,19 +66,25 @@ class InvitationType extends AbstractType
 
     /**
      * {@inheritdoc}
+     *
+     * @param  OptionsResolver $resolver The options resolver.
+     * @return void
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Invitation::class
+            'data_class' => Invitation::class,
+            'translation_domain' => BkstgScheduleBundle::TRANSLATION_DOMAIN,
         ]);
     }
 
     /**
      * {@inheritdoc}
+     *
+     * @return string
      */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
-        return 'bkstg_schedulebundle_invitation';
+        return 'bkstg_invitation';
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Bkstg\ScheduleBundle\Form;
 
+use Bkstg\ScheduleBundle\BkstgScheduleBundle;
 use Bkstg\ScheduleBundle\Entity\Schedule;
 use Bkstg\ScheduleBundle\Form\ScheduleEventType;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
@@ -15,34 +16,45 @@ class ScheduleType extends AbstractType
 {
     /**
      * {@inheritdoc}
+     *
+     * @param  FormBuilderInterface $builder The form builder.
+     * @param  array                $options The options for this form.
+     * @return void
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title')
-            ->add('location')
+            ->add('title', null, [
+                'label' => 'schedule.form.title',
+            ])
+            ->add('location', null, [
+                'label' => 'schedule.form.location',
+            ])
             ->add('notes', CKEditorType::class, [
+                'label' => 'schedule.form.notes',
                 'config' => ['toolbar' => 'basic'],
                 'required' => false])
             ->add('colour', ChoiceType::class, [
-                'label' => 'Colour',
+                'label' => 'schedule.form.colour',
                 'required' => false,
                 'choices' => [
-                    'Red' => 'important',
-                    'Green' => 'success',
-                    'Yellow' => 'warning',
-                    'Blue' => 'info',
-                    'Dark' => 'inverse',
-                    'Purple' => 'special',
+                    'schedule.form.colour_choices.red' => 'important',
+                    'schedule.form.colour_choices.green' => 'success',
+                    'schedule.form.colour_choices.yellow' => 'warning',
+                    'schedule.form.colour_choices.blue' => 'info',
+                    'schedule.form.colour_choices.dark' => 'inverse',
+                    'schedule.form.colour_choices.purple' => 'special',
                 ],
             ])
             ->add('active', ChoiceType::class, [
+                'label' => 'schedule.form.active',
                 'choices' => [
-                    'Active' => true,
-                    'Closed' => false,
-                ]
+                    'schedule.form.active_choices.active' => true,
+                    'schedule.form.active_choices.inactive' => false,
+                ],
             ])
             ->add('events', CollectionType::class, [
+                'label' => 'schedule.form.events',
                 'entry_type' => ScheduleEventType::class,
                 'entry_options' => ['label' => false],
                 'allow_add' => true,
@@ -53,20 +65,16 @@ class ScheduleType extends AbstractType
     }
 
     /**
-     * {@inheritdoc}
+     * Set default options.
+     *
+     * @param  OptionsResolver $resolver The options resolver.
+     * @return void
      */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Schedule::class
+            'data_class' => Schedule::class,
+            'translation_domain' => BkstgScheduleBundle::TRANSLATION_DOMAIN,
         ]);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getBlockPrefix()
-    {
-        return 'bkstg_schedulebundle_schedule';
     }
 }

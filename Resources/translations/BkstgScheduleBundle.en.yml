@@ -4,6 +4,8 @@ timeline:
     scheduled: 'scheduled'
     scheduled_in: 'in'
 schedule:
+    create: 'Create new schedule'
+    title: 'Schedule'
     created: 'Schedule "%schedule%" created.'
     updated: 'Schedule "%schedule%" edited.'
     deleted: 'Schedule "%schedule%" deleted.'
@@ -31,6 +33,7 @@ schedule:
         location: 'Location'
         events: 'Events'
 event:
+    create: 'Create new event'
     created: 'Event "%event%" created.'
     updated: 'Event "%event%" edited.'
     deleted: 'Event "%event%" deleted.'
@@ -81,3 +84,15 @@ invitation:
     optional: 'Optional'
     production: 'Production'
     event: 'Event'
+calendar:
+    next: 'Next'
+    previous: 'Previous'
+    today: 'Today'
+    day: 'Day'
+    week: 'Week'
+    month: 'Month'
+    year: 'Year'
+    toggle_display: 'Toggle calendar display'
+    navigation: 'Calendar navigation'
+    toolbar: 'Toolbar with buttons for calendar'
+my_schedule: 'My Schedule'

@@ -10,16 +10,31 @@ class UniqueCollectionPropertyValidator extends ConstraintValidator
 {
     private $property_accessor;
 
+    /**
+     * Create a new unique property validator.
+     *
+     * @param PropertyAccessorInterface $property_accessor The property accessor service.
+     */
     public function __construct(PropertyAccessorInterface $property_accessor)
     {
         $this->property_accessor = $property_accessor;
     }
 
-    public function validate($value, Constraint $constraint)
+    /**
+     * Validate a constraint.
+     *
+     * @param  mixed      $value      The value being passed in.
+     * @param  Constraint $constraint The constraint to be checked.
+     * @return void
+     */
+    public function validate($value, Constraint $constraint): void
     {
+        // Build a list of values.
         $item_values = [];
         foreach ($value as $item) {
             $item_value = $this->property_accessor->getValue($item, $constraint->property);
+
+            // If any value is repeated build a violation.
             if (isset($item_values[$item_value])) {
                 $this->context->buildViolation($constraint->message)
                     ->setParameter('{{ string }}', $constraint->property)

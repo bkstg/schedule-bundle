@@ -13,8 +13,12 @@ class InvitationVoter extends Voter
 
     /**
      * {@inheritdoc}
+     *
+     * @param  mixed $attribute The attribute to vote on.
+     * @param  mixed $subject   The subject to vote on.
+     * @return boolean
      */
-    protected function supports($attribute, $subject)
+    protected function supports($attribute, $subject): boolean
     {
         // if the attribute isn't one we support, return false
         if (!in_array($attribute, [self::RESPOND])) {
@@ -31,8 +35,13 @@ class InvitationVoter extends Voter
 
     /**
      * {@inheritdoc}
+     *
+     * @param  mixed          $attribute The attribute to vote on.
+     * @param  mixed          $subject   The subject to vote on.
+     * @param  TokenInterface $token     The user token.
+     * @return boolean
      */
-    protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
+    protected function voteOnAttribute($attribute, $subject, TokenInterface $token): boolean
     {
         $user = $token->getUser();
 

@@ -4,22 +4,23 @@ namespace Bkstg\ScheduleBundle\Security;
 
 use Bkstg\CoreBundle\Security\GroupableEntityVoter;
 use Bkstg\ScheduleBundle\Entity\Event;
-use MidnightLuke\GroupSecurityBundle\Model\GroupableInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
 class EventVoter extends GroupableEntityVoter
 {
     /**
      * {@inheritdoc}
+     *
+     * @param  mixed $attribute The attribute to vote on.
+     * @param  mixed $subject   The subject to vote on.
+     * @return boolean
      */
-    protected function supports($attribute, $subject)
+    protected function supports($attribute, $subject): boolean
     {
-        // if the attribute isn't one we support, return false
         if (!in_array($attribute, [self::VIEW, self::EDIT])) {
             return false;
         }
 
-        // only vote on Groupable objects inside this voter
         if (!$subject instanceof Event) {
             return false;
         }

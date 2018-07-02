@@ -7,6 +7,12 @@ use Doctrine\ORM\EntityRepository;
 
 class InvitationRepository extends EntityRepository
 {
+    /**
+     * Build query to find pending invitations for a user.
+     *
+     * @param  UserInterface $user The user to find invitations for.
+     * @return Invitation[]
+     */
     public function findPendingInvitationsQuery(UserInterface $user)
     {
         $qb = $this->createQueryBuilder('i');
@@ -28,11 +34,23 @@ class InvitationRepository extends EntityRepository
             ->getQuery();
     }
 
+    /**
+     * Find pending invitations for a user.
+     *
+     * @param  UserInterface $user The user to find invitations for.
+     * @return Invitation[]
+     */
     public function findPendingInvitations(UserInterface $user)
     {
         return $this->findPendingInvitationsQuery($user)->getResult();
     }
 
+    /**
+     * Build query to find other invitations for a user.
+     *
+     * @param  UserInterface $user The user to find invitations for.
+     * @return Invitation[]
+     */
     public function findOtherInvitationsQuery(UserInterface $user)
     {
         $qb = $this->createQueryBuilder('i');
@@ -59,6 +77,12 @@ class InvitationRepository extends EntityRepository
             ->getQuery();
     }
 
+    /**
+     * Find other invitations for a user.
+     *
+     * @param  UserInterface $user The user to find invitations for.
+     * @return Invitation[]
+     */
     public function findOtherInvitations(UserInterface $user)
     {
         return $this->findOtherInvitationsQuery($user)->getResult();

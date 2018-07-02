@@ -7,6 +7,12 @@ use Doctrine\ORM\EntityRepository;
 
 class ScheduleRepository extends EntityRepository
 {
+    /**
+     * Build query to find archived schedules for a production.
+     *
+     * @param  Production $production The production to search for schedules in.
+     * @return Schedule[]
+     */
     public function findArchivedSchedulesQuery(Production $production)
     {
         $qb = $this->createQueryBuilder('s');

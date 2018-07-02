@@ -10,6 +10,15 @@ use Doctrine\ORM\EntityRepository;
 
 class EventRepository extends EntityRepository
 {
+    /**
+     * Search for events within a production.
+     *
+     * @param  Production $production The production to search in.
+     * @param  \DateTime  $from       The time to start searching from.
+     * @param  \DateTime  $to         The time to end searching from.
+     * @param  boolean    $active     The active state of the events.
+     * @return Event[]
+     */
     public function searchEvents(
         Production $production,
         \DateTime $from,
@@ -36,6 +45,15 @@ class EventRepository extends EntityRepository
             ->getResult();
     }
 
+    /**
+     * Search for events for a user.
+     *
+     * @param  UserInterface $user   The production to search in.
+     * @param  \DateTime     $from   The time to start searching from.
+     * @param  \DateTime     $to     The time to end searching from.
+     * @param  boolean       $active The active state of the events.
+     * @return Event[]
+     */
     public function searchEventsByUser(
         UserInterface $user,
         \DateTime $from,
@@ -67,6 +85,12 @@ class EventRepository extends EntityRepository
             ->getResult();
     }
 
+    /**
+     * Helper function to search for events that are not active.
+     *
+     * @param  Production $production The production to search in.
+     * @return Event[]
+     */
     public function findArchivedEventsQuery(Production $production)
     {
         $qb = $this->createQueryBuilder('e');
@@ -81,7 +105,7 @@ class EventRepository extends EntityRepository
             // Add ordering.
             ->addOrderBy('e.updated', 'DESC')
 
-            // Get results.
+            // Get query.
             ->getQuery();
     }
 }

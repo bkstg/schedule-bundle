@@ -1,5 +1,7 @@
 {% extends '@BkstgCore/layout.html.twig' %}
-{% set page_title = 'Create new event'|trans %}
+{% trans_default_domain 'BkstgScheduleBundle' %}
+{% set page_title = 'event.create'|trans %}
+
 {% block content %}
-  {% include '@BkstgSchedule/Event/_form.html.twig' with {'form': form} only %}
+  {% include '@BkstgSchedule/Event/_form.html.twig' with {'form': form, 'production': production} only %}
 {% endblock %}

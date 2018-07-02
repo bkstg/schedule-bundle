@@ -1,11 +1,13 @@
 {% extends '@BkstgCore/layout.html.twig' %}
+{% trans_default_domain 'BkstgScheduleBundle' %}
 {% set page_title = event.name %}
+
 {% block content %}
   {% include '@BkstgSchedule/Event/_actions.html.twig' with { 'event': event, 'production': production } only %}
   <div class="row">
     <div class="col-md-8">
-      <p><strong class="text-muted">{{ event.start|date('F j, Y g:ia') }} - {{ event.end|date('F j, Y g:ia') }}</strong></p>
-      {{ event.description|raw }}
+      <p><strong class="text-muted">{{ 'event.date_string'|trans({ '%start%': event.start|date(full_date), '%end%': event.end|date(full_date) }) }}</strong></p>
+      {{ event.description|purify }}
       {% if event.location is not empty %}
         <iframe
           width="100%"
@@ -21,7 +23,7 @@
         {% for invite in event.invitations %}
           <li class="list-group-item">{% include '@BkstgSchedule/Invitation/_show.html.twig' with {'invitation': invite} only %}</li>
         {% else %}
-          <li class="list-group-item">{{ 'No invitees'|trans }}</li>
+          <li class="list-group-item">{{ 'event.no_invitees'|trans }}</li>
         {% endfor %}
       </ul>
     </div>

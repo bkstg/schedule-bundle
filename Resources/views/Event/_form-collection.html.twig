@@ -1,14 +1,12 @@
+{% trans_default_domain 'BkstgScheduleBundle' %}
 {% form_theme form '@BkstgSchedule/Invitation/_form.html.twig' %}
+
 {% block bkstg_schedule_event_widget %}
   <div class="row">
     <div class="col-md-8">
       <div class="form-row">
         <div class="col start-date">{{ form_row(form.start) }}</div>
         <div class="col end-date">{{ form_row(form.end) }}</div>
-        <div class="col">
-        </div>
-        <div class="col">
-        </div>
       </div>
       {{ form_row(form.name) }}
       {{ form_row(form.description) }}
@@ -21,6 +19,6 @@
     </div>
   </div>
   <div class="btn-group">
-    <a href="#" class="collection-item-remove btn btn-danger"><i class="fa fa-times"></i> {{ 'Remove' }}</a>
+    <a href="#" class="collection-item-remove btn btn-danger"><i class="fa fa-times"></i> {{ 'remove'|trans }}</a>
   </div>
 {% endblock %}

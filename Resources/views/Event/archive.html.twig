@@ -1,11 +1,13 @@
-{% trans_default_domain 'BkstgScheduleBundle' %}
 {% extends '@BkstgCore/layout.html.twig' %}
-{% set page_title = 'Events' %}
+{% trans_default_domain 'BkstgScheduleBundle' %}
+{% set page_title = 'events'|trans %}
+
 {% block content %}
   <div class="alert alert-info">
     {{ 'event.archive_info'|trans }}
   </div>
 
+  {# Event and schedule archive links. #}
   <ul class="nav nav-tabs mb-3">
     <li class="nav-item">
       <a class="nav-link" href="{{ url('bkstg_schedule_archive', {'production_slug': production.slug}) }}">Schedules</a>
@@ -19,21 +21,28 @@
     <table class="table table-striped">
       <thead>
         <tr>
-          <th>{{ 'Author'|trans }}</th>
-          <th>{{ 'Status'|trans }}</th>
-          <th>{{ 'Name'|trans }}</th>
-          <th>{{ 'Updated'|trans }}</th>
           <th></th>
+          <th>{{ 'event.label.name'|trans }}</th>
+          <th>{{ 'event.label.author'|trans }}</th>
+          <th>{{ 'event.label.status'|trans }}</th>
+          <th>{{ 'event.label.updated'|trans }}</th>
         </tr>
       </thead>
       <tbody>
         {% for event in events %}
           <tr>
+            <td>
+              {% if is_granted('edit', event) %}
+                <div class="btn-group btn-group-sm">
+                  <a href="{{ url('bkstg_event_update', {'production_slug': production.slug, 'id': event.id}) }}" class="btn btn-info"><i class="fa fa-pencil" aria-hidden="true"></i><span class="sr-only">{{ 'edit'|trans }}</span></a>
+                  <a href="{{ url('bkstg_event_delete', {'production_slug': production.slug, 'id': event.id}) }}" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i><span class="sr-only">{{ 'delete'|trans }}</span></a>
+                </div>
+              {% endif %}
+            </td>
+            <td><a href="{{ url('bkstg_event_read', {'production_slug': production.slug, 'id': event.id}) }}">{{ event.name }}</a></td>
             <td>{{ get_user(event.author) }}</td>
-            <td>{% if event.published == false %}{{ 'event.unpublished'|trans }}{% else %}{{ 'event.archived'|trans }}{% endif %}</td>
-            <td>{{ event.name }}</td>
-            <td>{{ event.updated|date }}</td>
-            <td><a href="{{ url('bkstg_event_update', {'production_slug': production.slug, 'id': event.id}) }}">{{ 'event.edit'|trans }}</a></td>
+            <td>{{ event.published == false ? 'event.unpublished'|trans : 'event.archived'|trans }}</td>
+            <td>{{ event.updated|date(full_date) }}</td>
           </tr>
         {% else %}
           <tr>

@@ -1,6 +1,8 @@
 {% extends '@BkstgCore/layout.html.twig' %}
-{% set page_title = 'Edit event "%event%"'|trans({'%event%': event.name}) %}
+{% trans_default_domain 'BkstgScheduleBundle' %}
+{% set page_title = 'event.update'|trans({'%event%': event.name}) %}
+
 {% block content %}
   {% include '@BkstgSchedule/Event/_actions.html.twig' with { 'event': event, 'production': production } only %}
-  {% include '@BkstgSchedule/Event/_form.html.twig' with {'form': form} only %}
+  {% include '@BkstgSchedule/Event/_form.html.twig' with { 'form': form, 'production': production } only %}
 {% endblock %}

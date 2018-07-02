@@ -91,6 +91,7 @@ class EventController extends Controller
         // Render the form.
         return new Response($this->templating->render('@BkstgSchedule/Event/create.html.twig', [
             'form' => $form->createView(),
+            'production' => $production,
         ]));
     }
 

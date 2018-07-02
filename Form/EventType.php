@@ -1,10 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of the BkstgCoreBundle package.
+ * (c) Luke Bainbridge <http://www.lukebainbridge.ca/>
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Bkstg\ScheduleBundle\Form;
 
 use Bkstg\ScheduleBundle\BkstgScheduleBundle;
 use Bkstg\ScheduleBundle\Entity\Event;
-use Bkstg\ScheduleBundle\Form\InvitationType;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -18,9 +26,8 @@ class EventType extends AbstractType
     /**
      * {@inheritdoc}
      *
-     * @param  FormBuilderInterface $builder The form builder.
-     * @param  array                $options The options for this form.
-     * @return void
+     * @param FormBuilderInterface $builder The form builder.
+     * @param array                $options The options for this form.
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -83,8 +90,7 @@ class EventType extends AbstractType
     /**
      * Set default options.
      *
-     * @param  OptionsResolver $resolver The options resolver.
-     * @return void
+     * @param OptionsResolver $resolver The options resolver.
      */
     public function configureOptions(OptionsResolver $resolver): void
     {

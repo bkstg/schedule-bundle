@@ -1,5 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of the BkstgCoreBundle package.
+ * (c) Luke Bainbridge <http://www.lukebainbridge.ca/>
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Bkstg\ScheduleBundle\Controller;
 
 use Bkstg\CoreBundle\Controller\Controller;
@@ -9,7 +18,6 @@ use Bkstg\ScheduleBundle\Entity\Schedule;
 use Bkstg\ScheduleBundle\Form\ScheduleType;
 use Doctrine\Common\Collections\ArrayCollection;
 use Knp\Component\Pager\PaginatorInterface;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,13 +31,15 @@ class ScheduleController extends Controller
     /**
      * Create a new schedule, which is a collection of events.
      *
-     * @param  string                        $production_slug The slug for the production.
-     * @param  AuthorizationCheckerInterface $auth            The authorization checker service.
-     * @param  TokenStorageInterface         $token           The user token service.
-     * @param  Request                       $request         The current request.
-     * @throws NotFoundHttpException                          When the production does not exist.
-     * @throws AccessDeniedException                          When the user is not an editor.
-     * @return Response                                       A response.
+     * @param string                        $production_slug The slug for the production.
+     * @param AuthorizationCheckerInterface $auth            The authorization checker service.
+     * @param TokenStorageInterface         $token           The user token service.
+     * @param Request                       $request         The current request.
+     *
+     * @throws NotFoundHttpException When the production does not exist.
+     * @throws AccessDeniedException When the user is not an editor.
+     *
+     * @return Response A response.
      */
     public function createAction(
         string $production_slug,
@@ -84,6 +94,7 @@ class ScheduleController extends Controller
                     '%schedule%' => $schedule->getTitle(),
                 ], BkstgScheduleBundle::TRANSLATION_DOMAIN)
             );
+
             return new RedirectResponse($this->url_generator->generate(
                 'bkstg_schedule_read',
                 [
@@ -103,12 +114,14 @@ class ScheduleController extends Controller
     /**
      * Show a single schedule.
      *
-     * @param  integer                       $id              The schedule id.
-     * @param  string                        $production_slug The production slug.
-     * @param  AuthorizationCheckerInterface $auth            The authorization checker service.
-     * @param  PaginatorInterface            $paginator       The paginator service.
-     * @param  Request                       $request         The incoming request.
-     * @throws AccessDeniedException                          If the user has no access to view.
+     * @param int                           $id              The schedule id.
+     * @param string                        $production_slug The production slug.
+     * @param AuthorizationCheckerInterface $auth            The authorization checker service.
+     * @param PaginatorInterface            $paginator       The paginator service.
+     * @param Request                       $request         The incoming request.
+     *
+     * @throws AccessDeniedException If the user has no access to view.
+     *
      * @return Response
      */
     public function readAction(
@@ -143,11 +156,13 @@ class ScheduleController extends Controller
     /**
      * Update a single schedule.
      *
-     * @param  string                        $production_slug The production slug.
-     * @param  integer                       $id              The schedule id.
-     * @param  AuthorizationCheckerInterface $auth            The authorization checker service.
-     * @param  Request                       $request         The incoming request.
-     * @throws AccessDeniedException                          If the user has no access to edit.
+     * @param string                        $production_slug The production slug.
+     * @param int                           $id              The schedule id.
+     * @param AuthorizationCheckerInterface $auth            The authorization checker service.
+     * @param Request                       $request         The incoming request.
+     *
+     * @throws AccessDeniedException If the user has no access to edit.
+     *
      * @return Response
      */
     public function updateAction(
@@ -219,6 +234,7 @@ class ScheduleController extends Controller
                     '%schedule%' => $schedule->getTitle(),
                 ], BkstgScheduleBundle::TRANSLATION_DOMAIN)
             );
+
             return new RedirectResponse($this->url_generator->generate(
                 'bkstg_schedule_read',
                 ['id' => $schedule->getId(), 'production_slug' => $production->getSlug()]
@@ -236,11 +252,13 @@ class ScheduleController extends Controller
     /**
      * Delete a single schedule.
      *
-     * @param  string                        $production_slug The production slug.
-     * @param  integer                       $id              The schedule id.
-     * @param  AuthorizationCheckerInterface $auth            The authorization checker service.
-     * @param  Request                       $request         The incoming request.
-     * @throws AccessDeniedException                          If the user has no access to edit.
+     * @param string                        $production_slug The production slug.
+     * @param int                           $id              The schedule id.
+     * @param AuthorizationCheckerInterface $auth            The authorization checker service.
+     * @param Request                       $request         The incoming request.
+     *
+     * @throws AccessDeniedException If the user has no access to edit.
+     *
      * @return Response
      */
     public function deleteAction(
@@ -293,12 +311,14 @@ class ScheduleController extends Controller
     /**
      * Show a list of archived schedules.
      *
-     * @param  string                        $production_slug The production to look in.
-     * @param  PaginatorInterface            $paginator       The paginator service.
-     * @param  AuthorizationCheckerInterface $auth            The authorization checker service.
-     * @param  Request                       $request         The incoming request.
-     * @throws NotFoundHttpException                          When the production does not exist.
-     * @throws AccessDeniedException                          When the user is not an editor.
+     * @param string                        $production_slug The production to look in.
+     * @param PaginatorInterface            $paginator       The paginator service.
+     * @param AuthorizationCheckerInterface $auth            The authorization checker service.
+     * @param Request                       $request         The incoming request.
+     *
+     * @throws NotFoundHttpException When the production does not exist.
+     * @throws AccessDeniedException When the user is not an editor.
+     *
      * @return Response
      */
     public function archiveAction(
@@ -324,6 +344,7 @@ class ScheduleController extends Controller
 
         // Paginate and render the results.
         $schedules = $paginator->paginate($query, $request->query->getInt('page', 1));
+
         return new Response($this->templating->render('@BkstgSchedule/Schedule/archive.html.twig', [
             'schedules' => $schedules,
             'production' => $production,

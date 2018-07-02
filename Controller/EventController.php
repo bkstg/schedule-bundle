@@ -1,5 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of the BkstgCoreBundle package.
+ * (c) Luke Bainbridge <http://www.lukebainbridge.ca/>
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Bkstg\ScheduleBundle\Controller;
 
 use Bkstg\CoreBundle\Controller\Controller;
@@ -9,8 +18,6 @@ use Bkstg\ScheduleBundle\Entity\Event;
 use Bkstg\ScheduleBundle\Form\EventType;
 use Doctrine\Common\Collections\ArrayCollection;
 use Knp\Component\Pager\PaginatorInterface;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,13 +31,15 @@ class EventController extends Controller
     /**
      * Create a new standalone event.
      *
-     * @param  string                        $production_slug The slug for the production.
-     * @param  AuthorizationCheckerInterface $auth            The authorization checker service.
-     * @param  TokenStorageInterface         $token           The token storage service.
-     * @param  Request                       $request         The request.
-     * @throws NotFoundHttpException                          When the production does not exist.
-     * @throws AccessDeniedException                          When the user is not an editor.
-     * @return Response                                       The response.
+     * @param string                        $production_slug The slug for the production.
+     * @param AuthorizationCheckerInterface $auth            The authorization checker service.
+     * @param TokenStorageInterface         $token           The token storage service.
+     * @param Request                       $request         The request.
+     *
+     * @throws NotFoundHttpException When the production does not exist.
+     * @throws AccessDeniedException When the user is not an editor.
+     *
+     * @return Response The response.
      */
     public function createAction(
         string $production_slug,
@@ -82,6 +91,7 @@ class EventController extends Controller
                     '%event%' => $event->getName(),
                 ], BkstgScheduleBundle::TRANSLATION_DOMAIN)
             );
+
             return new RedirectResponse($this->url_generator->generate(
                 'bkstg_event_read',
                 ['id' => $event->getId(), 'production_slug' => $production->getSlug()]
@@ -98,11 +108,13 @@ class EventController extends Controller
     /**
      * Show a single event.
      *
-     * @param  string                        $production_slug The slug for the production.
-     * @param  integer                       $id              The event id.
-     * @param  AuthorizationCheckerInterface $auth            The authorization checker service.
-     * @throws AccessDeniedException                          When the user is not in the group.
-     * @return Response                                       The response.
+     * @param string                        $production_slug The slug for the production.
+     * @param int                           $id              The event id.
+     * @param AuthorizationCheckerInterface $auth            The authorization checker service.
+     *
+     * @throws AccessDeniedException When the user is not in the group.
+     *
+     * @return Response The response.
      */
     public function readAction(
         string $production_slug,
@@ -132,13 +144,15 @@ class EventController extends Controller
     /**
      * Update a standalone event.
      *
-     * @param  string                        $production_slug The slug for the production.
-     * @param  integer                       $id              The event id.
-     * @param  AuthorizationCheckerInterface $auth            The authorization checker service.
-     * @param  TokenStorageInterface         $token           The token storage service.
-     * @param  Request                       $request         The request.
-     * @throws AccessDeniedException                          When the user is not an editor.
-     * @return Response                                       The response.
+     * @param string                        $production_slug The slug for the production.
+     * @param int                           $id              The event id.
+     * @param AuthorizationCheckerInterface $auth            The authorization checker service.
+     * @param TokenStorageInterface         $token           The token storage service.
+     * @param Request                       $request         The request.
+     *
+     * @throws AccessDeniedException When the user is not an editor.
+     *
+     * @return Response The response.
      */
     public function updateAction(
         string $production_slug,
@@ -189,6 +203,7 @@ class EventController extends Controller
                     '%event%' => $event->getName(),
                 ], BkstgScheduleBundle::TRANSLATION_DOMAIN)
             );
+
             return new RedirectResponse($this->url_generator->generate(
                 'bkstg_event_read',
                 ['id' => $event->getId(), 'production_slug' => $production->getSlug()]
@@ -206,12 +221,14 @@ class EventController extends Controller
     /**
      * Delete a single event.
      *
-     * @param  string                        $production_slug The slug for the production.
-     * @param  integer                       $id              The event id.
-     * @param  AuthorizationCheckerInterface $auth            The authorization checker service.
-     * @param  Request                       $request         The request.
-     * @throws AccessDeniedException                          When the user is not an editor.
-     * @return Response                                       The response.
+     * @param string                        $production_slug The slug for the production.
+     * @param int                           $id              The event id.
+     * @param AuthorizationCheckerInterface $auth            The authorization checker service.
+     * @param Request                       $request         The request.
+     *
+     * @throws AccessDeniedException When the user is not an editor.
+     *
+     * @return Response The response.
      */
     public function deleteAction(
         string $production_slug,
@@ -268,12 +285,14 @@ class EventController extends Controller
     /**
      * Show a list of archived events.
      *
-     * @param  string                        $production_slug The production to look in.
-     * @param  PaginatorInterface            $paginator       The paginator service.
-     * @param  AuthorizationCheckerInterface $auth            The authorization checker service.
-     * @param  Request                       $request         The incoming request.
-     * @throws NotFoundHttpException                          When the production does not exist.
-     * @throws AccessDeniedException                          When the user is not an editor.
+     * @param string                        $production_slug The production to look in.
+     * @param PaginatorInterface            $paginator       The paginator service.
+     * @param AuthorizationCheckerInterface $auth            The authorization checker service.
+     * @param Request                       $request         The incoming request.
+     *
+     * @throws NotFoundHttpException When the production does not exist.
+     * @throws AccessDeniedException When the user is not an editor.
+     *
      * @return Response
      */
     public function archiveAction(
@@ -299,6 +318,7 @@ class EventController extends Controller
 
         // Paginate and render the results.
         $events = $paginator->paginate($query, $request->query->getInt('page', 1));
+
         return new Response($this->templating->render('@BkstgSchedule/Event/archive.html.twig', [
             'events' => $events,
             'production' => $production,
@@ -308,8 +328,9 @@ class EventController extends Controller
     /**
      * Check if an event has a parent schedule.
      *
-     * @param  Event      $event      The event to check.
-     * @param  Production $production The production this event is in.
+     * @param Event      $event      The event to check.
+     * @param Production $production The production this event is in.
+     *
      * @return RedirectResponse
      */
     private function checkSchedule(Event $event, Production $production): ?RedirectResponse
@@ -320,7 +341,7 @@ class EventController extends Controller
                 'bkstg_schedule_read',
                 [
                     'production_slug' => $production->getSlug(),
-                    'id' => $schedule->getId()
+                    'id' => $schedule->getId(),
                 ]
             ));
         }

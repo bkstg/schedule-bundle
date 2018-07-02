@@ -1,5 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of the BkstgCoreBundle package.
+ * (c) Luke Bainbridge <http://www.lukebainbridge.ca/>
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Bkstg\ScheduleBundle\EventSubscriber;
 
 use Bkstg\CoreBundle\Event\UserMenuCollectionEvent;
@@ -51,8 +60,7 @@ class UserMenuSubscriber implements EventSubscriberInterface
     /**
      * Add the schedule items to the user menu.
      *
-     * @param  UserMenuCollectionEvent $event The menu collection event.
-     * @return void
+     * @param UserMenuCollectionEvent $event The menu collection event.
      */
     public function addScheduleMenuItem(UserMenuCollectionEvent $event): void
     {
@@ -82,8 +90,7 @@ class UserMenuSubscriber implements EventSubscriberInterface
     /**
      * Add invitations menu item.
      *
-     * @param  UserMenuCollectionEvent $event The menu collection event.
-     * @return void
+     * @param UserMenuCollectionEvent $event The menu collection event.
      */
     public function addInvitationsMenuItem(UserMenuCollectionEvent $event): void
     {
@@ -101,7 +108,7 @@ class UserMenuSubscriber implements EventSubscriberInterface
             'extras' => [
                 'badge_count' => count($invitations),
                 'translation_domain' => BkstgScheduleBundle::TRANSLATION_DOMAIN,
-            ]
+            ],
         ]);
         $menu->addChild($invitations);
     }

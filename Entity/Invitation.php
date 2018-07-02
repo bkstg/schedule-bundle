@@ -1,11 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of the BkstgCoreBundle package.
+ * (c) Luke Bainbridge <http://www.lukebainbridge.ca/>
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Bkstg\ScheduleBundle\Entity;
 
-use Bkstg\ScheduleBundle\Entity\Event;
-
 /**
- * Invitation
+ * Invitation.
  */
 class Invitation
 {
@@ -22,7 +29,7 @@ class Invitation
     /**
      * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -32,7 +39,7 @@ class Invitation
     /**
      * Set response.
      *
-     * @param integer|null $response
+     * @param int|null $response
      *
      * @return Invitation
      */
@@ -46,7 +53,7 @@ class Invitation
     /**
      * Get response.
      *
-     * @return integer|null
+     * @return int|null
      */
     public function getResponse()
     {
@@ -56,7 +63,7 @@ class Invitation
     /**
      * Set optional.
      *
-     * @param boolean $optional
+     * @param bool $optional
      *
      * @return Invitation
      */
@@ -70,7 +77,7 @@ class Invitation
     /**
      * Get optional.
      *
-     * @return boolean
+     * @return bool
      */
     public function getOptional()
     {

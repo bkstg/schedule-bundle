@@ -1,5 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of the BkstgCoreBundle package.
+ * (c) Luke Bainbridge <http://www.lukebainbridge.ca/>
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Bkstg\ScheduleBundle\Controller;
 
 use Bkstg\CoreBundle\Controller\Controller;
@@ -18,12 +27,14 @@ class CalendarController extends Controller
     /**
      * Show a calendar for the production.
      *
-     * @param  string                        $production_slug The slug for the production.
-     * @param  AuthorizationCheckerInterface $auth            The authorization checker service.
-     * @param  Request                       $request         The current request.
-     * @throws NotFoundHttpException                          When the production does not exist.
-     * @throws AccessDeniedException                          When the user is not an editor.
-     * @return Response                                       A response.
+     * @param string                        $production_slug The slug for the production.
+     * @param AuthorizationCheckerInterface $auth            The authorization checker service.
+     * @param Request                       $request         The current request.
+     *
+     * @throws NotFoundHttpException When the production does not exist.
+     * @throws AccessDeniedException When the user is not an editor.
+     *
+     * @return Response A response.
      */
     public function productionAction(
         string $production_slug,
@@ -50,12 +61,14 @@ class CalendarController extends Controller
     /**
      * Search events for a production.
      *
-     * @param  string                        $production_slug The slug for the production.
-     * @param  AuthorizationCheckerInterface $auth            The authorization checker service.
-     * @param  Request                       $request         The current request.
-     * @throws NotFoundHttpException                          When the production does not exist.
-     * @throws AccessDeniedException                          When the user is not an editor.
-     * @return Response                                       A response.
+     * @param string                        $production_slug The slug for the production.
+     * @param AuthorizationCheckerInterface $auth            The authorization checker service.
+     * @param Request                       $request         The current request.
+     *
+     * @throws NotFoundHttpException When the production does not exist.
+     * @throws AccessDeniedException When the user is not an editor.
+     *
+     * @return Response A response.
      */
     public function searchProductionAction(
         string $production_slug,
@@ -77,8 +90,8 @@ class CalendarController extends Controller
         $event_repo = $this->em->getRepository(Event::class);
         $events = $event_repo->searchEvents(
             $production,
-            new \DateTime('@' . ($request->query->get('from')/1000)),
-            new \DateTime('@' . ($request->query->get('to')/1000))
+            new \DateTime('@' . ($request->query->get('from') / 1000)),
+            new \DateTime('@' . ($request->query->get('to') / 1000))
         );
 
         // Return a JSON response.
@@ -88,11 +101,13 @@ class CalendarController extends Controller
     /**
      * Show a calendar for a user.
      *
-     * @param  AuthorizationCheckerInterface $auth    The authorization checker service.
-     * @param  Request                       $request The current request.
-     * @throws NotFoundHttpException                          When the production does not exist.
-     * @throws AccessDeniedException                          When the user is not an editor.
-     * @return Response                                       A response.
+     * @param AuthorizationCheckerInterface $auth    The authorization checker service.
+     * @param Request                       $request The current request.
+     *
+     * @throws NotFoundHttpException When the production does not exist.
+     * @throws AccessDeniedException When the user is not an editor.
+     *
+     * @return Response A response.
      */
     public function personalAction(
         AuthorizationCheckerInterface $auth,
@@ -106,12 +121,14 @@ class CalendarController extends Controller
     /**
      * Search events for a production.
      *
-     * @param  AuthorizationCheckerInterface $auth    The authorization checker service.
-     * @param  TokenStorageInterface         $token   The user token.
-     * @param  Request                       $request The current request.
-     * @throws NotFoundHttpException                  When the production does not exist.
-     * @throws AccessDeniedException                  When the user is not an editor.
-     * @return Response                               A response.
+     * @param AuthorizationCheckerInterface $auth    The authorization checker service.
+     * @param TokenStorageInterface         $token   The user token.
+     * @param Request                       $request The current request.
+     *
+     * @throws NotFoundHttpException When the production does not exist.
+     * @throws AccessDeniedException When the user is not an editor.
+     *
+     * @return Response A response.
      */
     public function searchPersonalAction(
         AuthorizationCheckerInterface $auth,
@@ -122,8 +139,8 @@ class CalendarController extends Controller
         $event_repo = $this->em->getRepository(Event::class);
         $events = $event_repo->searchEventsByUser(
             $token->getToken()->getUser(),
-            new \DateTime('@' . ($request->query->get('from')/1000)),
-            new \DateTime('@' . ($request->query->get('to')/1000))
+            new \DateTime('@' . ($request->query->get('from') / 1000)),
+            new \DateTime('@' . ($request->query->get('to') / 1000))
         );
 
         // Return a JSON response.
@@ -133,9 +150,10 @@ class CalendarController extends Controller
     /**
      * Helper function to prepare results for the calendar.
      *
-     * @param  array      $events     The events to return.
-     * @param  Production $production The production for these events.
-     * @return array                  The formatted events.
+     * @param array      $events     The events to return.
+     * @param Production $production The production for these events.
+     *
+     * @return array The formatted events.
      */
     private function prepareResult(array $events, Production $production = null): array
     {
@@ -148,13 +166,13 @@ class CalendarController extends Controller
         // Index schedules so we don't duplicate them.
         $schedules = [];
         foreach ($events as $event) {
-            $event_production = ($production !== null) ? $production : $event->getGroups()[0];
+            $event_production = (null !== $production) ? $production : $event->getGroups()[0];
             if (null === $schedule = $event->getSchedule()) {
                 // Add the event directly.
                 $result['result'][] = [
                     'icon' => 'calendar',
                     'id' => 'event:' . $event->getId(),
-                    'title' => (($production === null) ? $event_production->getName() . ': ' : '') . $event->getName(),
+                    'title' => ((null === $production) ? $event_production->getName() . ': ' : '') . $event->getName(),
                     'url' => $this->url_generator->generate(
                         'bkstg_event_read',
                         ['production_slug' => $event_production->getSlug(), 'id' => $event->getId()]
@@ -169,7 +187,7 @@ class CalendarController extends Controller
                 $result['result'][] = [
                     'icon' => 'list',
                     'id' => 'schedule:' . $schedule->getId(),
-                    'title' => (($production === null) ? $event_production->getName() . ': ' : '') . $schedule->getTitle(),
+                    'title' => ((null === $production) ? $event_production->getName() . ': ' : '') . $schedule->getTitle(),
                     'url' => $this->url_generator->generate(
                         'bkstg_schedule_read',
                         ['production_slug' => $event_production->getSlug(), 'id' => $schedule->getId()]
@@ -180,6 +198,7 @@ class CalendarController extends Controller
                 ];
             }
         }
+
         return $result;
     }
 }

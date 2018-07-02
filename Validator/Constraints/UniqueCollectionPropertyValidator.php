@@ -1,5 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of the BkstgCoreBundle package.
+ * (c) Luke Bainbridge <http://www.lukebainbridge.ca/>
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Bkstg\ScheduleBundle\Validator\Constraints;
 
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
@@ -23,9 +32,8 @@ class UniqueCollectionPropertyValidator extends ConstraintValidator
     /**
      * Validate a constraint.
      *
-     * @param  mixed      $value      The value being passed in.
-     * @param  Constraint $constraint The constraint to be checked.
-     * @return void
+     * @param mixed      $value      The value being passed in.
+     * @param Constraint $constraint The constraint to be checked.
      */
     public function validate($value, Constraint $constraint): void
     {

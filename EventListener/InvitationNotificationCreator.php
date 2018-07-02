@@ -1,5 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of the BkstgCoreBundle package.
+ * (c) Luke Bainbridge <http://www.lukebainbridge.ca/>
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Bkstg\ScheduleBundle\EventListener;
 
 use Bkstg\CoreBundle\User\UserProviderInterface;
@@ -35,7 +44,6 @@ class InvitationNotificationCreator
      * Listener for invitation creation that creates invitation timeline entry.
      *
      * @param LifecycleEventArgs $args The event arguments.
-     * @return void
      */
     public function postPersist(LifecycleEventArgs $args): void
     {

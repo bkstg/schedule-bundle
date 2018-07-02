@@ -1,5 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of the BkstgCoreBundle package.
+ * (c) Luke Bainbridge <http://www.lukebainbridge.ca/>
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Bkstg\ScheduleBundle\Repository;
 
 use Bkstg\CoreBundle\User\UserInterface;
@@ -10,12 +19,14 @@ class InvitationRepository extends EntityRepository
     /**
      * Build query to find pending invitations for a user.
      *
-     * @param  UserInterface $user The user to find invitations for.
+     * @param UserInterface $user The user to find invitations for.
+     *
      * @return Invitation[]
      */
     public function findPendingInvitationsQuery(UserInterface $user)
     {
         $qb = $this->createQueryBuilder('i');
+
         return $qb
             ->join('i.event', 'e')
 
@@ -37,7 +48,8 @@ class InvitationRepository extends EntityRepository
     /**
      * Find pending invitations for a user.
      *
-     * @param  UserInterface $user The user to find invitations for.
+     * @param UserInterface $user The user to find invitations for.
+     *
      * @return Invitation[]
      */
     public function findPendingInvitations(UserInterface $user)
@@ -48,12 +60,14 @@ class InvitationRepository extends EntityRepository
     /**
      * Build query to find other invitations for a user.
      *
-     * @param  UserInterface $user The user to find invitations for.
+     * @param UserInterface $user The user to find invitations for.
+     *
      * @return Invitation[]
      */
     public function findOtherInvitationsQuery(UserInterface $user)
     {
         $qb = $this->createQueryBuilder('i');
+
         return $qb
             ->join('i.event', 'e')
 
@@ -80,7 +94,8 @@ class InvitationRepository extends EntityRepository
     /**
      * Find other invitations for a user.
      *
-     * @param  UserInterface $user The user to find invitations for.
+     * @param UserInterface $user The user to find invitations for.
+     *
      * @return Invitation[]
      */
     public function findOtherInvitations(UserInterface $user)

@@ -1,5 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of the BkstgCoreBundle package.
+ * (c) Luke Bainbridge <http://www.lukebainbridge.ca/>
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Bkstg\ScheduleBundle\Repository;
 
 use Bkstg\CoreBundle\Entity\Production;
@@ -10,12 +19,14 @@ class ScheduleRepository extends EntityRepository
     /**
      * Build query to find archived schedules for a production.
      *
-     * @param  Production $production The production to search for schedules in.
+     * @param Production $production The production to search for schedules in.
+     *
      * @return Schedule[]
      */
     public function findArchivedSchedulesQuery(Production $production)
     {
         $qb = $this->createQueryBuilder('s');
+
         return $qb
             // Add joins.
             ->join('s.groups', 'g')

@@ -1,16 +1,24 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of the BkstgCoreBundle package.
+ * (c) Luke Bainbridge <http://www.lukebainbridge.ca/>
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Bkstg\ScheduleBundle\Entity;
 
 use Bkstg\CoreBundle\Entity\Production;
 use Bkstg\CoreBundle\Model\PublishableInterface;
-use Bkstg\ScheduleBundle\Entity\Invitation;
 use Doctrine\Common\Collections\ArrayCollection;
-use MidnightLuke\GroupSecurityBundle\Model\GroupInterface;
 use MidnightLuke\GroupSecurityBundle\Model\GroupableInterface;
+use MidnightLuke\GroupSecurityBundle\Model\GroupInterface;
 
 /**
- * Event
+ * Event.
  */
 class Event implements GroupableInterface, PublishableInterface
 {
@@ -31,7 +39,7 @@ class Event implements GroupableInterface, PublishableInterface
     private $published;
 
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
@@ -42,7 +50,7 @@ class Event implements GroupableInterface, PublishableInterface
     /**
      * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -263,7 +271,7 @@ class Event implements GroupableInterface, PublishableInterface
      *
      * @param Production $group
      *
-     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     * @return bool TRUE if this collection contained the specified element, FALSE otherwise.
      */
     public function removeGroup(GroupInterface $group)
     {
@@ -290,6 +298,7 @@ class Event implements GroupableInterface, PublishableInterface
                 return true;
             }
         }
+
         return false;
     }
 
@@ -313,7 +322,7 @@ class Event implements GroupableInterface, PublishableInterface
      *
      * @param Invitation $invitation
      *
-     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     * @return bool TRUE if this collection contained the specified element, FALSE otherwise.
      */
     public function removeInvitation(Invitation $invitation)
     {
@@ -329,11 +338,11 @@ class Event implements GroupableInterface, PublishableInterface
     {
         return $this->invitations;
     }
+
     /**
      * @var \Bkstg\ScheduleBundle\Entity\Schedule
      */
     private $schedule;
-
 
     /**
      * Set schedule.
@@ -360,7 +369,8 @@ class Event implements GroupableInterface, PublishableInterface
     }
 
     /**
-     * Get colour
+     * Get colour.
+     *
      * @return
      */
     public function getColour()
@@ -369,17 +379,20 @@ class Event implements GroupableInterface, PublishableInterface
     }
 
     /**
-     * Set colour
+     * Set colour.
+     *
      * @return $this
      */
     public function setColour(?string $colour)
     {
         $this->colour = $colour;
+
         return $this;
     }
 
     /**
-     * Get full_company
+     * Get full_company.
+     *
      * @return
      */
     public function getFullCompany()
@@ -388,50 +401,58 @@ class Event implements GroupableInterface, PublishableInterface
     }
 
     /**
-     * Set full_company
+     * Set full_company.
+     *
      * @return $this
      */
     public function setFullCompany(bool $full_company)
     {
         $this->full_company = $full_company;
+
         return $this;
     }
 
     /**
-     * Get active
+     * Get active.
+     *
      * @return
      */
     public function isActive(): bool
     {
-        return ($this->active === true);
+        return true === $this->active;
     }
 
     /**
-     * Set active
+     * Set active.
+     *
      * @return $this
      */
     public function setActive(bool $active): self
     {
         $this->active = $active;
+
         return $this;
     }
 
     /**
-     * Get published
+     * Get published.
+     *
      * @return
      */
     public function isPublished(): bool
     {
-        return ($this->published === true);
+        return true === $this->published;
     }
 
     /**
-     * Set published
+     * Set published.
+     *
      * @return $this
      */
-    public function setPublished(bool $published): self
+    public function setPublished(bool $published): PublishableInterface
     {
         $this->published = $published;
+
         return $this;
     }
 

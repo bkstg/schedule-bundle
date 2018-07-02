@@ -1,5 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of the BkstgCoreBundle package.
+ * (c) Luke Bainbridge <http://www.lukebainbridge.ca/>
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Bkstg\ScheduleBundle\EventListener;
 
 use Bkstg\CoreBundle\User\MembershipProviderInterface;
@@ -28,10 +37,9 @@ class FullCompanyListener
     /**
      * Listens for the onFlush event.
      *
-     * @param  OnFlushEventArgs $args The arguments for this event.
-     * @return void
+     * @param OnFlushEventArgs $args The arguments for this event.
      */
-    public function onFlush(OnFlushEventArgs $args)
+    public function onFlush(OnFlushEventArgs $args): void
     {
         // Get the entity manager and unit of work.
         $em = $args->getEntityManager();
@@ -57,8 +65,9 @@ class FullCompanyListener
     /**
      * Helper function that generates new invitations as needed.
      *
-     * @param  mixed $object The entity being acted on.
-     * @return Invitation[]  The new invitations needed for this event.
+     * @param mixed $object The entity being acted on.
+     *
+     * @return Invitation[] The new invitations needed for this event.
      */
     private function getInvitations($object)
     {

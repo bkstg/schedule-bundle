@@ -1,5 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of the BkstgCoreBundle package.
+ * (c) Luke Bainbridge <http://www.lukebainbridge.ca/>
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Bkstg\ScheduleBundle\Spread;
 
 use Bkstg\ScheduleBundle\Entity\Event;
@@ -16,7 +25,7 @@ class EventGroupableSpread extends GroupableSpread
         $object = $action->getComponent('directComplement')->getData();
 
         if (!$object instanceof Event
-            || $action->getVerb() != 'schedule') {
+            || 'schedule' != $action->getVerb()) {
             return false;
         }
 

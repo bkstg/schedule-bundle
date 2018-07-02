@@ -1,5 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of the BkstgCoreBundle package.
+ * (c) Luke Bainbridge <http://www.lukebainbridge.ca/>
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Bkstg\ScheduleBundle\Repository;
 
 use Bkstg\CoreBundle\Entity\Production;
@@ -13,10 +22,11 @@ class EventRepository extends EntityRepository
     /**
      * Search for events within a production.
      *
-     * @param  Production $production The production to search in.
-     * @param  \DateTime  $from       The time to start searching from.
-     * @param  \DateTime  $to         The time to end searching from.
-     * @param  boolean    $active     The active state of the events.
+     * @param Production $production The production to search in.
+     * @param \DateTime  $from       The time to start searching from.
+     * @param \DateTime  $to         The time to end searching from.
+     * @param bool       $active     The active state of the events.
+     *
      * @return Event[]
      */
     public function searchEvents(
@@ -26,6 +36,7 @@ class EventRepository extends EntityRepository
         bool $active = true
     ) {
         $qb = $this->createQueryBuilder('e');
+
         return $qb
             ->join('e.groups', 'g')
 
@@ -48,10 +59,11 @@ class EventRepository extends EntityRepository
     /**
      * Search for events for a user.
      *
-     * @param  UserInterface $user   The production to search in.
-     * @param  \DateTime     $from   The time to start searching from.
-     * @param  \DateTime     $to     The time to end searching from.
-     * @param  boolean       $active The active state of the events.
+     * @param UserInterface $user   The production to search in.
+     * @param \DateTime     $from   The time to start searching from.
+     * @param \DateTime     $to     The time to end searching from.
+     * @param bool          $active The active state of the events.
+     *
      * @return Event[]
      */
     public function searchEventsByUser(
@@ -61,6 +73,7 @@ class EventRepository extends EntityRepository
         bool $active = true
     ) {
         $qb = $this->createQueryBuilder('e');
+
         return $qb
             ->join('e.invitations', 'i')
 
@@ -88,12 +101,14 @@ class EventRepository extends EntityRepository
     /**
      * Helper function to search for events that are not active.
      *
-     * @param  Production $production The production to search in.
+     * @param Production $production The production to search in.
+     *
      * @return Event[]
      */
     public function findArchivedEventsQuery(Production $production)
     {
         $qb = $this->createQueryBuilder('e');
+
         return $qb
             // Add conditions.
             ->andWhere($qb->expr()->eq('e.active', ':active'))

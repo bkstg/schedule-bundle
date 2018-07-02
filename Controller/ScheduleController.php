@@ -96,6 +96,7 @@ class ScheduleController extends Controller
         // Render the form.
         return new Response($this->templating->render('@BkstgSchedule/Schedule/create.html.twig', [
             'form' => $form->createView(),
+            'production' => $production,
         ]));
     }
 

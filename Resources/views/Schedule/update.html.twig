@@ -1,5 +1,7 @@
 {% extends '@BkstgCore/layout.html.twig' %}
-{% set page_title = 'Edit schedule %schedule%'|trans({'%schedule%': schedule.title}) %}
+{% trans_default_domain 'BkstgScheduleBundle' %}
+{% set page_title = 'schedule.update'|trans({ '%schedule%': schedule.title }) %}
+
 {% form_theme form
   '@BkstgSchedule/Invitation/_form.html.twig'
   '@BkstgSchedule/Event/_form-collection.html.twig'

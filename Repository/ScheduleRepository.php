@@ -17,10 +17,15 @@ class ScheduleRepository extends EntityRepository
     {
         $qb = $this->createQueryBuilder('s');
         return $qb
+            // Add joins.
+            ->join('s.groups', 'g')
+
             // Add conditions.
+            ->andWhere($qb->expr()->eq('g', ':production'))
             ->andWhere($qb->expr()->eq('s.active', ':active'))
 
             // Add parameters.
+            ->setParameter('production', $production)
             ->setParameter('active', false)
 
             // Add ordering.

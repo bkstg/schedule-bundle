@@ -1,10 +1,12 @@
 {% extends '@BkstgCore/layout.html.twig' %}
-{% set page_title = 'Delete "%title%"?'|trans({'%title%': schedule.title }) %}
+{% trans_default_domain 'BkstgScheduleBundle' %}
+{% set page_title = 'schedule.delete'|trans({'%schedule%': schedule.title }) %}
 
 {% block content %}
   {% include '@BkstgSchedule/Schedule/_actions.html.twig' with { 'schedule': schedule, 'production': production } only %}
-  <p>{{ 'Are you sure you want to delete this schedule?' }}</p>
-  <p><strong>{{ 'All events attached to it will be deleted as well!' }}</strong></p>
+  <p>{{ 'schedule.delete_confirm'|trans({ '%schedule%': schedule.title }) }}</p>
+  <p>{{ 'schedule.delete_consequences'|trans }}</p>
+  <p><strong>{{ 'schedule.delete_no_undo'|trans }}</strong></p>
   {{ form_start(form) }}
     {{ form_widget(form) }}
     <div class="form-group form-inline">

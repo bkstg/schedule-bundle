@@ -1,11 +1,12 @@
 {% extends '@BkstgCore/layout.html.twig' %}
-{% set page_title = schedule.title %}
 {% trans_default_domain 'BkstgScheduleBundle' %}
+{% set page_title = schedule.title %}
+
 {% block content %}
   {% include '@BkstgSchedule/Schedule/_actions.html.twig' with { 'schedule': schedule, 'production': production } only %}
   <div class="row">
     <div class="col-md-8">
-      {{ schedule.notes|raw }}</p>
+      {{ schedule.notes|purify }}</p>
     </div>
     <div class="col-md-4">
       {% if schedule.location is not empty %}
@@ -74,9 +75,9 @@
             <td>{{ event.description|raw }}</td>
           </tr>
         {% else %}
-            <tr>
-              <td colspan="4">{{ 'schedule.no_events'|trans }}</td>
-            </tr>
+          <tr>
+            <td colspan="4">{{ 'schedule.no_events'|trans }}</td>
+          </tr>
         {% endfor %}
       </tbody>
     </table>

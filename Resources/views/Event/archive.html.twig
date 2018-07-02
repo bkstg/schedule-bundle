@@ -10,10 +10,10 @@
   {# Event and schedule archive links. #}
   <ul class="nav nav-tabs mb-3">
     <li class="nav-item">
-      <a class="nav-link" href="{{ url('bkstg_schedule_archive', {'production_slug': production.slug}) }}">Schedules</a>
+      <a class="nav-link" href="{{ url('bkstg_schedule_archive', {'production_slug': production.slug}) }}">{{ 'schedules'|trans }}</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link active" href="{{ url('bkstg_event_archive', {'production_slug': production.slug}) }}">Events</a>
+      <a class="nav-link active" href="{{ url('bkstg_event_archive', {'production_slug': production.slug}) }}">{{ 'events'|trans }}</a>
     </li>
   </ul>
 
@@ -32,12 +32,10 @@
         {% for event in events %}
           <tr>
             <td>
-              {% if is_granted('edit', event) %}
-                <div class="btn-group btn-group-sm">
-                  <a href="{{ url('bkstg_event_update', {'production_slug': production.slug, 'id': event.id}) }}" class="btn btn-info"><i class="fa fa-pencil" aria-hidden="true"></i><span class="sr-only">{{ 'edit'|trans }}</span></a>
-                  <a href="{{ url('bkstg_event_delete', {'production_slug': production.slug, 'id': event.id}) }}" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i><span class="sr-only">{{ 'delete'|trans }}</span></a>
-                </div>
-              {% endif %}
+              <div class="btn-group btn-group-sm">
+                <a href="{{ url('bkstg_event_update', {'production_slug': production.slug, 'id': event.id}) }}" class="btn btn-info"><i class="fa fa-pencil" aria-hidden="true"></i><span class="sr-only">{{ 'edit'|trans }}</span></a>
+                <a href="{{ url('bkstg_event_delete', {'production_slug': production.slug, 'id': event.id}) }}" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i><span class="sr-only">{{ 'delete'|trans }}</span></a>
+              </div>
             </td>
             <td><a href="{{ url('bkstg_event_read', {'production_slug': production.slug, 'id': event.id}) }}">{{ event.name }}</a></td>
             <td>{{ get_user(event.author) }}</td>

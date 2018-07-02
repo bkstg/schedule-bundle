@@ -1,6 +1,7 @@
 {% extends '@BkstgCore/layout.html.twig' %}
-{% set page_title = 'My Archived Invitations'|trans %}
 {% trans_default_domain 'BkstgScheduleBundle' %}
+{% set page_title = 'invitation.my_archive'|trans|title %}
+
 {% block main %}
   <div class="container-fluid">
     {% include '@BkstgCore/_header.html.twig' with { 'title': page_title } only %}
@@ -9,13 +10,13 @@
       <table class="table table-striped">
         <thead>
           <tr>
-            <th>{{ 'Response'|trans }}</th>
-            <th>{{ knp_pagination_sortable(invitations, 'invitation.optional'|trans, 'i.optional') }}</th>
-            <th>{{ 'invitation.production'|trans }}</th>
-            <th>{{ knp_pagination_sortable(invitations, 'invitation.event'|trans, 'e.name') }}</th>
-            <th>{{ knp_pagination_sortable(invitations, 'event.start'|trans, 'e.start') }}</th>
-            <th>{{ knp_pagination_sortable(invitations, 'event.end'|trans, 'e.end') }}</th>
-            <th>{{ 'Invited by'|trans }}</th>
+            <th>{{ 'invitation.label.response'|trans }}</th>
+            <th>{{ knp_pagination_sortable(invitations, 'invitation.label.optional'|trans, 'i.optional') }}</th>
+            <th>{{ 'invitation.label.production'|trans }}</th>
+            <th>{{ knp_pagination_sortable(invitations, 'invitation.label.event'|trans, 'e.name') }}</th>
+            <th>{{ knp_pagination_sortable(invitations, 'event.label.start'|trans, 'e.start') }}</th>
+            <th>{{ knp_pagination_sortable(invitations, 'event.label.end'|trans, 'e.end') }}</th>
+            <th>{{ 'invitation.label.invited_by'|trans }}</th>
           </tr>
         </thead>
         <tbody>
@@ -23,7 +24,7 @@
           {% set author = get_user(invitation.event.author) %}
           <tr>
             <td>{% include '@BkstgSchedule/Invitation/_respond.html.twig' with { 'invitation': invitation } only %}</td>
-            <td>{% if invitation.optional %}{{ 'Yes'|trans }}{% else %}{{ 'No'|trans }}{% endif %}</td>
+            <td>{{ invitation.optional ? 'invitation.label.optional_choices.yes'|trans : 'invitation.label.optional_choices.no'|trans }}</td>
             <td>
               {% for production in invitation.event.groups %}
                 {{ production }}
@@ -38,19 +39,19 @@
                 {% endif %}
               {% endfor %}
             </td>
-            <td>{{ invitation.event.start|date('l, F j, Y g:i a') }}</td>
-            <td>{{ invitation.event.end|date('l, F j, Y g:i a') }}</td>
+            <td>{{ invitation.event.start|date(full_date_weekday) }}</td>
+            <td>{{ invitation.event.end|date(full_date_weekday) }}</td>
             <td>{{ author }}</td>
           </tr>
         {% else %}
-            <tr>
-              <td colspan="7">{{ 'invitations.no_invitations'|trans }}</td>
-            </tr>
+          <tr>
+            <td colspan="7">{{ 'invitations.no_invitations'|trans }}</td>
+          </tr>
         {% endfor %}
         </tbody>
       </table>
-      {{ knp_pagination_render(invitations) }}
     </div></p>
+    {{ knp_pagination_render(invitations) }}
     {% include '@BkstgCore/_footer.html.twig' %}
   </div>
 {% endblock %}

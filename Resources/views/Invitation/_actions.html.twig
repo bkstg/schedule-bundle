@@ -1,9 +1,11 @@
+{% trans_default_domain 'BkstgScheduleBundle' %}
+
 {% set route = app.request.attributes.get('_route') %}
 <ul class="nav nav-tabs mb-3">
   <li class="nav-item">
-    <a class="nav-link{% if route == 'bkstg_invitation_index' %} active{% endif %}" href="{{ url('bkstg_invitation_index') }}">Pending</a>
+    <a class="nav-link{% if route == 'bkstg_invitation_index' %} active{% endif %}" href="{{ url('bkstg_invitation_index') }}">{{ 'invitation.pending'|trans }}</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link{% if route == 'bkstg_invitation_archive' %} active{% endif %}" href="{{ url('bkstg_invitation_archive') }}">Archived</a>
+    <a class="nav-link{% if route == 'bkstg_invitation_archive' %} active{% endif %}" href="{{ url('bkstg_invitation_archive') }}">{{ 'invitation.archive'|trans }}</a>
   </li>
 </ul>

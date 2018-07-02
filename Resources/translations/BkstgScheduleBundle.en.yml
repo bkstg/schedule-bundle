@@ -60,9 +60,9 @@ event:
     title: 'Title'
     invitations: 'Invitations'
     notes: 'Notes'
-    start: 'Start'
-    end: 'End'
     label:
+        start: 'Start'
+        end: 'End'
         name: 'Name'
         status: 'Status'
         author: 'Author'
@@ -97,9 +97,23 @@ menu_item:
 invitations:
     no_invitations: 'No pending invitations.'
 invitation:
-    optional: 'Optional'
-    production: 'Production'
-    event: 'Event'
+    my_pending: 'My pending invitations'
+    my_archive: 'My archived invitations'
+    respond: 'Respond to invitation.'
+    accept: 'Accept'
+    maybe: 'Maybe'
+    decline: 'Decline'
+    pending: 'Pending'
+    archive: 'Archive'
+    label:
+        optional: 'Optional'
+        optional_choices:
+            yes: 'Yes'
+            no: 'No'
+        production: 'Production'
+        event: 'Event'
+        response: 'Response'
+        invited_by: 'Invited by'
     form:
         invitee: 'Invitee'
         choose_invitee: '- Choose invitee -'

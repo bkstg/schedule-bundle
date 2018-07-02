@@ -1,7 +1,9 @@
+{% trans_default_domain 'BkstgScheduleBundle' %}
+
 {% block bkstg_invitation_widget %}
   {{ form_row(form.invitee) }}
   {{ form_row(form.optional) }}
   <div class="btn-group">
-    <a href="#" class="collection-item-remove btn btn-danger"><i class="fa fa-times"></i> {{ 'Remove' }}</a>
+    <a href="#" class="collection-item-remove btn btn-danger"><i class="fa fa-times"></i> {{ 'remove'|trans }}</a>
   </div>
 {% endblock %}

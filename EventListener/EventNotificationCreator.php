@@ -67,7 +67,7 @@ class EventNotificationCreator
                     ['directComplement' => $event_component, 'indirectComplement' => $group_component]
                 );
                 $action->setLink($this->url_generator->generate(
-                    'bkstg_event_show',
+                    'bkstg_event_read',
                     ['id' => $event->getId(), 'production_slug' => $group->getSlug()]
                 ));
 

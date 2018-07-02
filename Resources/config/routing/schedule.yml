@@ -7,11 +7,11 @@ bkstg_schedule_archive:
     path: /archive
     defaults:
       _controller: Bkstg\ScheduleBundle\Controller\ScheduleController:archiveAction
-bkstg_schedule_show:
+bkstg_schedule_read:
     path: /{id}
     defaults:
         _controller: Bkstg\ScheduleBundle\Controller\ScheduleController:readAction
-bkstg_schedule_edit:
+bkstg_schedule_update:
     path: /{id}/edit
     defaults:
         _controller: Bkstg\ScheduleBundle\Controller\ScheduleController:updateAction

@@ -156,7 +156,7 @@ class CalendarController extends Controller
                     'id' => 'event:' . $event->getId(),
                     'title' => (($production === null) ? $event_production->getName() . ': ' : '') . $event->getName(),
                     'url' => $this->url_generator->generate(
-                        'bkstg_event_show',
+                        'bkstg_event_read',
                         ['production_slug' => $event_production->getSlug(), 'id' => $event->getId()]
                     ),
                     'class' => 'event-' . $event->getColour(),
@@ -171,7 +171,7 @@ class CalendarController extends Controller
                     'id' => 'schedule:' . $schedule->getId(),
                     'title' => (($production === null) ? $event_production->getName() . ': ' : '') . $schedule->getTitle(),
                     'url' => $this->url_generator->generate(
-                        'bkstg_schedule_show',
+                        'bkstg_schedule_read',
                         ['production_slug' => $event_production->getSlug(), 'id' => $schedule->getId()]
                     ),
                     'class' => 'event-' . $schedule->getColour(),

@@ -32,9 +32,9 @@
             <td>
               {% for production in invitation.event.groups %}
                 {% if invitation.event.schedule is not empty %}
-                  <i class="fa fa-list"></i> <a href="{{ url('bkstg_schedule_show', {'production_slug': production.slug, 'id': invitation.event.schedule.id}) }}"><strong>{{ invitation.event.schedule.title }}:</strong> {{ invitation.event }}</a>
+                  <i class="fa fa-list"></i> <a href="{{ url('bkstg_schedule_read', {'production_slug': production.slug, 'id': invitation.event.schedule.id}) }}"><strong>{{ invitation.event.schedule.title }}:</strong> {{ invitation.event }}</a>
                 {% else %}
-                  <i class="fa fa-calendar"></i> <a href="{{ url('bkstg_event_show', {'production_slug': production.slug, 'id': invitation.event.id}) }}">{{ invitation.event }}</a>
+                  <i class="fa fa-calendar"></i> <a href="{{ url('bkstg_event_read', {'production_slug': production.slug, 'id': invitation.event.id}) }}">{{ invitation.event }}</a>
                 {% endif %}
               {% endfor %}
             </td>

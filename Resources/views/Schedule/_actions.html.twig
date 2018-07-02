@@ -2,10 +2,10 @@
   {% set route = app.request.attributes.get('_route') %}
   <ul class="nav nav-tabs mb-3">
     <li class="nav-item">
-      <a class="nav-link{% if route == 'bkstg_schedule_show' %} active{% endif %}" href="{{ url('bkstg_schedule_show', {'id': schedule.id, 'production_slug': production.slug}) }}">View</a>
+      <a class="nav-link{% if route == 'bkstg_schedule_read' %} active{% endif %}" href="{{ url('bkstg_schedule_read', {'id': schedule.id, 'production_slug': production.slug}) }}">View</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link{% if route == 'bkstg_schedule_edit' %} active{% endif %}" href="{{ url('bkstg_schedule_edit', {'id': schedule.id, 'production_slug': production.slug}) }}">Edit</a>
+      <a class="nav-link{% if route == 'bkstg_schedule_update' %} active{% endif %}" href="{{ url('bkstg_schedule_update', {'id': schedule.id, 'production_slug': production.slug}) }}">Edit</a>
     </li>
     <li class="nav-item">
       <a class="nav-link{% if route == 'bkstg_schedule_delete' %} active{% endif %} text-danger" href="{{ url('bkstg_schedule_delete', {'id': schedule.id, 'production_slug': production.slug}) }}">Delete</a>

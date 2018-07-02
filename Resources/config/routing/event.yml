@@ -7,11 +7,11 @@ bkstg_event_archive:
     path: /archive
     defaults:
       _controller: Bkstg\ScheduleBundle\Controller\EventController:archiveAction
-bkstg_event_show:
+bkstg_event_read:
     path: /{id}
     defaults:
       _controller: Bkstg\ScheduleBundle\Controller\EventController:readAction
-bkstg_event_edit:
+bkstg_event_update:
     path: /{id}/edit
     defaults:
         _controller: Bkstg\ScheduleBundle\Controller\EventController:updateAction

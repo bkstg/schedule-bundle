@@ -85,7 +85,7 @@ class ScheduleController extends Controller
                 ], BkstgScheduleBundle::TRANSLATION_DOMAIN)
             );
             return new RedirectResponse($this->url_generator->generate(
-                'bkstg_schedule_show',
+                'bkstg_schedule_read',
                 [
                     'id' => $schedule->getId(),
                     'production_slug' => $production->getSlug(),
@@ -219,7 +219,7 @@ class ScheduleController extends Controller
                 ], BkstgScheduleBundle::TRANSLATION_DOMAIN)
             );
             return new RedirectResponse($this->url_generator->generate(
-                'bkstg_schedule_show',
+                'bkstg_schedule_read',
                 ['id' => $schedule->getId(), 'production_slug' => $production->getSlug()]
             ));
         }

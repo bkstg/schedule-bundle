@@ -33,7 +33,7 @@
             <td>{% if schedule.published == false %}{{ 'schedule.unpublished'|trans }}{% else %}{{ 'schedule.archived'|trans }}{% endif %}</td>
             <td>{{ schedule.title }}</td>
             <td>{{ schedule.updated|date }}</td>
-            <td><a href="{{ url('bkstg_schedule_edit', {'production_slug': production.slug, 'id': schedule.id}) }}">{{ 'schedule.edit'|trans }}</a></td>
+            <td><a href="{{ url('bkstg_schedule_update', {'production_slug': production.slug, 'id': schedule.id}) }}">{{ 'schedule.edit'|trans }}</a></td>
           </tr>
         {% else %}
           <tr>

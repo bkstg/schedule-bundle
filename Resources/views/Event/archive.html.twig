@@ -33,7 +33,7 @@
             <td>{% if event.published == false %}{{ 'event.unpublished'|trans }}{% else %}{{ 'event.archived'|trans }}{% endif %}</td>
             <td>{{ event.name }}</td>
             <td>{{ event.updated|date }}</td>
-            <td><a href="{{ url('bkstg_event_edit', {'production_slug': production.slug, 'id': event.id}) }}">{{ 'event.edit'|trans }}</a></td>
+            <td><a href="{{ url('bkstg_event_update', {'production_slug': production.slug, 'id': event.id}) }}">{{ 'event.edit'|trans }}</a></td>
           </tr>
         {% else %}
           <tr>

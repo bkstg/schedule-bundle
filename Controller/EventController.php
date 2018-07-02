@@ -83,7 +83,7 @@ class EventController extends Controller
                 ], BkstgScheduleBundle::TRANSLATION_DOMAIN)
             );
             return new RedirectResponse($this->url_generator->generate(
-                'bkstg_event_show',
+                'bkstg_event_read',
                 ['id' => $event->getId(), 'production_slug' => $production->getSlug()]
             ));
         }
@@ -189,7 +189,7 @@ class EventController extends Controller
                 ], BkstgScheduleBundle::TRANSLATION_DOMAIN)
             );
             return new RedirectResponse($this->url_generator->generate(
-                'bkstg_event_show',
+                'bkstg_event_read',
                 ['id' => $event->getId(), 'production_slug' => $production->getSlug()]
             ));
         }
@@ -316,7 +316,7 @@ class EventController extends Controller
         // If this event is handled by a schedule generate a redirect there.
         if (null !== $schedule = $event->getSchedule()) {
             return new RedirectResponse($this->url_generator->generate(
-                'bkstg_schedule_show',
+                'bkstg_schedule_read',
                 [
                     'production_slug' => $production->getSlug(),
                     'id' => $schedule->getId()

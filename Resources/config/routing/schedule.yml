@@ -1,21 +1,26 @@
 # Schedule paths.
 bkstg_schedule_create:
     path: /create
+    methods: [GET]
     defaults:
         _controller: Bkstg\ScheduleBundle\Controller\ScheduleController:createAction
 bkstg_schedule_archive:
     path: /archive
+    methods: [GET]
     defaults:
       _controller: Bkstg\ScheduleBundle\Controller\ScheduleController:archiveAction
 bkstg_schedule_read:
     path: /{id}
+    methods: [GET]
     defaults:
         _controller: Bkstg\ScheduleBundle\Controller\ScheduleController:readAction
 bkstg_schedule_update:
     path: /{id}/edit
+    methods: [GET,POST]
     defaults:
         _controller: Bkstg\ScheduleBundle\Controller\ScheduleController:updateAction
 bkstg_schedule_delete:
     path: /{id}/delete
+    methods: [GET,POST]
     defaults:
         _controller: Bkstg\ScheduleBundle\Controller\ScheduleController:deleteAction

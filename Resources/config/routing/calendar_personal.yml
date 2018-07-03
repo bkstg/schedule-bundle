@@ -1,9 +1,11 @@
 # Personal calendar paths.
 bkstg_calendar_personal:
     path: /
+    methods: [GET]
     defaults:
         _controller: Bkstg\ScheduleBundle\Controller\CalendarController:personalAction
 bkstg_calendar_search_personal:
     path: /search
+    methods: [GET]
     defaults:
         _controller: Bkstg\ScheduleBundle\Controller\CalendarController:searchPersonalAction

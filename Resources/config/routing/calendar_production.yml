@@ -1,9 +1,11 @@
 # Production calendar paths.
 bkstg_calendar_production:
     path: /
+    methods: [GET]
     defaults:
         _controller: Bkstg\ScheduleBundle\Controller\CalendarController:productionAction
 bkstg_calendar_search_production:
     path: /search
+    methods: [GET]
     defaults:
         _controller: Bkstg\ScheduleBundle\Controller\CalendarController:searchProductionAction

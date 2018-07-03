@@ -1,21 +1,26 @@
 # Event paths.
 bkstg_event_create:
     path: /create
+    methods: [GET,POST]
     defaults:
       _controller: Bkstg\ScheduleBundle\Controller\EventController:createAction
 bkstg_event_archive:
     path: /archive
+    methods: [GET]
     defaults:
       _controller: Bkstg\ScheduleBundle\Controller\EventController:archiveAction
 bkstg_event_read:
     path: /{id}
+    methods: [GET]
     defaults:
       _controller: Bkstg\ScheduleBundle\Controller\EventController:readAction
 bkstg_event_update:
     path: /{id}/edit
+    methods: [GET,POST]
     defaults:
         _controller: Bkstg\ScheduleBundle\Controller\EventController:updateAction
 bkstg_event_delete:
     path: /{id}/delete
+    methods: [GET,POST]
     defaults:
         _controller: Bkstg\ScheduleBundle\Controller\EventController:deleteAction

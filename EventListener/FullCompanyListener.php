@@ -94,7 +94,7 @@ class FullCompanyListener
 
                 // If this membership is active, has not expired and is not
                 // already invited create new invitation.
-                if ($membership->getStatus()
+                if ($membership->isActive()
                     && !$membership->isExpired()
                     && !in_array($membership->getMember()->getUsername(), $existing)
                 ) {

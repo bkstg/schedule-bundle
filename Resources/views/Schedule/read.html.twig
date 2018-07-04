@@ -1,12 +1,12 @@
 {% extends '@BkstgCore/layout.html.twig' %}
 {% trans_default_domain 'BkstgScheduleBundle' %}
-{% set page_title = schedule.title %}
+{% set page_title = schedule.name %}
 
 {% block content %}
   {% include '@BkstgSchedule/Schedule/_actions.html.twig' with { 'schedule': schedule, 'production': production } only %}
   <div class="row">
     <div class="col-md-8">
-      {{ schedule.notes|purify }}</p>
+      {{ schedule.description|purify }}</p>
     </div>
     <div class="col-md-4">
       {% if schedule.location is not empty %}

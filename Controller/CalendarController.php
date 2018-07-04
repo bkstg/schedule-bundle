@@ -187,7 +187,7 @@ class CalendarController extends Controller
                 $result['result'][] = [
                     'icon' => 'list',
                     'id' => 'schedule:' . $schedule->getId(),
-                    'title' => ((null === $production) ? $event_production->getName() . ': ' : '') . $schedule->getTitle(),
+                    'title' => ((null === $production) ? $event_production->getName() . ': ' : '') . $schedule->getName(),
                     'url' => $this->url_generator->generate(
                         'bkstg_schedule_read',
                         ['production_slug' => $event_production->getSlug(), 'id' => $schedule->getId()]

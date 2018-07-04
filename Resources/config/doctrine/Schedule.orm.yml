@@ -10,7 +10,7 @@ Bkstg\ScheduleBundle\Entity\Schedule:
                 strategy: AUTO
 
     fields:
-        title:
+        name:
             type: string
         location:
             type: string
@@ -18,7 +18,7 @@ Bkstg\ScheduleBundle\Entity\Schedule:
         colour:
             type: string
             nullable: true
-        notes:
+        description:
             type: text
             nullable: true
         active:

@@ -1,10 +1,10 @@
 {% extends '@BkstgCore/layout.html.twig' %}
 {% trans_default_domain 'BkstgScheduleBundle' %}
-{% set page_title = 'schedule.delete'|trans({'%schedule%': schedule.title }) %}
+{% set page_title = 'schedule.delete'|trans({'%schedule%': schedule.name }) %}
 
 {% block content %}
   {% include '@BkstgSchedule/Schedule/_actions.html.twig' with { 'schedule': schedule, 'production': production } only %}
-  <p>{{ 'schedule.delete_confirm'|trans({ '%schedule%': schedule.title }) }}</p>
+  <p>{{ 'schedule.delete_confirm'|trans({ '%schedule%': schedule.name }) }}</p>
   <p>{{ 'schedule.delete_consequences'|trans }}</p>
   <p><strong>{{ 'schedule.delete_no_undo'|trans }}</strong></p>
   {{ form_start(form) }}

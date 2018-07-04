@@ -31,14 +31,14 @@ class ScheduleType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('title', null, [
-                'label' => 'schedule.form.title',
+            ->add('name', null, [
+                'label' => 'schedule.form.name',
             ])
             ->add('location', null, [
                 'label' => 'schedule.form.location',
             ])
-            ->add('notes', CKEditorType::class, [
-                'label' => 'schedule.form.notes',
+            ->add('description', CKEditorType::class, [
+                'label' => 'schedule.form.description',
                 'config' => ['toolbar' => 'basic'],
                 'required' => false, ])
             ->add('colour', ChoiceType::class, [

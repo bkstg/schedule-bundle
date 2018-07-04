@@ -20,10 +20,10 @@ use MidnightLuke\GroupSecurityBundle\Model\GroupInterface;
 class Schedule implements GroupableInterface, PublishableInterface
 {
     private $id;
-    private $title;
+    private $name;
     private $location;
     private $colour;
-    private $notes;
+    private $description;
     private $active;
     private $published;
     private $author;
@@ -44,23 +44,23 @@ class Schedule implements GroupableInterface, PublishableInterface
     }
 
     /**
-     * Get title.
+     * Get name.
      *
      * @return
      */
-    public function getTitle()
+    public function getName()
     {
-        return $this->title;
+        return $this->name;
     }
 
     /**
-     * Set title.
+     * Set name.
      *
      * @return $this
      */
-    public function setTitle($title)
+    public function setName($name)
     {
-        $this->title = $title;
+        $this->name = $name;
 
         return $this;
     }
@@ -110,23 +110,23 @@ class Schedule implements GroupableInterface, PublishableInterface
     }
 
     /**
-     * Get notes.
+     * Get description.
      *
      * @return
      */
-    public function getNotes()
+    public function getDescription()
     {
-        return $this->notes;
+        return $this->description;
     }
 
     /**
-     * Set notes.
+     * Set description.
      *
      * @return $this
      */
-    public function setNotes(string $notes)
+    public function setDescription(string $description)
     {
-        $this->notes = $notes;
+        $this->description = $description;
 
         return $this;
     }

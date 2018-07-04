@@ -91,7 +91,7 @@ class ScheduleController extends Controller
             $this->session->getFlashBag()->add(
                 'success',
                 $this->translator->trans('schedule.created', [
-                    '%schedule%' => $schedule->getTitle(),
+                    '%schedule%' => $schedule->getName(),
                 ], BkstgScheduleBundle::TRANSLATION_DOMAIN)
             );
 
@@ -231,7 +231,7 @@ class ScheduleController extends Controller
             $this->session->getFlashBag()->add(
                 'success',
                 $this->translator->trans('schedule.updated', [
-                    '%schedule%' => $schedule->getTitle(),
+                    '%schedule%' => $schedule->getName(),
                 ], BkstgScheduleBundle::TRANSLATION_DOMAIN)
             );
 
@@ -289,7 +289,7 @@ class ScheduleController extends Controller
             $this->session->getFlashBag()->add(
                 'success',
                 $this->translator->trans('schedule.deleted', [
-                    '%schedule%' => $schedule->getTitle(),
+                    '%schedule%' => $schedule->getName(),
                 ], BkstgScheduleBundle::TRANSLATION_DOMAIN)
             );
 

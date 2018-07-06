@@ -11,11 +11,11 @@ declare(strict_types=1);
 
 namespace Bkstg\ScheduleBundle\EventListener;
 
-use Bkstg\CoreBundle\User\UserProviderInterface;
 use Bkstg\ScheduleBundle\Entity\Event;
 use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
 use Spy\Timeline\Driver\ActionManagerInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 /**
  * Doctrine event listener for event creation.

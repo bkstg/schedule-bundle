@@ -11,11 +11,11 @@ declare(strict_types=1);
 
 namespace Bkstg\ScheduleBundle\EventListener;
 
-use Bkstg\CoreBundle\User\UserProviderInterface;
 use Bkstg\ScheduleBundle\Entity\Invitation;
 use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
 use Spy\Timeline\Driver\ActionManagerInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 class InvitationNotificationCreator
 {

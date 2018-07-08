@@ -46,3 +46,6 @@ services:
     Bkstg\ScheduleBundle\EventListener\FullCompanyListener:
         tags:
             - { name: doctrine.event_listener, event: onFlush, lazy: true }
+    Bkstg\ScheduleBundle\EventListener\InvitationAutoAcceptListener:
+        tags:
+            - { name: doctrine.event_listener, event: prePersist, lazy: true }

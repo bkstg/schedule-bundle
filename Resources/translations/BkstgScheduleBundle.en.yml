@@ -26,7 +26,7 @@ schedule:
     edit: 'Edit'
     no_events: 'No events in this schedule yet.'
     archive_no_schedules: 'No schedules in the archive right now.'
-    archive_info: 'These schedules are either unpublished or inactive, you can edit them here.'
+    archive_info: 'These schedules are either unpublished or archived, you can edit them here.'
     label:
         name: 'Name'
         status: 'Status'
@@ -66,7 +66,7 @@ event:
     unpublished: 'Unpublished'
     edit: 'Edit'
     archive_no_events: 'No events in the archive right now.'
-    archive_info: 'These events are either unpublished or inactive, you can edit them here.'
+    archive_info: 'These events are either unpublished or archived, you can edit them here.'
     full_company: 'Full company'
     show_full_company: '(show)'
     hide_full_company: '(hide)'

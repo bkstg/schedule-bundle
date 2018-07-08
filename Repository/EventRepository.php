@@ -110,11 +110,16 @@ class EventRepository extends EntityRepository
         $qb = $this->createQueryBuilder('e');
 
         return $qb
+            // Add joins.
+            ->join('e.groups', 'g')
+
             // Add conditions.
+            ->andWhere($qb->expr()->eq('g', ':production'))
             ->andWhere($qb->expr()->eq('e.active', ':active'))
             ->andWhere($qb->expr()->isNull('e.schedule'))
 
             // Add parameters.
+            ->setParameter('production', $production)
             ->setParameter('active', false)
 
             // Add ordering.

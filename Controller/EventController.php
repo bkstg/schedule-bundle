@@ -15,6 +15,7 @@ use Bkstg\CoreBundle\Controller\Controller;
 use Bkstg\CoreBundle\Entity\Production;
 use Bkstg\ScheduleBundle\BkstgScheduleBundle;
 use Bkstg\ScheduleBundle\Entity\Event;
+use Bkstg\ScheduleBundle\Entity\Invitation;
 use Bkstg\ScheduleBundle\Form\EventType;
 use Doctrine\Common\Collections\ArrayCollection;
 use Knp\Component\Pager\PaginatorInterface;
@@ -44,7 +45,7 @@ class EventController extends Controller
     public function createAction(
         string $production_slug,
         AuthorizationCheckerInterface $auth,
-        TokenStorageInterface $token,
+        TokenStorageInterface $token_storage,
         Request $request
     ): Response {
         // Lookup the production by production_slug.
@@ -59,10 +60,16 @@ class EventController extends Controller
         }
 
         // Create a new event with author and production.
+        $user = $token_storage->getToken()->getUser();
         $event = new Event();
         $event->addGroup($production);
-        $event->setAuthor($token->getToken()->getUser()->getUsername());
+        $event->setAuthor($user->getUsername());
         $event->setActive(true);
+
+        // Create a new invitation for the current user.
+        $invitation = new Invitation();
+        $invitation->setInvitee($user->getUsername());
+        $event->addInvitation($invitation);
 
         // Set start and end times using closest 1 hour intervals.
         $start = new \DateTime();

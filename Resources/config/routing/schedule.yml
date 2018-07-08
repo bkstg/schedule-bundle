@@ -1,7 +1,7 @@
 # Schedule paths.
 bkstg_schedule_create:
     path: /create
-    methods: [GET]
+    methods: [GET,POST]
     defaults:
         _controller: Bkstg\ScheduleBundle\Controller\ScheduleController:createAction
 bkstg_schedule_archive:

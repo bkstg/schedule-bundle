@@ -39,7 +39,7 @@
             </td>
             <td>{{ schedule.name }}</td>
             <td>{{ get_user(schedule.author) }}</td>
-            <td>{{ schedule.published == false ? 'schedule.unpublished'|trans : 'schedule.archived'|trans }}</td>
+            <td>{{ schedule.published == false ? 'schedule.label.status_choices.unpublished'|trans : 'schedule.label.status_choices.archived'|trans }}</td>
             <td>{{ schedule.updated|date(full_date) }}</td>
           </tr>
         {% else %}

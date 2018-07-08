@@ -39,7 +39,7 @@
             </td>
             <td><a href="{{ url('bkstg_event_read', {'production_slug': production.slug, 'id': event.id}) }}">{{ event.name }}</a></td>
             <td>{{ get_user(event.author) }}</td>
-            <td>{{ event.published == false ? 'event.unpublished'|trans : 'event.archived'|trans }}</td>
+            <td>{{ event.published == false ? 'event.label.status_choices.unpublished'|trans : 'event.label.status_choices.archived'|trans }}</td>
             <td>{{ event.updated|date(full_date) }}</td>
           </tr>
         {% else %}

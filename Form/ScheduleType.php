@@ -15,6 +15,7 @@ use Bkstg\ScheduleBundle\BkstgScheduleBundle;
 use Bkstg\ScheduleBundle\Entity\Schedule;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\ChoiceList\Loader\CallbackChoiceLoader;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -30,6 +31,7 @@ class ScheduleType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $schedule = $options['data'];
         $builder
             ->add('name', null, [
                 'label' => 'schedule.form.name',
@@ -54,11 +56,16 @@ class ScheduleType extends AbstractType
                 ],
             ])
             ->add('active', ChoiceType::class, [
-                'label' => 'schedule.form.active',
-                'choices' => [
-                    'schedule.form.active_choices.active' => true,
-                    'schedule.form.active_choices.inactive' => false,
-                ],
+                // Show "unpublished" instead of active.
+                'choice_loader' => new CallbackChoiceLoader(function () use ($schedule) {
+                    yield 'schedule.form.status_choices.active' => true;
+                    if (!$schedule->isPublished()) {
+                        yield 'schedule.form.status_choices.unpublished' => false;
+                    } else {
+                        yield 'schedule.form.status_choices.archived' => false;
+                    }
+                }),
+                'label' => 'schedule.form.status',
             ])
             ->add('events', CollectionType::class, [
                 'label' => 'schedule.form.events',

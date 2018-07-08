@@ -30,15 +30,19 @@ schedule:
     label:
         name: 'Name'
         status: 'Status'
+        status_choices:
+            unpublished: 'Unpublished'
+            archived: 'Archived'
         author: 'Author'
         updated: 'Updated'
     form:
         title: 'Title'
         notes: 'Notes'
-        active: 'Active'
-        active_choices:
+        status: 'Status'
+        status_choices:
             active: 'Active'
-            inactive: 'Inactive'
+            unpublished: 'Unpublished'
+            archived: 'Archived'
         colour: 'Colour'
         colour_choices:
             red: 'Red'
@@ -76,6 +80,9 @@ event:
         end: 'End'
         name: 'Name'
         status: 'Status'
+        status_choices:
+            unpublished: 'Unpublished'
+            archived: 'Archived'
         author: 'Author'
         updated: 'Updated'
     form:
@@ -84,10 +91,11 @@ event:
         start: 'Start'
         end: 'End'
         full_company: 'Full company'
-        active: 'Active'
-        active_choices:
+        status: 'Status'
+        status_choices:
             active: 'Active'
-            inactive: 'Inactive'
+            unpublished: 'Unpublished'
+            archived: 'Archived'
         colour: 'Colour'
         colour_choices:
             red: 'Red'

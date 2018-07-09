@@ -6,7 +6,7 @@ cancel: 'Cancel'
 save: 'Save'
 timeline:
     invited: 'invited'
-    invited_to: 'to'
+    to: 'to'
     scheduled: 'scheduled'
     scheduled_in: 'in'
 schedules: 'Schedules'

@@ -1,6 +1,8 @@
 {% trans_default_domain 'BkstgScheduleBundle' %}
 
-{% if invitation.response is empty %}
+{% if is_granted('respond', invitation) %}
+  {% include '@BkstgSchedule/Invitation/_respond.html.twig' with {'invitation': invitation, 'size':  'sm'} only %}
+{% elseif invitation.response is empty %}
   <i class="fa fa-circle-thin"></i>
 {% elseif invitation.response == 1 %}
   <i class="fa fa-check-circle text-success"></i>
@@ -10,6 +12,6 @@
   <i class="fa fa-times-circle text-danger"></i><em class="text-muted">
 {% endif %}
 {{ get_user(invitation.invitee) }}
-{% if invitation.response == -1 %}
+{% if not is_granted('respond', invitation) and invitation.response == -1 %}
   </em>
 {% endif %}

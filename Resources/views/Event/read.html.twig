@@ -22,9 +22,7 @@
       <ul class="list-group">
         {% for invite in event.invitations %}
           <li class="list-group-item">
-            {% include '@BkstgSchedule/Invitation/_show.html.twig' with {'invitation': invite} only %}
-            {% if is_granted('respond', invite) %}<div class="float-right">{% include '@BkstgSchedule/Invitation/_respond.html.twig' with {'invitation': invite, 'size':  'sm'} only %}</div>{% endif %}
-          </li>
+            {% include '@BkstgSchedule/Invitation/_show.html.twig' with {'invitation': invite} only %}          </li>
         {% else %}
           <li class="list-group-item">{{ 'event.no_invitees'|trans }}</li>
         {% endfor %}

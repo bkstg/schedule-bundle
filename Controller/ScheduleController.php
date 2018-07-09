@@ -79,7 +79,7 @@ class ScheduleController extends Controller
                 }
                 $event->setColour($schedule->getColour());
                 $event->setLocation($schedule->getLocation());
-                $event->setActive($schedule->getActive());
+                $event->setActive($schedule->isActive());
                 $event->setAuthor($schedule->getAuthor());
             }
 

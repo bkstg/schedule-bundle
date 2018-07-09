@@ -8,7 +8,7 @@ timeline:
     invited: 'invited'
     to: 'to'
     scheduled: 'scheduled'
-    scheduled_in: 'in'
+    in: 'in'
 schedules: 'Schedules'
 schedule:
     title: 'Schedule'

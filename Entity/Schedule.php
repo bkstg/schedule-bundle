@@ -355,4 +355,9 @@ class Schedule implements GroupableInterface, PublishableInterface
 
         return $highest_date;
     }
+
+    public function __toString()
+    {
+        return $this->name;
+    }
 }

@@ -4,6 +4,7 @@ namespace Bkstg\ScheduleBundle\Timeline\EventSubscriber;
 
 use Bkstg\CoreBundle\Event\EntityPublishedEvent;
 use Bkstg\ScheduleBundle\Entity\Event;
+use Bkstg\ScheduleBundle\Entity\Schedule;
 use Spy\Timeline\Driver\ActionManagerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -36,15 +37,16 @@ class EventTimelineSubscriber implements EventSubscriberInterface
     {
         return [
             EntityPublishedEvent::NAME => [
-                ['createEventInvitationTimelineEntries', 0],
+                ['createInvitationTimelineEntries', 0],
+                ['createScheduleTimelineEntry', 0],
             ]
         ];
     }
 
-    public function createEventInvitationTimelineEntries(EntityPublishedEvent $event): void
+    public function createInvitationTimelineEntries(EntityPublishedEvent $published_event): void
     {
         // Only act on event objects.
-        $event = $event->getObject();
+        $event = $published_event->getObject();
         if (!$event instanceof Event) {
             return;
         }
@@ -75,6 +77,41 @@ class EventTimelineSubscriber implements EventSubscriberInterface
                 // Update the action.
                 $this->action_manager->updateAction($action);
             }
+        }
+    }
+
+    public function createScheduleTimelineEntry(EntityPublishedEvent $event): void
+    {
+        // Only act on schedule objects.
+        $schedule = $event->getObject();
+        if (!$schedule instanceof Schedule) {
+            return;
+        }
+
+        // Get the author for the schedule.
+        $author = $this->user_provider->loadUserByUsername($schedule->getAuthor());
+
+        // Create components for this action.
+        $schedule_component = $this->action_manager->findOrCreateComponent($schedule);
+        $author_component = $this->action_manager->findOrCreateComponent($author);
+
+        // Add timeline entries for each group.
+        foreach ($schedule->getGroups() as $group) {
+            // Create the group component.
+            $group_component = $this->action_manager->findOrCreateComponent($group);
+
+            // Create the action and link it.
+            $action = $this->action_manager->create($author_component, 'scheduled', [
+                'directComplement' => $schedule_component,
+                'indirectComplement' => $group_component,
+            ]);
+            $action->setLink($this->url_generator->generate('bkstg_schedule_read', [
+                'production_slug' => $group->getSlug(),
+                'id' => $schedule->getId(),
+            ]));
+
+            // Update the action.
+            $this->action_manager->updateAction($action);
         }
     }
 }

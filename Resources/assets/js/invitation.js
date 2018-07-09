@@ -7,6 +7,7 @@ Globals.behaviours.invitation = function() {
     var parent = $(this).closest('.invitation-respond');
     $(parent).find('.btn').addClass('disabled')
     $.ajax({
+      type: 'POST',
       url: $(this).data('respond-url'),
       success: function (data, status) {
         $(parent).find('.btn').removeClass('disabled');

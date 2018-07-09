@@ -3,17 +3,12 @@ services:
         autowire: true
         autoconfigure: true
         public: false
+    Bkstg\ScheduleBundle\Timeline\:
+        resource: '../../Timeline/*'
 
     # Spread services.
-    Bkstg\ScheduleBundle\Spread\:
-        resource: '../../Spread'
+    Bkstg\ScheduleBundle\Timeline\Spread\:
+        resource: '../../Timeline/Spread'
         public: true
         tags:
             - { name: spy_timeline.spread }
-
-    Bkstg\ScheduleBundle\EventListener\InvitationNotificationCreator:
-        tags:
-            - { name: doctrine.event_listener, event: postPersist, lazy: true }
-    Bkstg\ScheduleBundle\EventListener\EventNotificationCreator:
-        tags:
-            - { name: doctrine.event_listener, event: postPersist, lazy: true }

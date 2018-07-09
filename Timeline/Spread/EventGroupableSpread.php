@@ -9,13 +9,13 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Bkstg\ScheduleBundle\Spread;
+namespace Bkstg\ScheduleBundle\Timeline\Spread;
 
 use Bkstg\ScheduleBundle\Entity\Event;
-use Bkstg\TimelineBundle\Spread\AdminSpread;
+use Bkstg\TimelineBundle\Spread\GroupableSpread;
 use Spy\Timeline\Model\ActionInterface;
 
-class EventAdminSpread extends AdminSpread
+class EventGroupableSpread extends GroupableSpread
 {
     /**
      * {@inheritdoc}
@@ -24,7 +24,8 @@ class EventAdminSpread extends AdminSpread
     {
         $object = $action->getComponent('directComplement')->getData();
 
-        if (!$object instanceof Event) {
+        if (!$object instanceof Event
+            || 'schedule' != $action->getVerb()) {
             return false;
         }
 

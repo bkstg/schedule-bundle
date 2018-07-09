@@ -3,13 +3,9 @@ services:
         autowire: true
         autoconfigure: true
         public: false
-
-    # Bundle service.
-    Bkstg\ScheduleBundle\BkstgScheduleBundle: ~
-
-    # Dependency injection services.
-    Bkstg\ScheduleBundle\DependencyInjection\:
-        resource: '../../DependencyInjection'
+    Bkstg\ScheduleBundle\:
+        resource: '../../*'
+        exclude: '../../{Entity,Repository,Tests,Timeline}'
 
     # Controller services.
     Bkstg\ScheduleBundle\Controller\:
@@ -17,30 +13,6 @@ services:
         public: true
         tags:
             - { name: controller.service_arguments }
-
-    # Form type services.
-    Bkstg\ScheduleBundle\Form\:
-        resource: '../../Form'
-        tags:
-            - { name: form.type }
-
-    # Event subscriber services.
-    Bkstg\ScheduleBundle\EventSubscriber\:
-        resource: '../../EventSubscriber'
-        tags:
-            - { name: kernel.event_subscriber }
-
-    # Security voter services.
-    Bkstg\ScheduleBundle\Security\:
-        resource: '../../Security'
-        tags:
-            - { name: security.voter }
-
-    # Validator services.
-    Bkstg\ScheduleBundle\Validator\:
-        resource: '../../Validator'
-        tags:
-            - { name: validator.constraint_validator }
 
     # Doctrine event listeners.
     Bkstg\ScheduleBundle\EventListener\FullCompanyListener:

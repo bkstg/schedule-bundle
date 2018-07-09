@@ -58,18 +58,14 @@ class EventTimelineSubscriber implements EventSubscriberInterface
 
         // Add timeline entries for each group.
         foreach ($event->getGroups() as $group) {
-            // Create the group component.
-            $group_component = $this->action_manager->findOrCreateComponent($group);
             foreach ($event->getInvitations() as $invitation) {
                 $invitee = $this->user_provider->loadUserByUsername($invitation->getInvitee());
                 $invitee_component = $this->action_manager->findOrCreateComponent($invitee);
-                $invitation_component = $this->action_manager->findOrCreateComponent($invitation);
 
                 // Create the action and link it.
                 $action = $this->action_manager->create($author_component, 'invited', [
                     'directComplement' => $invitee_component,
                     'indirectComplement' => $event_component,
-                    'invitationComplement' => $invitation_component,
                 ]);
                 $action->setLink($this->url_generator->generate('bkstg_event_read', [
                     'production_slug' => $group->getSlug(),
@@ -79,7 +75,6 @@ class EventTimelineSubscriber implements EventSubscriberInterface
                 // Update the action.
                 $this->action_manager->updateAction($action);
             }
-
         }
     }
 }

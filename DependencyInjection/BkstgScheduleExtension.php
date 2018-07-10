@@ -37,5 +37,8 @@ class BkstgScheduleExtension extends Extension
         if (isset($bundles['BkstgTimelineBundle'])) {
             $loader->load('services.timeline.yml');
         }
+        if (isset($bundles['BkstgSearchBundle'])) {
+            $loader->load('services.search.yml');
+        }
     }
 }

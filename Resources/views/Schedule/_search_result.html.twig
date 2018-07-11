@@ -1,0 +1,11 @@
+{% embed '@BkstgSearch/Search/_search_result.html.twig' with {'link': url('bkstg_schedule_read', {'production_slug': result.groups[0].slug, 'id': result.id})} %}
+  {% trans_default_domain 'BkstgScheduleBundle' %}
+  {% block result %}
+    <h4><i class="fa fa-list"></i> {{ result }}</h4>
+    <p class="text-primary">{{ result.groups[0] }}</p>
+    <p class="text-muted">{{ 'event.date_string'|trans({'%start%': result.start|date(full_date), '%end%': result.end|date(full_date)}) }}</p>
+    {% if result.description is not empty %}
+      <p>{{ result.description|striptags|truncate(300, true)|purify }}</p>
+    {% endif %}
+  {% endblock %}
+{% endembed %}

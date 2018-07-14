@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of the BkstgCoreBundle package.
+ * This file is part of the BkstgScheduleBundle package.
  * (c) Luke Bainbridge <http://www.lukebainbridge.ca/>
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -381,6 +381,8 @@ class Event implements GroupableInterface, PublishableInterface
     /**
      * Set colour.
      *
+     * @param ?string $colour
+     *
      * @return $this
      */
     public function setColour(?string $colour)
@@ -402,6 +404,8 @@ class Event implements GroupableInterface, PublishableInterface
 
     /**
      * Set full_company.
+     *
+     * @param bool $full_company
      *
      * @return $this
      */
@@ -425,6 +429,8 @@ class Event implements GroupableInterface, PublishableInterface
     /**
      * Set active.
      *
+     * @param bool $active
+     *
      * @return $this
      */
     public function setActive(bool $active): self
@@ -446,6 +452,8 @@ class Event implements GroupableInterface, PublishableInterface
 
     /**
      * Set published.
+     *
+     * @param bool $published
      *
      * @return $this
      */

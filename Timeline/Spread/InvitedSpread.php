@@ -1,5 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of the BkstgScheduleBundle package.
+ * (c) Luke Bainbridge <http://www.lukebainbridge.ca/>
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Bkstg\ScheduleBundle\Timeline\Spread;
 
 use Doctrine\Common\Proxy\Proxy;
@@ -24,19 +33,21 @@ class InvitedSpread implements SpreadInterface
      *
      * @param ActionInterface $action
      *
-     * @return boolean
+     * @return bool
      */
     public function supports(ActionInterface $action): bool
     {
-        if ($action->getVerb() != 'invited') {
+        if ('invited' != $action->getVerb()) {
             return false;
         }
+
         return true;
     }
 
     /**
-     * @param  ActionInterface $action action we look for spreads
-     * @param  EntryCollection $coll   Spreads defined on an EntryCollection
+     * @param ActionInterface $action     action we look for spreads
+     * @param EntryCollection $coll       Spreads defined on an EntryCollection
+     * @param EntryCollection $collection
      */
     public function process(ActionInterface $action, EntryCollection $collection): void
     {
@@ -44,7 +55,8 @@ class InvitedSpread implements SpreadInterface
         $collection->add(new EntryUnaware($this->resolveClass($invitee), $invitee->getId()));
     }
 
-    private function resolveClass($object) {
+    private function resolveClass($object)
+    {
         if (!$object instanceof Proxy) {
             return get_class($object);
         }

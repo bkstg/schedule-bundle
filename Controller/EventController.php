@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of the BkstgCoreBundle package.
+ * This file is part of the BkstgScheduleBundle package.
  * (c) Luke Bainbridge <http://www.lukebainbridge.ca/>
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -36,6 +36,7 @@ class EventController extends Controller
      * @param AuthorizationCheckerInterface $auth            The authorization checker service.
      * @param TokenStorageInterface         $token           The token storage service.
      * @param Request                       $request         The request.
+     * @param TokenStorageInterface         $token_storage
      *
      * @throws NotFoundHttpException When the production does not exist.
      * @throws AccessDeniedException When the user is not an editor.

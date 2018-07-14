@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of the BkstgCoreBundle package.
+ * This file is part of the BkstgScheduleBundle package.
  * (c) Luke Bainbridge <http://www.lukebainbridge.ca/>
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -56,6 +56,8 @@ class Schedule implements GroupableInterface, PublishableInterface
     /**
      * Set name.
      *
+     * @param mixed $name
+     *
      * @return $this
      */
     public function setName($name)
@@ -77,6 +79,8 @@ class Schedule implements GroupableInterface, PublishableInterface
 
     /**
      * Set location.
+     *
+     * @param string $location
      *
      * @return $this
      */
@@ -100,6 +104,8 @@ class Schedule implements GroupableInterface, PublishableInterface
     /**
      * Set colour.
      *
+     * @param string $colour
+     *
      * @return $this
      */
     public function setColour(string $colour): self
@@ -121,6 +127,8 @@ class Schedule implements GroupableInterface, PublishableInterface
 
     /**
      * Set description.
+     *
+     * @param string $description
      *
      * @return $this
      */
@@ -144,6 +152,8 @@ class Schedule implements GroupableInterface, PublishableInterface
     /**
      * Set active.
      *
+     * @param bool $active
+     *
      * @return $this
      */
     public function setActive(bool $active): self
@@ -165,6 +175,8 @@ class Schedule implements GroupableInterface, PublishableInterface
 
     /**
      * Set published.
+     *
+     * @param bool $published
      *
      * @return $this
      */
@@ -188,6 +200,8 @@ class Schedule implements GroupableInterface, PublishableInterface
     /**
      * Set author.
      *
+     * @param string $author
+     *
      * @return $this
      */
     public function setAuthor(string $author)
@@ -210,6 +224,8 @@ class Schedule implements GroupableInterface, PublishableInterface
     /**
      * Set created.
      *
+     * @param mixed $created
+     *
      * @return $this
      */
     public function setCreated($created)
@@ -231,6 +247,8 @@ class Schedule implements GroupableInterface, PublishableInterface
 
     /**
      * Set updated.
+     *
+     * @param mixed $updated
      *
      * @return $this
      */

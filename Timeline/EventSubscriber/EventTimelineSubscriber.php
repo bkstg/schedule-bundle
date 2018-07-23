@@ -16,30 +16,25 @@ use Bkstg\ScheduleBundle\Entity\Event;
 use Bkstg\ScheduleBundle\Entity\Schedule;
 use Spy\Timeline\Driver\ActionManagerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 class EventTimelineSubscriber implements EventSubscriberInterface
 {
     private $action_manager;
     private $user_provider;
-    private $url_genertor;
 
     /**
      * Create a new event notification listener.
      *
      * @param ActionManagerInterface $action_manager The action manager service.
      * @param UserProviderInterface  $user_provider  The user provider service.
-     * @param UrlGeneratorInterface  $url_generator  The url generator service.
      */
     public function __construct(
         ActionManagerInterface $action_manager,
-        UserProviderInterface $user_provider,
-        UrlGeneratorInterface $url_generator
+        UserProviderInterface $user_provider
     ) {
         $this->action_manager = $action_manager;
         $this->user_provider = $user_provider;
-        $this->url_generator = $url_generator;
     }
 
     public static function getSubscribedEvents(): array
@@ -78,10 +73,6 @@ class EventTimelineSubscriber implements EventSubscriberInterface
                     'directComplement' => $invitee_component,
                     'indirectComplement' => $event_component,
                 ]);
-                $action->setLink($this->url_generator->generate('bkstg_event_read', [
-                    'production_slug' => $group->getSlug(),
-                    'id' => $event->getId(),
-                ]));
 
                 // Update the action.
                 $this->action_manager->updateAction($action);
@@ -114,10 +105,6 @@ class EventTimelineSubscriber implements EventSubscriberInterface
                 'directComplement' => $schedule_component,
                 'indirectComplement' => $group_component,
             ]);
-            $action->setLink($this->url_generator->generate('bkstg_schedule_read', [
-                'production_slug' => $group->getSlug(),
-                'id' => $schedule->getId(),
-            ]));
 
             // Update the action.
             $this->action_manager->updateAction($action);

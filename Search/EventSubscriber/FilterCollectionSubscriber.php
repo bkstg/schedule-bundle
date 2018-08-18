@@ -31,10 +31,10 @@ class FilterCollectionSubscriber implements EventSubscriberInterface
         $now = new \DateTime();
         $qb = $event->getQueryBuilder();
         $query = $qb->query()->bool()
-            ->addMust($qb->query()->term(['_type' => 'event']))
+            ->addMust($qb->query()->term(['_index' => 'event']))
             ->addMust($qb->query()->term(['active' => true]))
             ->addMust($qb->query()->terms('groups.id', $event->getGroupIds()))
-            ->addMust($qb->query()->constant_score()->setParam('filter', ['missing' => ['field' => 'schedule']]))
+            ->addMustNot($qb->query()->exists('schedule'))
         ;
         $event->addFilter($query);
     }
@@ -44,7 +44,7 @@ class FilterCollectionSubscriber implements EventSubscriberInterface
         $now = new \DateTime();
         $qb = $event->getQueryBuilder();
         $query = $qb->query()->bool()
-            ->addMust($qb->query()->term(['_type' => 'schedule']))
+            ->addMust($qb->query()->term(['_index' => 'schedule']))
             ->addMust($qb->query()->term(['active' => true]))
             ->addMust($qb->query()->terms('groups.id', $event->getGroupIds()))
         ;

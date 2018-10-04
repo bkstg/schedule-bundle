@@ -5,13 +5,13 @@
 {% block content %}
   {% if is_granted('GROUP_ROLE_EDITOR', production) %}
     <p>
-      <a class="btn btn-success" href="{{ url('bkstg_schedule_create', {'production_slug': production.slug}) }}"><i class="fa fa-list" aria-hidden="true"></i> {{ 'schedule.create'|trans }}</a>
-      <a class="btn btn-success" href="{{ url('bkstg_event_create', {'production_slug': production.slug}) }}"><i class="fa fa-calendar-plus-o" aria-hidden="true"></i> {{ 'event.create'|trans }}</a>
+      <a class="btn btn-success" href="{{ path('bkstg_schedule_create', {'production_slug': production.slug}) }}"><i class="fa fa-list" aria-hidden="true"></i> {{ 'schedule.create'|trans }}</a>
+      <a class="btn btn-success" href="{{ path('bkstg_event_create', {'production_slug': production.slug}) }}"><i class="fa fa-calendar-plus-o" aria-hidden="true"></i> {{ 'event.create'|trans }}</a>
     </p>
   {% endif %}
 
   <h3 class="date-display">{{ "now"|date('F Y') }}</h3>
   {% include '@BkstgSchedule/Calendar/_controls.html.twig' %}
-  <div id="calendar" class="mt-2 mb-2" data-search-url="{{ url('bkstg_calendar_search_production', { 'production_slug': production.slug }) }}"></div>
+  <div id="calendar" class="mt-2 mb-2" data-search-url="{{ path('bkstg_calendar_search_production', { 'production_slug': production.slug }) }}"></div>
 {% endblock %}
 

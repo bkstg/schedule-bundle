@@ -29,6 +29,8 @@ class EventType extends AbstractType
      *
      * @param FormBuilderInterface $builder The form builder.
      * @param array                $options The options for this form.
+     *
+     * @return void
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -98,6 +100,8 @@ class EventType extends AbstractType
      * Set default options.
      *
      * @param OptionsResolver $resolver The options resolver.
+     *
+     * @return void
      */
     public function configureOptions(OptionsResolver $resolver): void
     {

@@ -37,6 +37,11 @@ class EventTimelineSubscriber implements EventSubscriberInterface
         $this->user_provider = $user_provider;
     }
 
+    /**
+     * Return the events this subscriber listens for.
+     *
+     * @return array The subscribed events.
+     */
     public static function getSubscribedEvents(): array
     {
         return [
@@ -47,6 +52,13 @@ class EventTimelineSubscriber implements EventSubscriberInterface
         ];
     }
 
+    /**
+     * Create invited timeline events.
+     *
+     * @param EntityPublishedEvent $published_event The published event.
+     *
+     * @return void
+     */
     public function createInvitationTimelineEntries(EntityPublishedEvent $published_event): void
     {
         // Only act on event objects.
@@ -80,6 +92,13 @@ class EventTimelineSubscriber implements EventSubscriberInterface
         }
     }
 
+    /**
+     * Create the schedule timeline entry.
+     *
+     * @param EntityPublishedEvent $event The published event.
+     *
+     * @return void
+     */
     public function createScheduleTimelineEntry(EntityPublishedEvent $event): void
     {
         // Only act on schedule objects.

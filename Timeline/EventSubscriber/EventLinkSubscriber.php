@@ -19,11 +19,21 @@ class EventLinkSubscriber implements EventSubscriberInterface
 {
     private $url_generator;
 
+    /**
+     * Create a new event link subscriber.
+     *
+     * @param UrlGeneratorInterface $url_generator The url generator service.
+     */
     public function __construct(UrlGeneratorInterface $url_generator)
     {
         $this->url_generator = $url_generator;
     }
 
+    /**
+     * Return the events this subscriber listens for.
+     *
+     * @return array The subscribed events.
+     */
     public static function getSubscribedEvents()
     {
         return [
@@ -34,6 +44,13 @@ class EventLinkSubscriber implements EventSubscriberInterface
         ];
     }
 
+    /**
+     * Set the link for invited actions.
+     *
+     * @param TimelineLinkEvent $event The timeline action event.
+     *
+     * @return void
+     */
     public function setInvitedLink(TimelineLinkEvent $event): void
     {
         $action = $event->getAction();
@@ -49,6 +66,13 @@ class EventLinkSubscriber implements EventSubscriberInterface
         ]));
     }
 
+    /**
+     * Set the link for scheduled actions.
+     *
+     * @param TimelineLinkEvent $event The timeline action event.
+     *
+     * @return void
+     */
     public function setScheduledLink(TimelineLinkEvent $event): void
     {
         $action = $event->getAction();

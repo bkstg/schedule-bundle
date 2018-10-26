@@ -22,6 +22,11 @@ class InvitedSpread implements SpreadInterface
 {
     private $em;
 
+    /**
+     * Create a new invited spread.
+     *
+     * @param EntityManagerInterface $em The entity manager.
+     */
     public function __construct(
         EntityManagerInterface $em
     ) {
@@ -29,9 +34,9 @@ class InvitedSpread implements SpreadInterface
     }
 
     /**
-     * You spread class is support the action ?
+     * {@inheritdoc}
      *
-     * @param ActionInterface $action
+     * @param ActionInterface $action The action.
      *
      * @return bool
      */
@@ -45,9 +50,12 @@ class InvitedSpread implements SpreadInterface
     }
 
     /**
-     * @param ActionInterface $action     action we look for spreads
-     * @param EntryCollection $coll       Spreads defined on an EntryCollection
-     * @param EntryCollection $collection
+     * {@inheritdoc}
+     *
+     * @param ActionInterface $action     Action to spread.
+     * @param EntryCollection $collection Spreads defined on an EntryCollection.
+     *
+     * @return void
      */
     public function process(ActionInterface $action, EntryCollection $collection): void
     {
@@ -55,6 +63,13 @@ class InvitedSpread implements SpreadInterface
         $collection->add(new EntryUnaware($this->resolveClass($invitee), $invitee->getId()));
     }
 
+    /**
+     * Figure out the real class for this object.
+     *
+     * @param mixed $object The object.
+     *
+     * @return string
+     */
     private function resolveClass($object)
     {
         if (!$object instanceof Proxy) {

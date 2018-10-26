@@ -22,6 +22,12 @@ class ProductionMenuSubscriber implements EventSubscriberInterface
     private $factory;
     private $auth;
 
+    /**
+     * Create a new menu subscriber.
+     *
+     * @param FactoryInterface              $factory The menu factory service.
+     * @param AuthorizationCheckerInterface $auth    The authorization checker service.
+     */
     public function __construct(
         FactoryInterface $factory,
         AuthorizationCheckerInterface $auth
@@ -48,6 +54,8 @@ class ProductionMenuSubscriber implements EventSubscriberInterface
      * Add the schedule menu item.
      *
      * @param ProductionMenuCollectionEvent $event The menu collection event.
+     *
+     * @return void
      */
     public function addScheduleItem(ProductionMenuCollectionEvent $event): void
     {

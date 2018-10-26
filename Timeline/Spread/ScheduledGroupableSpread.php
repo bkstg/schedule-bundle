@@ -17,6 +17,13 @@ use Spy\Timeline\Model\ActionInterface;
 
 class ScheduledGroupableSpread extends GroupableSpread
 {
+    /**
+     * {@inheritdoc}
+     *
+     * @param ActionInterface $action The action.
+     *
+     * @return bool
+     */
     public function supports(ActionInterface $action)
     {
         $schedule = $action->getComponent('directComplement')->getData();

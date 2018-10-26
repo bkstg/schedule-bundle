@@ -32,13 +32,21 @@ class Schedule implements GroupableInterface, PublishableInterface
     private $groups;
     private $events;
 
+    /**
+     * Create a new schedule.
+     */
     public function __construct()
     {
         $this->groups = new ArrayCollection();
         $this->events = new ArrayCollection();
     }
 
-    public function getId()
+    /**
+     * Get the id for the schedule.
+     *
+     * @return int
+     */
+    public function getId(): int
     {
         return $this->id;
     }
@@ -46,9 +54,9 @@ class Schedule implements GroupableInterface, PublishableInterface
     /**
      * Get name.
      *
-     * @return
+     * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -56,11 +64,11 @@ class Schedule implements GroupableInterface, PublishableInterface
     /**
      * Set name.
      *
-     * @param mixed $name
+     * @param mixed $name The name.
      *
      * @return $this
      */
-    public function setName($name)
+    public function setName($name): self
     {
         $this->name = $name;
 
@@ -70,7 +78,7 @@ class Schedule implements GroupableInterface, PublishableInterface
     /**
      * Get location.
      *
-     * @return
+     * @return ?string
      */
     public function getLocation(): ?string
     {
@@ -80,9 +88,9 @@ class Schedule implements GroupableInterface, PublishableInterface
     /**
      * Set location.
      *
-     * @param string $location
+     * @param string $location The location.
      *
-     * @return $this
+     * @return self
      */
     public function setLocation(string $location): self
     {
@@ -94,7 +102,7 @@ class Schedule implements GroupableInterface, PublishableInterface
     /**
      * Get colour.
      *
-     * @return
+     * @return ?string
      */
     public function getColour(): ?string
     {
@@ -104,7 +112,7 @@ class Schedule implements GroupableInterface, PublishableInterface
     /**
      * Set colour.
      *
-     * @param string $colour
+     * @param string $colour The colour.
      *
      * @return $this
      */
@@ -118,9 +126,9 @@ class Schedule implements GroupableInterface, PublishableInterface
     /**
      * Get description.
      *
-     * @return
+     * @return ?string
      */
-    public function getDescription()
+    public function getDescription(): ?string
     {
         return $this->description;
     }
@@ -128,11 +136,11 @@ class Schedule implements GroupableInterface, PublishableInterface
     /**
      * Set description.
      *
-     * @param string $description
+     * @param string $description The description.
      *
      * @return $this
      */
-    public function setDescription(string $description)
+    public function setDescription(string $description): self
     {
         $this->description = $description;
 
@@ -142,7 +150,7 @@ class Schedule implements GroupableInterface, PublishableInterface
     /**
      * Get active.
      *
-     * @return
+     * @return bool
      */
     public function isActive(): bool
     {
@@ -152,9 +160,9 @@ class Schedule implements GroupableInterface, PublishableInterface
     /**
      * Set active.
      *
-     * @param bool $active
+     * @param bool $active Whether this is active or not.
      *
-     * @return $this
+     * @return self
      */
     public function setActive(bool $active): self
     {
@@ -166,7 +174,7 @@ class Schedule implements GroupableInterface, PublishableInterface
     /**
      * Get published.
      *
-     * @return
+     * @return bool
      */
     public function isPublished(): bool
     {
@@ -176,9 +184,9 @@ class Schedule implements GroupableInterface, PublishableInterface
     /**
      * Set published.
      *
-     * @param bool $published
+     * @param bool $published Whether or not this is published.
      *
-     * @return $this
+     * @return self
      */
     public function setPublished(bool $published): PublishableInterface
     {
@@ -190,9 +198,9 @@ class Schedule implements GroupableInterface, PublishableInterface
     /**
      * Get author.
      *
-     * @return
+     * @return string
      */
-    public function getAuthor()
+    public function getAuthor(): string
     {
         return $this->author;
     }
@@ -200,11 +208,11 @@ class Schedule implements GroupableInterface, PublishableInterface
     /**
      * Set author.
      *
-     * @param string $author
+     * @param string $author The author.
      *
      * @return $this
      */
-    public function setAuthor(string $author)
+    public function setAuthor(string $author): string
     {
         $this->author = $author;
 
@@ -214,9 +222,9 @@ class Schedule implements GroupableInterface, PublishableInterface
     /**
      * Get created.
      *
-     * @return
+     * @return \DateTime
      */
-    public function getCreated()
+    public function getCreated(): \DateTime
     {
         return $this->created;
     }
@@ -224,11 +232,11 @@ class Schedule implements GroupableInterface, PublishableInterface
     /**
      * Set created.
      *
-     * @param mixed $created
+     * @param \DateTime $created The created date.
      *
      * @return $this
      */
-    public function setCreated($created)
+    public function setCreated(\DateTime $created): self
     {
         $this->created = $created;
 
@@ -238,9 +246,9 @@ class Schedule implements GroupableInterface, PublishableInterface
     /**
      * Get updated.
      *
-     * @return
+     * @return \DateTime
      */
-    public function getUpdated()
+    public function getUpdated(): \DateTime
     {
         return $this->updated;
     }
@@ -248,11 +256,11 @@ class Schedule implements GroupableInterface, PublishableInterface
     /**
      * Set updated.
      *
-     * @param mixed $updated
+     * @param \DateTime $updated The update time.
      *
-     * @return $this
+     * @return self
      */
-    public function setUpdated($updated)
+    public function setUpdated(\DateTime $updated): self
     {
         $this->updated = $updated;
 
@@ -262,11 +270,11 @@ class Schedule implements GroupableInterface, PublishableInterface
     /**
      * Add group.
      *
-     * @param Production $group
+     * @param Production $group The group.
      *
-     * @return Post
+     * @return self
      */
-    public function addGroup(GroupInterface $group)
+    public function addGroup(GroupInterface $group): self
     {
         if (!$group instanceof Production) {
             throw new Exception('Group type not supported.');
@@ -279,7 +287,9 @@ class Schedule implements GroupableInterface, PublishableInterface
     /**
      * Remove group.
      *
-     * @param Production $group
+     * @param Production $group The group to remove.
+     *
+     * @return void
      */
     public function removeGroup(GroupInterface $group): void
     {
@@ -292,15 +302,19 @@ class Schedule implements GroupableInterface, PublishableInterface
     /**
      * Get groups.
      *
-     * @return Collection
+     * @return ArrayCollection
      */
-    public function getGroups()
+    public function getGroups(): ArrayCollection
     {
         return $this->groups;
     }
 
     /**
      * {@inheritdoc}
+     *
+     * @param GroupInterface $group The group.
+     *
+     * @return bool
      */
     public function hasGroup(GroupInterface $group): bool
     {
@@ -316,11 +330,11 @@ class Schedule implements GroupableInterface, PublishableInterface
     /**
      * Add event.
      *
-     * @param Event $event
+     * @param Event $event The event to add.
      *
-     * @return Schedule
+     * @return self
      */
-    public function addEvent(Event $event)
+    public function addEvent(Event $event): self
     {
         $event->setSchedule($this);
         $this->events[] = $event;
@@ -331,9 +345,9 @@ class Schedule implements GroupableInterface, PublishableInterface
     /**
      * Remove event.
      *
-     * @param Event $event
+     * @param Event $event The event to remove.
      *
-     * @return bool TRUE if this collection contained the specified element, FALSE otherwise.
+     * @return bool
      */
     public function removeEvent(Event $event)
     {
@@ -343,13 +357,18 @@ class Schedule implements GroupableInterface, PublishableInterface
     /**
      * Get events.
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return ArrayCollection
      */
-    public function getEvents()
+    public function getEvents(): ArrayCollection
     {
         return $this->events;
     }
 
+    /**
+     * Get the start date of the schedule.
+     *
+     * @return ?\DateTimeInterface
+     */
     public function getStart(): ?\DateTimeInterface
     {
         $lowest_date = null;
@@ -362,6 +381,11 @@ class Schedule implements GroupableInterface, PublishableInterface
         return $lowest_date;
     }
 
+    /**
+     * Get the end date of the schedule.
+     *
+     * @return ?\DateTimeInterface
+     */
     public function getEnd(): ?\DateTimeInterface
     {
         $highest_date = null;
@@ -374,6 +398,11 @@ class Schedule implements GroupableInterface, PublishableInterface
         return $highest_date;
     }
 
+    /**
+     * Return the string representation of the schedule.
+     *
+     * @return string
+     */
     public function __toString()
     {
         return $this->name;

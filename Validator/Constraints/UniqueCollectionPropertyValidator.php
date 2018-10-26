@@ -34,6 +34,8 @@ class UniqueCollectionPropertyValidator extends ConstraintValidator
      *
      * @param mixed      $value      The value being passed in.
      * @param Constraint $constraint The constraint to be checked.
+     *
+     * @return void
      */
     public function validate($value, Constraint $constraint): void
     {

@@ -17,9 +17,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use MidnightLuke\GroupSecurityBundle\Model\GroupableInterface;
 use MidnightLuke\GroupSecurityBundle\Model\GroupInterface;
 
-/**
- * Event.
- */
 class Event implements GroupableInterface, PublishableInterface
 {
     private $id;
@@ -37,9 +34,10 @@ class Event implements GroupableInterface, PublishableInterface
     private $full_company;
     private $active;
     private $published;
+    private $schedule;
 
     /**
-     * Constructor.
+     * Create a new event.
      */
     public function __construct()
     {
@@ -52,7 +50,7 @@ class Event implements GroupableInterface, PublishableInterface
      *
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -60,11 +58,11 @@ class Event implements GroupableInterface, PublishableInterface
     /**
      * Set start.
      *
-     * @param \DateTime $start
+     * @param \DateTime $start The start date.
      *
      * @return Event
      */
-    public function setStart(\DateTime $start)
+    public function setStart(\DateTime $start): self
     {
         $this->start = $start;
 
@@ -76,7 +74,7 @@ class Event implements GroupableInterface, PublishableInterface
      *
      * @return \DateTime
      */
-    public function getStart()
+    public function getStart(): \DateTime
     {
         return $this->start;
     }
@@ -84,11 +82,11 @@ class Event implements GroupableInterface, PublishableInterface
     /**
      * Set end.
      *
-     * @param \DateTime $end
+     * @param \DateTime $end The end date.
      *
      * @return Event
      */
-    public function setEnd(\DateTime $end)
+    public function setEnd(\DateTime $end): self
     {
         $this->end = $end;
 
@@ -100,7 +98,7 @@ class Event implements GroupableInterface, PublishableInterface
      *
      * @return \DateTime
      */
-    public function getEnd()
+    public function getEnd(): \DateTime
     {
         return $this->end;
     }
@@ -108,11 +106,11 @@ class Event implements GroupableInterface, PublishableInterface
     /**
      * Set name.
      *
-     * @param string $name
+     * @param string $name The event name.
      *
      * @return Event
      */
-    public function setName(string $name)
+    public function setName(string $name): self
     {
         $this->name = $name;
 
@@ -124,7 +122,7 @@ class Event implements GroupableInterface, PublishableInterface
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -132,11 +130,11 @@ class Event implements GroupableInterface, PublishableInterface
     /**
      * Set description.
      *
-     * @param string|null $description
+     * @param string|null $description The description.
      *
      * @return Event
      */
-    public function setDescription(string $description = null)
+    public function setDescription(string $description = null): self
     {
         $this->description = $description;
 
@@ -148,7 +146,7 @@ class Event implements GroupableInterface, PublishableInterface
      *
      * @return string|null
      */
-    public function getDescription()
+    public function getDescription(): ?string
     {
         return $this->description;
     }
@@ -156,11 +154,11 @@ class Event implements GroupableInterface, PublishableInterface
     /**
      * Set location.
      *
-     * @param string|null $location
+     * @param string|null $location The location.
      *
      * @return Event
      */
-    public function setLocation(string $location = null)
+    public function setLocation(string $location = null): self
     {
         $this->location = $location;
 
@@ -172,7 +170,7 @@ class Event implements GroupableInterface, PublishableInterface
      *
      * @return string|null
      */
-    public function getLocation()
+    public function getLocation(): ?string
     {
         return $this->location;
     }
@@ -180,11 +178,11 @@ class Event implements GroupableInterface, PublishableInterface
     /**
      * Set created.
      *
-     * @param \DateTime $created
+     * @param \DateTime $created The created time.
      *
      * @return Event
      */
-    public function setCreated(\DateTime $created)
+    public function setCreated(\DateTime $created): self
     {
         $this->created = $created;
 
@@ -196,7 +194,7 @@ class Event implements GroupableInterface, PublishableInterface
      *
      * @return \DateTime
      */
-    public function getCreated()
+    public function getCreated(): \DateTime
     {
         return $this->created;
     }
@@ -204,11 +202,11 @@ class Event implements GroupableInterface, PublishableInterface
     /**
      * Set updated.
      *
-     * @param \DateTime $updated
+     * @param \DateTime $updated The updated time.
      *
      * @return Event
      */
-    public function setUpdated(\DateTime $updated)
+    public function setUpdated(\DateTime $updated): self
     {
         $this->updated = $updated;
 
@@ -220,7 +218,7 @@ class Event implements GroupableInterface, PublishableInterface
      *
      * @return \DateTime
      */
-    public function getUpdated()
+    public function getUpdated(): \DateTime
     {
         return $this->updated;
     }
@@ -228,11 +226,11 @@ class Event implements GroupableInterface, PublishableInterface
     /**
      * Set author.
      *
-     * @param string $author
+     * @param string $author The author.
      *
      * @return Event
      */
-    public function setAuthor(string $author)
+    public function setAuthor(string $author): self
     {
         $this->author = $author;
 
@@ -244,7 +242,7 @@ class Event implements GroupableInterface, PublishableInterface
      *
      * @return string
      */
-    public function getAuthor()
+    public function getAuthor(): string
     {
         return $this->author;
     }
@@ -252,11 +250,11 @@ class Event implements GroupableInterface, PublishableInterface
     /**
      * Add group.
      *
-     * @param Production $group
+     * @param Production $group The production.
      *
      * @return Event
      */
-    public function addGroup(GroupInterface $group)
+    public function addGroup(GroupInterface $group): self
     {
         if (!$group instanceof Production) {
             throw new Exception('Group type not supported.');
@@ -269,11 +267,11 @@ class Event implements GroupableInterface, PublishableInterface
     /**
      * Remove group.
      *
-     * @param Production $group
+     * @param Production $group The production.
      *
-     * @return bool TRUE if this collection contained the specified element, FALSE otherwise.
+     * @return bool
      */
-    public function removeGroup(GroupInterface $group)
+    public function removeGroup(GroupInterface $group): bool
     {
         return $this->groups->removeElement($group);
     }
@@ -281,15 +279,19 @@ class Event implements GroupableInterface, PublishableInterface
     /**
      * Get groups.
      *
-     * @return Collection
+     * @return ArrayCollection
      */
-    public function getGroups()
+    public function getGroups(): ArrayCollection
     {
         return $this->groups;
     }
 
     /**
      * {@inheritdoc}
+     *
+     * @param GroupInterface $group The group to check for.
+     *
+     * @return bool
      */
     public function hasGroup(GroupInterface $group): bool
     {
@@ -305,11 +307,11 @@ class Event implements GroupableInterface, PublishableInterface
     /**
      * Add invitation.
      *
-     * @param Invitation $invitation
+     * @param Invitation $invitation The invitation.
      *
      * @return Event
      */
-    public function addInvitation(Invitation $invitation)
+    public function addInvitation(Invitation $invitation): self
     {
         $invitation->setEvent($this);
         $this->invitations[] = $invitation;
@@ -320,11 +322,11 @@ class Event implements GroupableInterface, PublishableInterface
     /**
      * Remove invitation.
      *
-     * @param Invitation $invitation
+     * @param Invitation $invitation The invitation.
      *
-     * @return bool TRUE if this collection contained the specified element, FALSE otherwise.
+     * @return bool
      */
-    public function removeInvitation(Invitation $invitation)
+    public function removeInvitation(Invitation $invitation): bool
     {
         return $this->invitations->removeElement($invitation);
     }
@@ -332,26 +334,21 @@ class Event implements GroupableInterface, PublishableInterface
     /**
      * Get invitations.
      *
-     * @return Collection
+     * @return ArrayCollection
      */
-    public function getInvitations()
+    public function getInvitations(): ArrayCollection
     {
         return $this->invitations;
     }
 
     /**
-     * @var \Bkstg\ScheduleBundle\Entity\Schedule
-     */
-    private $schedule;
-
-    /**
      * Set schedule.
      *
-     * @param \Bkstg\ScheduleBundle\Entity\Schedule|null $schedule
+     * @param Schedule|null $schedule The schedule.
      *
      * @return Event
      */
-    public function setSchedule(\Bkstg\ScheduleBundle\Entity\Schedule $schedule = null)
+    public function setSchedule(Schedule $schedule = null): self
     {
         $this->schedule = $schedule;
 
@@ -361,9 +358,9 @@ class Event implements GroupableInterface, PublishableInterface
     /**
      * Get schedule.
      *
-     * @return \Bkstg\ScheduleBundle\Entity\Schedule|null
+     * @return Schedule|null
      */
-    public function getSchedule()
+    public function getSchedule(): ?Schedule
     {
         return $this->schedule;
     }
@@ -371,9 +368,9 @@ class Event implements GroupableInterface, PublishableInterface
     /**
      * Get colour.
      *
-     * @return
+     * @return self
      */
-    public function getColour()
+    public function getColour(): ?string
     {
         return $this->colour;
     }
@@ -381,11 +378,11 @@ class Event implements GroupableInterface, PublishableInterface
     /**
      * Set colour.
      *
-     * @param ?string $colour
+     * @param ?string $colour The colour.
      *
      * @return $this
      */
-    public function setColour(?string $colour)
+    public function setColour(?string $colour): self
     {
         $this->colour = $colour;
 
@@ -395,9 +392,9 @@ class Event implements GroupableInterface, PublishableInterface
     /**
      * Get full_company.
      *
-     * @return
+     * @return bool
      */
-    public function getFullCompany()
+    public function getFullCompany(): bool
     {
         return $this->full_company;
     }
@@ -405,7 +402,7 @@ class Event implements GroupableInterface, PublishableInterface
     /**
      * Set full_company.
      *
-     * @param bool $full_company
+     * @param bool $full_company Whether this is a full company call or not.
      *
      * @return $this
      */
@@ -419,7 +416,7 @@ class Event implements GroupableInterface, PublishableInterface
     /**
      * Get active.
      *
-     * @return
+     * @return bool
      */
     public function isActive(): bool
     {
@@ -429,9 +426,9 @@ class Event implements GroupableInterface, PublishableInterface
     /**
      * Set active.
      *
-     * @param bool $active
+     * @param bool $active Whether this active or not.
      *
-     * @return $this
+     * @return self
      */
     public function setActive(bool $active): self
     {
@@ -443,7 +440,7 @@ class Event implements GroupableInterface, PublishableInterface
     /**
      * Get published.
      *
-     * @return
+     * @return bool
      */
     public function isPublished(): bool
     {
@@ -453,7 +450,7 @@ class Event implements GroupableInterface, PublishableInterface
     /**
      * Set published.
      *
-     * @param bool $published
+     * @param bool $published Whether this is published or not.
      *
      * @return $this
      */
@@ -464,6 +461,11 @@ class Event implements GroupableInterface, PublishableInterface
         return $this;
     }
 
+    /**
+     * Return string represenation.
+     *
+     * @return string
+     */
     public function __toString()
     {
         return $this->name;

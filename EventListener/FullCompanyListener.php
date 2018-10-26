@@ -17,9 +17,6 @@ use Bkstg\ScheduleBundle\Entity\Event;
 use Bkstg\ScheduleBundle\Entity\Invitation;
 use Doctrine\ORM\Event\OnFlushEventArgs;
 
-/**
- * Listens for new/updated events to create invitations for full company calls.
- */
 class FullCompanyListener
 {
     private $membership_provider;
@@ -38,6 +35,8 @@ class FullCompanyListener
      * Listens for the onFlush event.
      *
      * @param OnFlushEventArgs $args The arguments for this event.
+     *
+     * @return void
      */
     public function onFlush(OnFlushEventArgs $args): void
     {

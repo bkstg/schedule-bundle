@@ -20,6 +20,8 @@ class InvitationAutoAcceptListener
      * Checks the invitation author and accepts if they match.
      *
      * @param LifecycleEventArgs $args The lifecycle arguments.
+     *
+     * @return void
      */
     public function prePersist(LifecycleEventArgs $args): void
     {

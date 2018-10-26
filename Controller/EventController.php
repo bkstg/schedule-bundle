@@ -34,9 +34,8 @@ class EventController extends Controller
      *
      * @param string                        $production_slug The slug for the production.
      * @param AuthorizationCheckerInterface $auth            The authorization checker service.
-     * @param TokenStorageInterface         $token           The token storage service.
+     * @param TokenStorageInterface         $token_storage   The token storage service.
      * @param Request                       $request         The request.
-     * @param TokenStorageInterface         $token_storage
      *
      * @throws NotFoundHttpException When the production does not exist.
      * @throws AccessDeniedException When the user is not an editor.

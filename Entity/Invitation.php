@@ -39,7 +39,7 @@ class Invitation
     /**
      * Set response.
      *
-     * @param int|null $response
+     * @param int|null $response The response.
      *
      * @return Invitation
      */
@@ -63,7 +63,7 @@ class Invitation
     /**
      * Set optional.
      *
-     * @param bool $optional
+     * @param bool $optional Whether this is optional or not.
      *
      * @return Invitation
      */
@@ -87,7 +87,7 @@ class Invitation
     /**
      * Set invitee.
      *
-     * @param string $invitee
+     * @param string $invitee The invitee.
      *
      * @return Invitation
      */
@@ -111,7 +111,7 @@ class Invitation
     /**
      * Set event.
      *
-     * @param Event|null $event
+     * @param Event|null $event The event.
      *
      * @return Invitation
      */

@@ -16,6 +16,11 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class FieldCollectionSubscriber implements EventSubscriberInterface
 {
+    /**
+     * Return the events this subscriber listens for.
+     *
+     * @return array The subscribed events.
+     */
     public static function getSubscribedEvents()
     {
         return [
@@ -26,6 +31,13 @@ class FieldCollectionSubscriber implements EventSubscriberInterface
         ];
     }
 
+    /**
+     * Add schedule fields to search.
+     *
+     * @param FieldCollectionEvent $event The field collection event.
+     *
+     * @return void
+     */
     public function addScheduleFields(FieldCollectionEvent $event): void
     {
         $event->addFields([
@@ -37,6 +49,13 @@ class FieldCollectionSubscriber implements EventSubscriberInterface
         ]);
     }
 
+    /**
+     * Add event fields to search.
+     *
+     * @param FieldCollectionEvent $event The field collection event.
+     *
+     * @return void
+     */
     public function addEventFields(FieldCollectionEvent $event): void
     {
         $event->addFields([

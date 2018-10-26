@@ -61,6 +61,8 @@ class UserMenuSubscriber implements EventSubscriberInterface
      * Add the schedule items to the user menu.
      *
      * @param UserMenuCollectionEvent $event The menu collection event.
+     *
+     * @return void
      */
     public function addScheduleMenuItem(UserMenuCollectionEvent $event): void
     {
@@ -91,6 +93,8 @@ class UserMenuSubscriber implements EventSubscriberInterface
      * Add invitations menu item.
      *
      * @param UserMenuCollectionEvent $event The menu collection event.
+     *
+     * @return void
      */
     public function addInvitationsMenuItem(UserMenuCollectionEvent $event): void
     {

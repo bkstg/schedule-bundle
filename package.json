@@ -4,9 +4,6 @@
   "description": "",
   "author": "Luke Bainbridge <luke@forestcitylabs.ca>",
   "dependencies": {
-    "chosen-js": "^1.8",
-    "jquery-once": "^2.2",
-    "list.js": "^1.5"
-  },
-  "files": ["Resources/assets/**/*"]
+    "bootstrap-calendar": "^0.2.4"
+  }
 }

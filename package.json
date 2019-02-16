@@ -4,6 +4,7 @@
   "description": "",
   "author": "Luke Bainbridge <luke@forestcitylabs.ca>",
   "dependencies": {
-    "bootstrap-calendar": "^0.2.4"
+    "bootstrap-calendar": "^0.2.4",
+    "underscore": "^1.9.1"
   }
 }

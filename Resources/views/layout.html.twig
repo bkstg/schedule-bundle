@@ -1,0 +1,18 @@
+{% extends '@BkstgCore/layout.html.twig' %}
+
+{% block stylesheets %}
+  {{ parent() }}
+
+  <!-- Vendor CSS -->
+  <link rel="stylesheet" href="{{ asset('vendor/bootstrap-calendar/css/calendar.min.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+
+  <!-- Vendor JS -->
+  <script src="{{ asset('vendor/bootstrap-calendar/js/calendar.min.js') }}"></script>
+
+  <!-- Schedule bundle JS -->
+  <script src="{{ asset('bundles/bkstgschedule/js/all.js') }}"></script>
+{% endblock %}

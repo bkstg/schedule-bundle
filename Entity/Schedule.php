@@ -56,7 +56,7 @@ class Schedule implements GroupableInterface, PublishableInterface
      *
      * @return string
      */
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -212,7 +212,7 @@ class Schedule implements GroupableInterface, PublishableInterface
      *
      * @return $this
      */
-    public function setAuthor(string $author): string
+    public function setAuthor(string $author): self
     {
         $this->author = $author;
 

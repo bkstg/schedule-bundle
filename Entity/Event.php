@@ -122,7 +122,7 @@ class Event implements GroupableInterface, PublishableInterface
      *
      * @return string
      */
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -394,7 +394,7 @@ class Event implements GroupableInterface, PublishableInterface
      *
      * @return bool
      */
-    public function getFullCompany(): bool
+    public function getFullCompany(): ?bool
     {
         return $this->full_company;
     }

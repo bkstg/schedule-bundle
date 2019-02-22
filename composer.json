@@ -25,6 +25,7 @@
     "prefer-stable": true,
     "require-dev": {
         "foxy/foxy": "^1.0",
-        "phpunit/phpunit": "^7.4"
+        "phpunit/phpunit": "^7.4",
+        "squizlabs/php_codesniffer": "^3.4"
     }
 }

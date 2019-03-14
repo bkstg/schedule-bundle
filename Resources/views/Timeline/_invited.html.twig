@@ -1,7 +1,7 @@
 {% embed '@BkstgTimeline/Timeline/default.html.twig' %}
   {% trans_default_domain 'BkstgScheduleBundle' %}
   {% block timeline_text %}
-    <big><i class="fa fa-calendar-plus-o"></i></big>
+    <big><i class="fa fa-calendar-plus"></i></big>
     <strong>{{ timeline_component_render(timeline, 'subject') }}</strong>
     {{ 'timeline.invited'|trans }}
     <strong>{{ timeline_component_render(timeline, 'directComplement') }}</strong>
